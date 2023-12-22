@@ -1,0 +1,123 @@
+
+<div class="section">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <span class="text-xxl-end">
+          <button class="btn btn-info" (click)="logout()">Cerrar Sesion
+					<fa-icon [icon]="faArrowRightFromBracket"></fa-icon></button>
+				</span>
+        <div class="card-body">
+          <h5 class="card-title">ERRORES UBICACIONES ZHUCAY</h5>
+          <p>Lista de observaciones de productos perdidos en Bodega Zhucay </p>
+          <hr>
+          <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faListUl"></fa-icon> Agregar Observacion </button>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+              <tr style="text-transform: uppercase">
+                <th scope="col">Fecha</th>
+                <th scope="col">Item</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Ubicacion bulto</th>
+                <th scope="col">Ubicacion Unidades</th>
+                <th scope="col">CXB</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Precio Total</th>
+                <th scope="col">Responsable Reclamo</th>
+                <th scope="col">Observacion</th>
+                <th scope="col">Responsable Solucion</th>
+                <th scope="col">Detalle</th>
+                <th scope="col"> Fecha solucion</th>
+                <th class="sticky-rigth"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let observacion of observaciones" (click)="selecionarObservacion(observacion)">
+                <th scope="row">{{observacion.fecha}}</th>
+                <td>{{observacion?.item}}</td>
+                <td>{{observacion?.descripcion}}</td>
+                <td>{{observacion?.bulto}}</td>
+                <td>{{observacion?.unidad}}</td>
+                <td>{{observacion?.cxb}}</td>
+                <td>{{observacion?.stock}}</td>
+                <td>{{observacion?.precio}}</td>
+                <td>{{observacion?.precioTotal}}</td>
+                <td>{{observacion?.usuario}}</td>
+                <td>{{observacion?.detalle}}</td>
+                <td>{{observacion.correccion?.usuario}}</td>
+                <td>{{observacion.correccion?.detalle}}</td>
+                <td>{{observacion.correccion?.fecha}}</td>
+                <td class="sticky-right">
+                  <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad <fa-icon [icon]="faMessage"></fa-icon> </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="ventana_flotante" *ngIf="vistaAddObservacion">
+  <div class="card">
+    <span class="close-button" (click)="cerrarVentana()"></span>
+    <hr>
+    <div class="card-body">
+      <h5 class="titulo">Ingreso de Observacion</h5>
+      <div class="div form-group row g-3">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <label for="inputProducto" class="form-label">Producto</label>
+              <input type="text" class="form-check" id="inputProducto"
+                     [(ngModel)]="barraItem" placeholder="Item o Barra"
+                     (keyup.enter)="mostrarProducto()" style="text-transform: uppercase;"
+                     autocomplete="true"
+              >
+              <button class="btn btn-success" (click)="mostrarProducto()"><fa-icon [icon]="faSearch"></fa-icon> </button>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{producto?.pro_nombre || 'Producto'}}</h5>
+                <p>{{producto?.pro_id1 || 'Item'}}</p>
+                <p>{{producto?.pro_id || 'Barra' }}</p>
+                <p>{{producto?.cxb || 'Cxb'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label for="inputObservacion" class="form-label">Observaciones</label>
+          <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese la Observacion"
+                 [(ngModel)]="detalleOb" autocomplete="true">
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" (click)="guardarObservacion()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ventana_flotante_correccion" *ngIf="vistaCorreccion">
+  <div class="card">
+    <span class="close-button" (click)="cerrarVentanaCorreccion()"></span>
+    <div class="card-body">
+      <h5 class="titulo">Ingreso de Novedad</h5>
+      <div class="col-md-12">
+        <label for="inputNovedad" class="form-label">Novedad</label>
+        <input type="text" class="form-control" id="inputNovedad" placeholder="Ingrese la Observacion"
+               [(ngModel)]="novedad" autocomplete="true">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" (click)="agregarCorreccion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

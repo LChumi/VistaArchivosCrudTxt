@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="screen">
+    <div class="screen__content">
+      <form class="login " #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <div class="login__field">
+          <fa-icon class="login__icon" [icon]="faUser"></fa-icon>
+          <input ngModel type="text" class="login__input" placeholder="Usuario" name="username">
+        </div>
+        <div class="login__field">
+          <fa-icon class="login__icon" [icon]="faLock"></fa-icon>
+          <input ngModel type="password" class="login__input" placeholder="Contraseña" name="password">
+        </div>
+        <button class="button login__submit" type="submit" value="Login">
+          <span class="button__text">Iniciar Sesion</span>
+          <fa-icon class="button__icon" [icon]="faChevronRight"></fa-icon>
+        </button>
+      </form>
+      <div class="informacion">
+        <h6>Importadora Cumpleaños</h6>
+        <div class="info_details">
+          <a href="http://192.168.112.36:8082/pedidos_clientes/login.jsf" class="button-style">
+            Assist web <fa-icon [icon]="faSquareUpRight"></fa-icon></a>
+        </div>
+      </div>
+      <div class="screen__background">
+        <span class="screen__background__shape screen__background__shape4"></span>
+        <span class="screen__background__shape screen__background__shape3"></span>
+        <span class="screen__background__shape screen__background__shape2"></span>
+        <span class="screen__background__shape screen__background__shape1"></span>
+      </div>
+    </div>
+  </div>
+</div>
