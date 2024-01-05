@@ -137,14 +137,15 @@ export class ObservacionesComponent implements OnInit{
   tieneCorreccion(observacion: Observacion): string {
     const hoy = new Date();
     const fechaObservacion = new Date(observacion.fecha);
-    console.log(hoy)
-    console.log(fechaObservacion)
     // Si tiene corrección, devolver 'verde'
     if (observacion.correccion !== null) {
       return 'verde';
     }
     // Si no tiene corrección y la fecha está en el último mes, devolver 'tomate'
-    if (fechaObservacion >= new Date(hoy.getFullYear(), hoy.getMonth() - 1, hoy.getDate())) {
+    if (
+      fechaObservacion >= new Date(hoy.getFullYear(), hoy.getMonth() - 1, hoy.getDate()) &&
+      fechaObservacion <= hoy
+    ) {
       return 'tomate';
     }
     // En cualquier otro caso, devolver ''
