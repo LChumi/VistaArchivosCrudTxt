@@ -116,6 +116,18 @@ table tbody tr:hover {
   background-color: #fcfcfd;
 }
 
+.rojo {
+  background-color: rgba(255, 99, 71, 0.34);
+}
+
+.tomate {
+  background-color: rgba(225, 231, 48, 0.34);
+}
+
+.verde {
+  background-color: rgba(48, 213, 48, 0.34);
+}
+
 @media (max-width: 600px) {
   .ventana_flotante {
     position: absolute;

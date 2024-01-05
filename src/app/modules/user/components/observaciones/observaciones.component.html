@@ -38,7 +38,8 @@
               </thead>
               <tbody>
               <tr *ngFor="let observacion of observaciones"
-                  (click)="selecionarObservacion(observacion)">
+                  (click)="selecionarObservacion(observacion)"
+                  [ngClass]="tieneCorreccion(observacion)">
                 <th scope="row">{{observacion.fecha}}</th>
                 <td>{{observacion.item || ''}}</td>
                 <td>{{observacion.descripcion || ''}}</td>

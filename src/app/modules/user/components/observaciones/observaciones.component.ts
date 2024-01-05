@@ -134,11 +134,22 @@ export class ObservacionesComponent implements OnInit{
     this.route.navigate(['/Cumpleaños/inicio/login'])
   }
 
-  tieneCorreccion(observacion: Observacion): boolean {
-    const resultado = observacion.correccion==null;
-    return resultado;
+  tieneCorreccion(observacion: Observacion): string {
+    const hoy = new Date();
+    const fechaObservacion = new Date(observacion.fecha);
+    console.log(hoy)
+    console.log(fechaObservacion)
+    // Si tiene corrección, devolver 'verde'
+    if (observacion.correccion !== null) {
+      return 'verde';
+    }
+    // Si no tiene corrección y la fecha está en el último mes, devolver 'tomate'
+    if (fechaObservacion >= new Date(hoy.getFullYear(), hoy.getMonth() - 1, hoy.getDate())) {
+      return 'tomate';
+    }
+    // En cualquier otro caso, devolver ''
+    return 'rojo';
   }
-
 
   protected readonly faListUl = faListUl;
   protected readonly faMessage = faMessage;
