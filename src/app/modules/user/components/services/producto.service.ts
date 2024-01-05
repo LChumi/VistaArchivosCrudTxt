@@ -13,8 +13,12 @@ export class ProductoService {
 
   constructor(private http:HttpClient) { }
 
-  getProducto(barraItem:any):Observable<Producto>{
-    return this.http.get<Producto>(this.baseUrl+'BuscarProducto/'+barraItem);
+  getProducto(barraItem: any): Observable<Producto> {
+    const options = {
+      params: { data: barraItem }
+    };
+
+    return this.http.get<Producto>(`${this.baseUrl}BuscarProducto`, options);
   }
 
 }

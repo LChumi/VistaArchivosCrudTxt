@@ -1,11 +1,6 @@
-.sticky-right {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #FCFCFD;
+.logout-container {
+  align-content: flex-end;
 }
-
 .ventana_flotante {
   position: fixed;
   top: 50%;
@@ -65,9 +60,60 @@
   color: #555;
   text-decoration: none;
 }
+.tableList {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+}
 
-.table th, .table td {
+table thead {
+  background-color: #d0dae7;
+  color: #000000;
+  font-size: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+table thead th {
+  padding: 10px 15px;
+  text-align: center;
+  font-weight: bold;
   white-space: nowrap;
+}
+
+table tbody th,
+table tbody td {
+  padding: 10px 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table tbody th {
+  text-align: center;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:hover {
+  background-color: #fcfcfc;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.sticky-right {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #fcfcfd;
 }
 
 @media (max-width: 600px) {
@@ -105,6 +151,4 @@
     padding: 20px;
     font-size: 16px;
   }
-
-
-}
+ }

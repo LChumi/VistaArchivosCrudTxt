@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {faArrowRightFromBracket, faListUl, faMessage, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {ObservacionesService} from "../services/observaciones.service";
 import {Observacion} from "../../../../core/models/Observaciones";
@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
   styleUrl: './observaciones.component.css'
 })
 export class ObservacionesComponent implements OnInit{
-  constructor(private observacionService:ObservacionesService,private productoService:ProductoService,private route:Router) {}
+  constructor(private observacionService:ObservacionesService,private productoService:ProductoService,private route:Router,private cdr:ChangeDetectorRef) {}
 
   observaciones:Observacion[]=[];
   producto!:Producto;
@@ -36,11 +36,18 @@ export class ObservacionesComponent implements OnInit{
     this.observacionService.getObservaciones().subscribe(
       (lista:Observacion[]) =>{
         this.observaciones=lista;
+
+        this.cdr.detectChanges();
       }
     )
   }
 
   mostrarProducto(){
+    if (!this.barraItem){
+      alert('Ingrese el item o la barra')
+    }
+    this.barraItem=this.barraItem.toUpperCase();
+    console.log(this.barraItem)
     this.productoService.getProducto(this.barraItem).subscribe(
       (producto:Producto) =>{
         this.producto=producto;
@@ -53,6 +60,9 @@ export class ObservacionesComponent implements OnInit{
   }
 
   guardarObservacion(){
+    if (!this.detalleOb){
+      alert('Por favor ingrese una observacion antes de guardar.');
+    }
     const usuarioLocalStorage = localStorage.getItem('usuario') ?? 'ValorPredeterminado';
     this.observacion=  new Observacion()
     this.observacion.item=this.producto.pro_id1;
@@ -62,12 +72,13 @@ export class ObservacionesComponent implements OnInit{
     this.observacion.cxb=this.producto.cxb;
     this.observacion.stock=this.producto.stock_real;
     this.observacion.precio=this.producto.pvp;
-    this.observacion.detalle=this.detalleOb;
+    this.observacion.detalle=this.detalleOb.toUpperCase();
     this.observacion.usuario=usuarioLocalStorage;
 
     this.observacionService.guardar(this.observacion).subscribe(
       obs =>{
         this.listarObservaciones();
+        this.detalleOb='';
         this.cerrarVentana();
       },error =>{
         alert('Ingreso no valido');
@@ -76,11 +87,14 @@ export class ObservacionesComponent implements OnInit{
   }
 
   agregarCorreccion(){
+    if (!this.novedad){
+      alert('Por favor ingrese la novedad antes de guardar ')
+    }
     const usuarioLocalStorage = localStorage.getItem('usuario') ?? 'ValorPredeterminado';
     this.obCorr=new ObservacionCorrecion();
     this.obCorr.observacion=this.observacionSeleccionada;
     this.correccion= new Correccion()
-    this.correccion.detalle=this.novedad;
+    this.correccion.detalle=this.novedad.toUpperCase();
     this.correccion.usuario=usuarioLocalStorage;
     this.obCorr.correccion=this.correccion;
 
@@ -88,6 +102,7 @@ export class ObservacionesComponent implements OnInit{
       data=>{
         if (data){
           this.listarObservaciones();
+          this.novedad='';
           this.cerrarVentanaCorreccion();
         }
       },error =>{
@@ -101,6 +116,7 @@ export class ObservacionesComponent implements OnInit{
     console.log(this.observacionSeleccionada)
   }
   abrirVentana(){
+    this.producto=new Producto();
     this.vistaAddObservacion=true;
   }
   cerrarVentana(){
@@ -116,6 +132,11 @@ export class ObservacionesComponent implements OnInit{
   logout(){
     localStorage.clear();
     this.route.navigate(['/Cumpleaños/inicio/login'])
+  }
+
+  tieneCorreccion(observacion: Observacion): boolean {
+    const resultado = observacion.correccion==null;
+    return resultado;
   }
 
 
