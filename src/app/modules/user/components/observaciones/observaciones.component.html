@@ -47,8 +47,8 @@
                 <td>{{observacion.unidad || '' }}</td>
                 <td>{{observacion.cxb || '' }}</td>
                 <td>{{observacion.stock || '' }}</td>
-                <td>{{observacion.precio || '' }}</td>
-                <td>{{observacion.precioTotal || ''}}</td>
+                <td>{{ observacion.precio !== undefined ? observacion.precio.toFixed(2) : '' }}</td>
+                <td>{{ observacion.precioTotal !== undefined ? observacion.precioTotal.toFixed(2) : '' }}</td>
                 <td>{{observacion.usuario || ''}}</td>
                 <td>{{observacion.detalle || ''}}</td>
                 <td>{{observacion.correccion?.usuario || ''}}</td>

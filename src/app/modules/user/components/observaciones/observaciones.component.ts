@@ -136,21 +136,39 @@ export class ObservacionesComponent implements OnInit{
 
   tieneCorreccion(observacion: Observacion): string {
     const hoy = new Date();
-    const fechaObservacion = new Date(observacion.fecha);
+    const fechaObservacion = this.convertirStringAFecha(observacion.fecha);
+
+    console.log('hoy', hoy);
+    console.log('fechaObservacion', fechaObservacion);
+
     // Si tiene corrección, devolver 'verde'
     if (observacion.correccion !== null) {
       return 'verde';
     }
-    // Si no tiene corrección y la fecha está en el último mes, devolver 'tomate'
-    if (
-      fechaObservacion >= new Date(hoy.getFullYear(), hoy.getMonth() - 1, hoy.getDate()) &&
-      fechaObservacion <= hoy
-    ) {
+
+    // Obtener el primer día del mes actual
+    const primerDiaMesActual = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+
+    // Si la fecha está en el último mes y hasta la fecha actual, devolver 'tomate'
+    if (fechaObservacion >= primerDiaMesActual && fechaObservacion <= hoy) {
       return 'tomate';
     }
+
+    // Si la fecha es anterior al último mes, devolver 'rojo'
+    if (fechaObservacion < primerDiaMesActual) {
+      return 'rojo';
+    }
+
     // En cualquier otro caso, devolver ''
-    return 'rojo';
+    return '';
   }
+
+
+  private convertirStringAFecha(fechaString: string): Date {
+    const [dia, mes, anio] = fechaString.split('-').map(Number);
+    return new Date(anio, mes-1 , dia);
+  }
+
 
   protected readonly faListUl = faListUl;
   protected readonly faMessage = faMessage;
