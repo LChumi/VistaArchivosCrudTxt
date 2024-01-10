@@ -26,4 +26,6 @@ export class ObservacionesService {
   agregarCorreccion(correccion:ObservacionCorrecion):Observable<Observacion>{
     return this.http.put<Observacion>(this.baseUrl+'agregarCorrecion/',correccion)
   }
+
+
 }

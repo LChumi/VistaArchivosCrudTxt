@@ -128,6 +128,29 @@ table tbody tr:hover {
   background-color: rgba(48, 213, 48, 0.34);
 }
 
+/* botones para listas  */
+.color-buttons {
+  display: flex;
+  gap: 20px; /* Espacio entre los botones */
+}
+
+.color-buttons label {
+  background-color: #cfd9e6; /* Color de fondo de los botones */
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer;
+}
+
+.color-buttons input[type="radio"] {
+  display: none; /* Ocultar los botones de radio por defecto */
+}
+
+.color-buttons input[type="radio"]:checked + label {
+  background-color: #0d6dfb; /* Color de fondo cuando está seleccionado */
+  color: #D4D3E8;
+}
+
+
 @media (max-width: 600px) {
   .ventana_flotante {
     position: absolute;
@@ -163,4 +186,21 @@ table tbody tr:hover {
     padding: 20px;
     font-size: 16px;
   }
+
+  .color-buttons label {
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  .color-buttons label i {
+    display: inline-block;
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .color-buttons label span {
+    display: none;
+  }
+
  }

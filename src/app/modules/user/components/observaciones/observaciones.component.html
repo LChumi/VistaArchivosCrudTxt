@@ -13,7 +13,41 @@
           <h5 class="card-title">ERRORES UBICACIONES ZHUCAY</h5>
           <p>Lista de observaciones de productos perdidos en Bodega Zhucay </p>
           <hr>
-          <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faListUl"></fa-icon> Agregar Observacion </button>
+          <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faFileCirclePlus"></fa-icon> Agregar Observacion </button>
+          <hr>
+
+          <div>
+            <label>Lista de Observaciones </label>
+            <div class="color-buttons">
+              <input type="radio" id="todos" name="color" [(ngModel)]="colorSeleccionado" value="todos" (change)="seleccionarColor()">
+              <label for="todos">
+                <fa-icon [icon]="faListUl"></fa-icon>
+                <span>Todos</span>
+              </label>
+
+              <input type="radio" id="verde" name="color" [(ngModel)]="colorSeleccionado" value="verde" (change)="seleccionarColor()">
+              <label for="verde">
+                <fa-icon [icon]="faListCheck"></fa-icon>
+                <span> Observaciones corregidas</span>
+                </label>
+
+              <input type="radio" id="tomate" name="color" [(ngModel)]="colorSeleccionado" value="tomate" (change)="seleccionarColor()">
+              <label for="tomate">
+                <fa-icon [icon]="faTriangleExclamation"></fa-icon>
+                <span> Observaciones sin correccion dentro del mes </span>
+                </label>
+
+              <input type="radio" id="rojo" name="color" [(ngModel)]="colorSeleccionado" value="rojo" (change)="seleccionarColor()">
+              <label for="rojo">
+                <fa-icon [icon]="faCircleExclamation"></fa-icon>
+                <span> Observaciones sin correccion antiguas</span>
+              </label>
+
+            </div>
+          </div>
+          <hr>
+          <span>Total Observaciones : </span>
+          <span>{{totalObservaciones}}</span>
           <hr>
           <div>
             <table class="tableList table-responsive">
@@ -37,7 +71,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let observacion of observaciones"
+              <tr *ngFor="let observacion of observaciones  | filtroColor: colorSeleccionado "
                   (click)="selecionarObservacion(observacion)"
                   [ngClass]="tieneCorreccion(observacion)">
                 <th scope="row">{{observacion.fecha}}</th>

@@ -1,13 +1,19 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {faArrowRightFromBracket, faListUl, faMessage, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightFromBracket, faCircleExclamation,
+  faFileCirclePlus, faListCheck,
+  faListUl,
+  faMessage,
+  faSearch, faTriangleExclamation
+} from "@fortawesome/free-solid-svg-icons";
 import {ObservacionesService} from "../services/observaciones.service";
 import {Observacion} from "../../../../core/models/Observaciones";
 import {ProductoService} from "../services/producto.service";
 import {Producto} from "../../../../core/models/Producto";
 import {Correccion} from "../../../../core/models/Correccion";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {ObservacionCorrecion} from "../../../../core/models/ObservacionCorreccion";
 import {Router} from "@angular/router";
+import {FiltroColorPipe} from "../pipes/filtro-color.pipe";
 
 @Component({
   selector: 'app-observaciones',
@@ -16,6 +22,8 @@ import {Router} from "@angular/router";
 })
 export class ObservacionesComponent implements OnInit{
   constructor(private observacionService:ObservacionesService,private productoService:ProductoService,private route:Router,private cdr:ChangeDetectorRef) {}
+
+  filtroColorPipe:FiltroColorPipe= new FiltroColorPipe();
 
   observaciones:Observacion[]=[];
   producto!:Producto;
@@ -28,6 +36,8 @@ export class ObservacionesComponent implements OnInit{
   barraItem!:string;
   vistaAddObservacion=false;
   vistaCorreccion=false;
+  colorSeleccionado!:string;
+  totalObservaciones!:number;
   ngOnInit(): void {
       this.listarObservaciones()
   }
@@ -36,10 +46,20 @@ export class ObservacionesComponent implements OnInit{
     this.observacionService.getObservaciones().subscribe(
       (lista:Observacion[]) =>{
         this.observaciones=lista;
-
+        this.totalObservaciones=this.observaciones.length;
         this.cdr.detectChanges();
       }
     )
+  }
+
+  seleccionarColor(){
+    this.observacionService.getObservaciones().subscribe(
+      (lista:Observacion[]) => {
+        this.observaciones = this.filtroColorPipe.transform(lista, this.colorSeleccionado);
+        this.totalObservaciones=this.observaciones.length;
+      }
+    )
+
   }
 
   mostrarProducto(){
@@ -134,35 +154,27 @@ export class ObservacionesComponent implements OnInit{
     this.route.navigate(['/Cumpleaños/inicio/login'])
   }
 
-  tieneCorreccion(observacion: Observacion): string {
+  public tieneCorreccion(observacion: Observacion): string {
     const hoy = new Date();
     const fechaObservacion = this.convertirStringAFecha(observacion.fecha);
-
-    console.log('hoy', hoy);
-    console.log('fechaObservacion', fechaObservacion);
 
     // Si tiene corrección, devolver 'verde'
     if (observacion.correccion !== null) {
       return 'verde';
     }
-
     // Obtener el primer día del mes actual
     const primerDiaMesActual = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-
     // Si la fecha está en el último mes y hasta la fecha actual, devolver 'tomate'
     if (fechaObservacion >= primerDiaMesActual && fechaObservacion <= hoy) {
       return 'tomate';
     }
-
     // Si la fecha es anterior al último mes, devolver 'rojo'
     if (fechaObservacion < primerDiaMesActual) {
       return 'rojo';
     }
-
     // En cualquier otro caso, devolver ''
     return '';
   }
-
 
   private convertirStringAFecha(fechaString: string): Date {
     const [dia, mes, anio] = fechaString.split('-').map(Number);
@@ -174,4 +186,8 @@ export class ObservacionesComponent implements OnInit{
   protected readonly faMessage = faMessage;
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faSearch = faSearch;
+  protected readonly faFileCirclePlus = faFileCirclePlus;
+  protected readonly faListCheck = faListCheck;
+  protected readonly faTriangleExclamation = faTriangleExclamation;
+  protected readonly faCircleExclamation = faCircleExclamation;
 }
