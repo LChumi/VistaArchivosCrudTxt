@@ -75,13 +75,20 @@ export class ObservacionesComponent implements OnInit{
       },error =>{
         alert('Producto no encontrado')
         this.barraItem='';
+        this.producto=new Producto();
     }
     )
   }
 
   guardarObservacion(){
+    console.log(this.producto.pro_nombre)
     if (!this.detalleOb){
       alert('Por favor ingrese una observacion antes de guardar.');
+      return;
+    }
+    if (this.producto.pro_nombre===undefined){
+      alert('Por favor Ingrese el producto ');
+      return;
     }
     const usuarioLocalStorage = localStorage.getItem('usuario') ?? 'ValorPredeterminado';
     this.observacion=  new Observacion()
