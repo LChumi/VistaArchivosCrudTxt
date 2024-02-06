@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {
   faArrowRightFromBracket, faBarcode , faCircleExclamation,
   faFileCirclePlus, faListCheck,
@@ -15,18 +15,20 @@ import { Router } from "@angular/router";
 import { FiltroColorPipe } from "./pipes/filtro-color.pipe";
 import { ProductoService } from '../../../../core/services/producto.service';
 import { BarcodeFormat} from '@zxing/library'
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-observaciones',
   templateUrl: './observaciones.component.html',
   styleUrl: './observaciones.component.css'
 })
-export class ObservacionesComponent implements OnInit {
+export class ObservacionesComponent implements OnInit,OnDestroy  {
   constructor(private observacionService: ObservacionesService, private productoService: ProductoService, private route: Router, private cdr: ChangeDetectorRef) { }
 
   filtroColorPipe: FiltroColorPipe = new FiltroColorPipe();
 
   formatosCodigoBarras:any[]= [BarcodeFormat['EAN_13']];
+  productoSubscription!: Subscription;
 
   mostrarCamara = false;
   observaciones: Observacion[] = [];
@@ -53,6 +55,13 @@ export class ObservacionesComponent implements OnInit {
     this.listarObservaciones();
   }
 
+  ngOnDestroy(): void {
+    // Desuscribirse para evitar fugas de memoria
+    if (this.productoSubscription) {
+      this.productoSubscription.unsubscribe();
+    }
+  }
+
   listarObservaciones(): void {
     this.observacionService.getObservaciones().subscribe(
       (lista: Observacion[]) => {
@@ -73,26 +82,29 @@ export class ObservacionesComponent implements OnInit {
 
   }
 
-  mostrarProducto() {
+  mostrarProducto(): void {
     if (!this.barraItem) {
-      alert('Ingrese el item o la barra')
+      alert('Ingrese el item o la barra');
+      return;
     }
     this.barraItem = this.barraItem.toUpperCase();
-    console.log(this.barraItem)
-    this.productoService.getProducto(this.bodegaLocalStorage, this.barraItem).subscribe(
-      (producto: Producto) => {
-        this.producto = producto;
-        this.barraItem = '';
-      }, error => {
-        alert('Producto no encontrado')
-        this.barraItem = '';
-        this.producto = new Producto();
-      }
-    )
+    console.log(this.barraItem);
+    // Realizar la suscripción y almacenar la referencia a la suscripción
+    this.productoSubscription = this.productoService.getProducto(this.bodegaLocalStorage, this.barraItem)
+      .subscribe({
+        next: (producto: Producto) => {
+          this.producto = producto;
+          this.barraItem = '';
+        },
+        error: error => {
+          alert('Producto no encontrado');
+          this.barraItem = '';
+          this.producto = new Producto();
+        }
+      });
   }
 
   guardarObservacion() {
-    console.log(this.producto.pro_nombre)
     if (!this.detalleOb) {
       alert('Por favor ingrese una observacion antes de guardar.');
       return;
@@ -113,15 +125,16 @@ export class ObservacionesComponent implements OnInit {
     this.observacion.detalle = this.detalleOb.toUpperCase();
     this.observacion.usuario = this.usuarioLocalStorage;
 
-    this.observacionService.guardar(this.observacion).subscribe(
-      obs => {
+    this.observacionService.guardar(this.observacion).subscribe({
+      next: (obs: Observacion) => {
         this.listarObservaciones();
         this.detalleOb = '';
         this.cerrarVentana();
-      }, error => {
-        alert('Ingreso no valido');
+      },
+      error: (error: any) => {
+        alert('Ingreso no válido');
       }
-    )
+    });
   }
 
   agregarCorreccion() {
@@ -135,17 +148,18 @@ export class ObservacionesComponent implements OnInit {
     this.correccion.usuario = this.usuarioLocalStorage;
     this.obCorr.correccion = this.correccion;
 
-    this.observacionService.agregarCorreccion(this.obCorr).subscribe(
-      data => {
+    this.observacionService.agregarCorreccion(this.obCorr).subscribe({
+      next: (data: any) => {
         if (data) {
           this.listarObservaciones();
           this.novedad = '';
           this.cerrarVentanaCorreccion();
         }
-      }, error => {
-        alert('Novedad no registrada')
+      },
+      error: (error: any) => {
+        alert('Novedad no registrada');
       }
-    )
+    });
   }
 
   selecionarObservacion(observacion: Observacion) {

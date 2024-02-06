@@ -80,7 +80,6 @@ export class ObservacionesNarancayComponent implements OnInit {
       alert('Ingrese el item o la barra')
     }
     this.barraItem = this.barraItem.toUpperCase();
-    console.log(this.barraItem)
     this.productoService.getProducto(this.bodegaLocalStorage, this.barraItem).subscribe(
       (producto: Producto) => {
         this.producto = producto;
@@ -130,12 +129,12 @@ export class ObservacionesNarancayComponent implements OnInit {
     if (!this.novedad) {
       alert('Por favor ingrese la novedad antes de guardar ')
     }
-    const usuarioLocalStorage = localStorage.getItem('usuario') ?? 'ValorPredeterminado';
+
     this.obCorr = new ObservacionCorrecion();
     this.obCorr.observacion = this.observacionSeleccionada;
     this.correccion = new Correccion()
     this.correccion.detalle = this.novedad.toUpperCase();
-    this.correccion.usuario = usuarioLocalStorage;
+    this.correccion.usuario = this.usuarioLocalStorage;
     this.obCorr.correccion = this.correccion;
 
     this.narancayService.agregarCorreccion(this.obCorr).subscribe(

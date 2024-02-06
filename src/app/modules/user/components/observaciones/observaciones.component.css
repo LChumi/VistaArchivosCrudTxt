@@ -159,10 +159,8 @@ table tbody tr:hover {
 }
 
 /* Estilos para el componente de cámara */
-webcam {
-  width: 100%; /* O el ancho deseado */
-  height: auto; /* Para mantener la proporción de aspecto */
-  display: block; /* Para eliminar el espacio adicional debajo del elemento inline */
+.camara-container div {
+  width: 100%;
 }
 
 /* Estilos para el componente de escáner */
