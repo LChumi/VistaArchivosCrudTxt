@@ -1,4 +1,3 @@
-
 <div class="section">
   <div class="row">
     <div>
@@ -14,31 +13,36 @@
           <p> LISTA DE OBSERVACIONES DE PRODUCTOS PERDIDOS EN LA BODEGA ZHUCAY </p>
           <p> USUARIO: {{usuarioLocalStorage}}</p>
           <hr>
-          <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faFileCirclePlus"></fa-icon> Agregar Observacion </button>
+          <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faFileCirclePlus"></fa-icon> Agregar
+            Observacion </button>
           <hr>
 
           <div>
             <label>Lista de Observaciones </label>
             <div class="color-buttons">
-              <input type="radio" id="todos" name="color" [(ngModel)]="colorSeleccionado" value="todos" (change)="seleccionarColor()">
+              <input type="radio" id="todos" name="color" [(ngModel)]="colorSeleccionado" value="todos"
+                (change)="seleccionarColor()">
               <label for="todos">
                 <fa-icon [icon]="faListUl"></fa-icon>
                 <span>Todos</span>
               </label>
 
-              <input type="radio" id="verde" name="color" [(ngModel)]="colorSeleccionado" value="verde" (change)="seleccionarColor()">
+              <input type="radio" id="verde" name="color" [(ngModel)]="colorSeleccionado" value="verde"
+                (change)="seleccionarColor()">
               <label for="verde">
                 <fa-icon [icon]="faListCheck"></fa-icon>
                 <span> Observaciones corregidas</span>
-                </label>
+              </label>
 
-              <input type="radio" id="tomate" name="color" [(ngModel)]="colorSeleccionado" value="tomate" (change)="seleccionarColor()">
+              <input type="radio" id="tomate" name="color" [(ngModel)]="colorSeleccionado" value="tomate"
+                (change)="seleccionarColor()">
               <label for="tomate">
                 <fa-icon [icon]="faTriangleExclamation"></fa-icon>
                 <span> Observaciones sin correccion dentro del mes </span>
-                </label>
+              </label>
 
-              <input type="radio" id="rojo" name="color" [(ngModel)]="colorSeleccionado" value="rojo" (change)="seleccionarColor()">
+              <input type="radio" id="rojo" name="color" [(ngModel)]="colorSeleccionado" value="rojo"
+                (change)="seleccionarColor()">
               <label for="rojo">
                 <fa-icon [icon]="faCircleExclamation"></fa-icon>
                 <span> Observaciones sin correccion antiguas</span>
@@ -53,42 +57,42 @@
           <div>
             <table class="tableList table-responsive">
               <thead>
-              <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Item</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">CXB</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Precio Total</th>
-                <th scope="col">Responsable Reclamo</th>
-                <th scope="col">Observacion</th>
-                <th scope="col">Responsable Solucion</th>
-                <th scope="col">Detalle</th>
-                <th scope="col"> Fecha solucion</th>
-                <th class="sticky-rigth"></th>
-              </tr>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">CXB</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Precio Total</th>
+                  <th scope="col">Responsable Reclamo</th>
+                  <th scope="col">Observacion</th>
+                  <th scope="col">Responsable Solucion</th>
+                  <th scope="col">Detalle</th>
+                  <th scope="col"> Fecha solucion</th>
+                  <th class="sticky-rigth"></th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let observacion of observaciones  | filtroColor: colorSeleccionado "
-                  (click)="selecionarObservacion(observacion)"
-                  [ngClass]="tieneCorreccion(observacion)">
-                <th scope="row">{{observacion.fecha}}</th>
-                <td>{{observacion.item || ''}}</td>
-                <td>{{observacion.descripcion || ''}}</td>
-                <td>{{observacion.cxb || '' }}</td>
-                <td>{{observacion.stock || '' }}</td>
-                <td>{{ observacion.precio !== undefined ? observacion.precio.toFixed(2) : '' }}</td>
-                <td>{{ observacion.precioTotal !== undefined ? observacion.precioTotal.toFixed(2) : '' }}</td>
-                <td>{{observacion.usuario || ''}}</td>
-                <td>{{observacion.detalle || ''}}</td>
-                <td>{{observacion.correccion?.usuario || ''}}</td>
-                <td>{{observacion.correccion?.detalle || ''}}</td>
-                <td>{{observacion.correccion?.fecha || ''}}</td>
-                <td class="sticky-right">
-                  <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad <fa-icon [icon]="faMessage"></fa-icon> </button>
-                </td>
-              </tr>
+                <tr *ngFor="let observacion of observaciones  | filtroColor: colorSeleccionado "
+                  (click)="selecionarObservacion(observacion)" [ngClass]="tieneCorreccion(observacion)">
+                  <th scope="row">{{observacion.fecha}}</th>
+                  <td>{{observacion.item || ''}}</td>
+                  <td>{{observacion.descripcion || ''}}</td>
+                  <td>{{observacion.cxb || '' }}</td>
+                  <td>{{observacion.stock || '' }}</td>
+                  <td>{{ observacion.precio !== undefined ? observacion.precio.toFixed(2) : '' }}</td>
+                  <td>{{ observacion.precioTotal !== undefined ? observacion.precioTotal.toFixed(2) : '' }}</td>
+                  <td>{{observacion.usuario || ''}}</td>
+                  <td>{{observacion.detalle || ''}}</td>
+                  <td>{{observacion.correccion?.usuario || ''}}</td>
+                  <td>{{observacion.correccion?.detalle || ''}}</td>
+                  <td>{{observacion.correccion?.fecha || ''}}</td>
+                  <td class="sticky-right">
+                    <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad <fa-icon
+                        [icon]="faMessage"></fa-icon> </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -111,11 +115,21 @@
           <div class="row g-0">
             <div class="col-md-4">
               <label for="inputProducto" class="form-label">Producto</label>
-              <input type="text" class="form-check" id="inputProducto"
-                     [(ngModel)]="barraItem" placeholder="Item o Barra"
-                     (keyup.enter)="mostrarProducto()" style="text-transform: uppercase;"
-                     autocomplete="true" required>
-              <button class="btn btn-outline-primary" (click)="mostrarProducto()"><fa-icon [icon]="faSearch"></fa-icon> </button>
+              <input type="text" class="form-check" id="inputProducto" [(ngModel)]="barraItem"
+                placeholder="Item o Barra" (keyup.enter)="mostrarProducto()" style="text-transform: uppercase;"
+                autocomplete="true" required>
+              <button class="btn btn-outline-primary" (click)="mostrarProducto()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </button>
+              <button class="btn btn-outline-primary" (click)="abrirCamara()">
+                <fa-icon [icon]="faBarcode"></fa-icon>
+              </button>
+
+              <div *ngIf="mostrarCamara" class="camara-container">
+                <webcam></webcam>
+                <zxing-scanner [formats]="formatosCodigoBarras" (scanSuccess)="codigoEscaneado($event)"></zxing-scanner>
+              </div>
+
             </div>
             <div class="col-md-8">
               <div class="card-body">
@@ -130,8 +144,7 @@
         <div class="col-md-12">
           <label for="inputObservacion" class="form-label">Observaciones</label>
           <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese la Observacion"
-                 [(ngModel)]="detalleOb" autocomplete="true"
-                 style="text-transform: uppercase;" required>
+            [(ngModel)]="detalleOb" autocomplete="true" style="text-transform: uppercase;" required>
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary" (click)="guardarObservacion()">Guardar</button>
@@ -148,8 +161,7 @@
       <div class="col-md-12">
         <label for="inputNovedad" class="form-label">Novedad</label>
         <input type="text" class="form-control" id="inputNovedad" placeholder="Ingrese la Observacion"
-               [(ngModel)]="novedad" autocomplete="true"
-               style="text-transform: uppercase;">
+          [(ngModel)]="novedad" autocomplete="true" style="text-transform: uppercase;">
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-primary" (click)="agregarCorreccion()">Guardar</button>
@@ -157,4 +169,3 @@
     </div>
   </div>
 </div>
-

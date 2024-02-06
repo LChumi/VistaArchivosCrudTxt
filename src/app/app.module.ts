@@ -7,6 +7,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {HttpClientModule} from "@angular/common/http";
 import { ConfirmacionDialogComponent } from './components/notification/confirmacion-dialog/confirmacion-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {WebcamModule} from 'ngx-webcam';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     FontAwesomeModule,
     HttpClientModule,
     AppRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    WebcamModule,
+    ZXingScannerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

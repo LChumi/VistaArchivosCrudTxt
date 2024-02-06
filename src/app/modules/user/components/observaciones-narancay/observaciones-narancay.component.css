@@ -150,6 +150,29 @@ table tbody tr:hover {
   color: #D4D3E8;
 }
 
+/* Estilos para el contenedor de la cámara */
+.camara-container {
+  position: relative;
+  width: 100%; /* O el ancho deseado */
+  max-width: 800px; /* O el ancho máximo deseado */
+  margin: 0 auto; /* Centrar horizontalmente */
+}
+
+/* Estilos para el componente de cámara */
+webcam {
+  width: 100%; /* O el ancho deseado */
+  height: auto; /* Para mantener la proporción de aspecto */
+  display: block; /* Para eliminar el espacio adicional debajo del elemento inline */
+}
+
+/* Estilos para el componente de escáner */
+zxing-scanner {
+  width: 100%; /* O el ancho deseado */
+  height: auto; /* Para mantener la proporción de aspecto */
+  display: block; /* Para eliminar el espacio adicional debajo del elemento inline */
+}
+
+
 
 @media (max-width: 600px) {
   .ventana_flotante {

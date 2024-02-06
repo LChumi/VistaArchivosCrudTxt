@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
-  faArrowRightFromBracket, faCircleExclamation,
+  faArrowRightFromBracket, faBarcode, faCircleExclamation,
   faFileCirclePlus, faListCheck,
   faListUl,
   faMessage,
@@ -14,6 +14,8 @@ import { Observacion } from '../../../../core/models/Observaciones';
 import { Producto } from '../../../../core/models/Producto';
 import { ObservacionCorrecion } from '../../../../core/models/ObservacionCorreccion';
 import { Correccion } from '../../../../core/models/Correccion';
+import { BarcodeFormat} from '@zxing/library'
+
 
 @Component({
   selector: 'app-observaciones-narancay',
@@ -26,6 +28,9 @@ export class ObservacionesNarancayComponent implements OnInit {
 
   filtroColorPipe: FiltroColorPipe = new FiltroColorPipe();
 
+  formatosCodigoBarras:any[]= [BarcodeFormat['EAN_13']];
+
+  mostrarCamara = false;
   observaciones: Observacion[] = [];
   producto!: Producto;
   observacion!: Observacion;
@@ -196,6 +201,17 @@ export class ObservacionesNarancayComponent implements OnInit {
     return new Date(anio, mes - 1, dia);
   }
 
+  abrirCamara(){
+    this.mostrarCamara = !this.mostrarCamara;
+  }
+
+  codigoEscaneado(event:any){
+    console.log(event)
+    this.barraItem=event;
+    this.mostrarProducto();
+    this.mostrarCamara=false;
+  }
+
 
   protected readonly faListUl = faListUl;
   protected readonly faMessage = faMessage;
@@ -205,5 +221,5 @@ export class ObservacionesNarancayComponent implements OnInit {
   protected readonly faListCheck = faListCheck;
   protected readonly faTriangleExclamation = faTriangleExclamation;
   protected readonly faCircleExclamation = faCircleExclamation;
-
+  protected readonly faBarcode = faBarcode;
 }

@@ -119,7 +119,19 @@
                      [(ngModel)]="barraItem" placeholder="Item o Barra"
                      (keyup.enter)="mostrarProducto()" style="text-transform: uppercase;"
                      autocomplete="true" required>
-              <button class="btn btn-outline-primary" (click)="mostrarProducto()"><fa-icon [icon]="faSearch"></fa-icon> </button>
+              <button class="btn btn-outline-primary" (click)="mostrarProducto()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </button>
+
+              <button class="btn btn-outline-primary" (click)="abrirCamara()">
+                <fa-icon [icon]="faBarcode"></fa-icon>
+              </button>
+
+              <div *ngIf="mostrarCamara" class="camara-container">
+                <webcam></webcam>
+                <zxing-scanner [formats]="formatosCodigoBarras" (scanSuccess)="codigoEscaneado($event)"></zxing-scanner>
+              </div>
+
             </div>
             <div class="col-md-8">
               <div class="card-body">

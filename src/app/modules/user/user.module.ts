@@ -8,7 +8,8 @@ import {FormsModule} from "@angular/forms";
 import { FiltroColorPipe } from './components/observaciones/pipes/filtro-color.pipe';
 import { BodegasComponent } from './components/bodegas/bodegas.component';
 import { ObservacionesNarancayComponent } from './components/observaciones-narancay/observaciones-narancay.component';
-
+import { WebcamModule } from 'ngx-webcam';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { ObservacionesNarancayComponent } from './components/observaciones-naran
     CommonModule,
     FontAwesomeModule,
     UserRoutingModule,
-    FormsModule
+    FormsModule,
+    WebcamModule,
+    ZXingScannerModule
   ]
 })
 export class UserModule { }
