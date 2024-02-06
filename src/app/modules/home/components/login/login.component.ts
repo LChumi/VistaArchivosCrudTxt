@@ -18,8 +18,11 @@ export class LoginComponent {
     this.loginService.login(loginForm.value).subscribe(
       (usuario:any) =>{
         if (usuario){
-          localStorage.setItem("usuario",String(usuario.usr_id))
+          localStorage.setItem("usuario",String(usuario.usr_nombre))
+          localStorage.setItem("idUsuario",String(usuario.usr_codigo))
+          localStorage.setItem("idEmpresa",String(usuario.usr_empresa_def))
           loginForm.resetForm();
+          console.log(usuario)
           this.goToLista()
         }
       },error => {
@@ -30,7 +33,7 @@ export class LoginComponent {
   }
 
   goToLista(){
-    this.router.navigate(['/Cumpleaños/observaciones/lista'])
+    this.router.navigate(['/Cumpleaños/observaciones/bodegas'])
   }
 
   protected readonly faUser = faUser;

@@ -1,0 +1,79 @@
+
+.confirm-dialog-container {
+  border-radius: 15px;
+  padding: 20px;
+  background-color: rgb(205, 224, 239);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  /* Posicionamiento fijo para que esté encima del contenido */
+  top: 50%;
+  /* Lo centramos verticalmente */
+  left: 50%;
+  /* Lo centramos horizontalmente */
+  transform: translate(-50%, -50%);
+  /* Centramos completamente */
+  z-index: 9999;
+  /* Aseguramos que esté encima de todo */
+}
+
+.confirm-dialog-title {
+  margin-top: 0;
+}
+
+.confirm-dialog-content {
+  margin-bottom: 20px;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.confirm-dialog-actions button {
+  margin-left: 10px;
+  border: none;
+  /* Elimina el borde del botón */
+  border-radius: 5px;
+  /* Añade bordes redondeados */
+  padding: 10px 20px;
+  /* Ajusta el relleno del botón */
+  cursor: pointer;
+  /* Cambia el cursor al pasar por encima del botón */
+  font-weight: bold;
+  /* Hace el texto en negrita */
+}
+
+.confirm-dialog-actions button.si {
+  background-color: #62a1e4;
+  /* Color azul para el botón "Sí" */
+  color: white;
+  /* Texto blanco */
+}
+
+.confirm-dialog-actions button.no {
+  background-color: #dc3545;
+  /* Color rojo para el botón "No" */
+  color: white;
+  /* Texto blanco */
+}
+
+.confirm-dialog-actions button:hover {
+  opacity: 0.8;
+  /* Reduce la opacidad al pasar el ratón por encima del botón */
+}
+
+@media screen and (max-width: 767px) {
+  .confirm-dialog-container {
+    width: 90%;
+    /* Reducir el ancho del cuadro de diálogo en pantallas pequeñas */
+    max-width: 300px;
+    /* Establecer un máximo de ancho */
+    padding: 10px;
+    /* Reducir el relleno */
+  }
+
+  .confirm-dialog-actions {
+    margin-bottom: 20px;
+    /* Espacio entre los botones y la imagen */
+  }
+}

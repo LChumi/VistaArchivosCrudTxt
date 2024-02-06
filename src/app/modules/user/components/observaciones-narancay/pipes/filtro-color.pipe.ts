@@ -1,20 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Observacion} from "../../../../core/models/Observaciones";
-import {ObservacionesService} from "../services/observaciones.service";
+import { Observacion } from '../../../../../core/models/Observaciones';
 
 @Pipe({
   name: 'filtroColor'
 })
 export class FiltroColorPipe implements PipeTransform {
+
   transform(observaciones:Observacion[],color:string): Observacion[] {
-    if (!color || color==='todos'){
+    if(!color || color==='todos'){
       return observaciones;
     }
 
-    return observaciones.filter(observacion => {
-      const colorObservacion = this.tieneCorreccion(observacion);
-      return colorObservacion === color;
+    return observaciones.filter(observacion =>{
+      const colorObservacion=this.tieneCorreccion(observacion);
+      return colorObservacion ===color;
     });
+
   }
 
   public tieneCorreccion(observacion: Observacion): string {

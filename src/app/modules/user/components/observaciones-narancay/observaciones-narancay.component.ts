@@ -6,22 +6,23 @@ import {
   faMessage,
   faSearch, faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
-import { ObservacionesService } from "./services/observaciones.service";
-import { Observacion } from "../../../../core/models/Observaciones";
-import { Producto } from "../../../../core/models/Producto";
-import { Correccion } from "../../../../core/models/Correccion";
-import { ObservacionCorrecion } from "../../../../core/models/ObservacionCorreccion";
-import { Router } from "@angular/router";
-import { FiltroColorPipe } from "./pipes/filtro-color.pipe";
+import { ObservacionesNarancayService } from './services/observaciones-narancay.service';
 import { ProductoService } from '../../../../core/services/producto.service';
+import { Router } from '@angular/router';
+import { FiltroColorPipe } from './pipes/filtro-color.pipe';
+import { Observacion } from '../../../../core/models/Observaciones';
+import { Producto } from '../../../../core/models/Producto';
+import { ObservacionCorrecion } from '../../../../core/models/ObservacionCorreccion';
+import { Correccion } from '../../../../core/models/Correccion';
 
 @Component({
-  selector: 'app-observaciones',
-  templateUrl: './observaciones.component.html',
-  styleUrl: './observaciones.component.css'
+  selector: 'app-observaciones-narancay',
+  templateUrl: './observaciones-narancay.component.html',
+  styleUrl: './observaciones-narancay.component.css'
 })
-export class ObservacionesComponent implements OnInit {
-  constructor(private observacionService: ObservacionesService, private productoService: ProductoService, private route: Router, private cdr: ChangeDetectorRef) { }
+export class ObservacionesNarancayComponent implements OnInit {
+
+  constructor(private narancayService: ObservacionesNarancayService, private productoService: ProductoService, private router: Router, private cdr: ChangeDetectorRef) { }
 
   filtroColorPipe: FiltroColorPipe = new FiltroColorPipe();
 
@@ -50,7 +51,7 @@ export class ObservacionesComponent implements OnInit {
   }
 
   listarObservaciones(): void {
-    this.observacionService.getObservaciones().subscribe(
+    this.narancayService.getObservaciones().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = lista;
         this.totalObservaciones = this.observaciones.length;
@@ -60,7 +61,7 @@ export class ObservacionesComponent implements OnInit {
   }
 
   seleccionarColor() {
-    this.observacionService.getObservaciones().subscribe(
+    this.narancayService.getObservaciones().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = this.filtroColorPipe.transform(lista, this.colorSeleccionado);
         this.totalObservaciones = this.observaciones.length;
@@ -109,7 +110,7 @@ export class ObservacionesComponent implements OnInit {
     this.observacion.detalle = this.detalleOb.toUpperCase();
     this.observacion.usuario = this.usuarioLocalStorage;
 
-    this.observacionService.guardar(this.observacion).subscribe(
+    this.narancayService.guardar(this.observacion).subscribe(
       obs => {
         this.listarObservaciones();
         this.detalleOb = '';
@@ -124,14 +125,15 @@ export class ObservacionesComponent implements OnInit {
     if (!this.novedad) {
       alert('Por favor ingrese la novedad antes de guardar ')
     }
+    const usuarioLocalStorage = localStorage.getItem('usuario') ?? 'ValorPredeterminado';
     this.obCorr = new ObservacionCorrecion();
     this.obCorr.observacion = this.observacionSeleccionada;
     this.correccion = new Correccion()
     this.correccion.detalle = this.novedad.toUpperCase();
-    this.correccion.usuario = this.usuarioLocalStorage;
+    this.correccion.usuario = usuarioLocalStorage;
     this.obCorr.correccion = this.correccion;
 
-    this.observacionService.agregarCorreccion(this.obCorr).subscribe(
+    this.narancayService.agregarCorreccion(this.obCorr).subscribe(
       data => {
         if (data) {
           this.listarObservaciones();
@@ -164,7 +166,7 @@ export class ObservacionesComponent implements OnInit {
 
   logout() {
     localStorage.clear();
-    this.route.navigate(['/Cumpleaños/inicio/login'])
+    this.router.navigate(['/Cumpleaños/inicio/login'])
   }
 
   public tieneCorreccion(observacion: Observacion): string {
@@ -203,4 +205,5 @@ export class ObservacionesComponent implements OnInit {
   protected readonly faListCheck = faListCheck;
   protected readonly faTriangleExclamation = faTriangleExclamation;
   protected readonly faCircleExclamation = faCircleExclamation;
+
 }

@@ -5,13 +5,17 @@ import { UserRoutingModule } from './user-routing.module';
 import { ObservacionesComponent } from './components/observaciones/observaciones.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {FormsModule} from "@angular/forms";
-import { FiltroColorPipe } from './components/pipes/filtro-color.pipe';
+import { FiltroColorPipe } from './components/observaciones/pipes/filtro-color.pipe';
+import { BodegasComponent } from './components/bodegas/bodegas.component';
+import { ObservacionesNarancayComponent } from './components/observaciones-narancay/observaciones-narancay.component';
 
 
 @NgModule({
   declarations: [
     ObservacionesComponent,
-    FiltroColorPipe
+    FiltroColorPipe,
+    BodegasComponent,
+    ObservacionesNarancayComponent
   ],
   imports: [
     CommonModule,

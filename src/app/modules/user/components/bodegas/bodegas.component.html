@@ -1,0 +1,13 @@
+
+
+<main class="main">
+  <div class="tittle-container">
+    <h1>LISTA DE BODEGAS</h1>
+  </div>
+  <div class="card-row">
+    <div class="card" *ngFor="let bodega of listaBodegas" (click)="BodegaSelecccionada(bodega)" >
+      <img [src]="alamcenNarancayImg" alt="Bodega">
+      <h2>{{bodega.bod_nombre}}</h2>
+    </div>
+  </div>
+</main>

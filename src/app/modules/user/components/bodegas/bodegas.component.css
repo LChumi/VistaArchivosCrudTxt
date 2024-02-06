@@ -1,0 +1,115 @@
+/* Estilos para pantallas grandes */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+}
+
+.title-container {
+  /* Asegura que el título permanezca fijo en la parte superior */
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  /* Ajusta el fondo según sea necesario */
+  padding: 10px 20px;
+  /* Ajusta el espaciado interno del contenedor del título */
+  z-index: 999;
+  /* Asegura que el título esté por encima de las tarjetas */
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+  gap: 25px;
+  max-width: 1500px;
+  margin-top: 30px;
+  z-index: 1;
+}
+
+.card {
+  width: 100%;
+  height: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card>img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.card>h2,
+.card>p {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  opacity: 0;
+  color: aliceblue;
+  transition: opacity 0.3s ease;
+}
+
+.card>h2 {
+  bottom: 10px;
+}
+
+.card>p {
+  bottom: 0px;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.card:hover>img {
+  filter: blur(2px);
+}
+
+.card:hover>h2,
+.card:hover>p {
+  opacity: 1;
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
+@media screen and (max-width: 767px) {
+  .title-container {
+    width: 100%;
+    /* Ajusta el ancho al 100% para ocupar toda la pantalla */
+  }
+
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Para asegurar que los elementos estén en una sola fila */
+    overflow-x: auto;
+    /* Agrega una barra de desplazamiento horizontal si es necesario */
+    -webkit-overflow-scrolling: touch;
+    /* Mejora el desplazamiento en dispositivos iOS */
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    /* Mejora el desplazamiento en dispositivos Windows */
+  }
+
+  .card {
+    flex: 0 0 auto;
+    /* Evita que las tarjetas se ajusten para que siempre tengan su tamaño original */
+    margin-right: 10px;
+    /* Ajusta el espacio entre las tarjetas */
+    transition: transform 0.3s ease; /* Agregar la transición para mantenerla en la vista móvil */
+  }
+
+  .card>h2,
+  .card>p {
+    opacity: 1; /* Ajusta la opacidad inicial para mantener la transición en la vista móvil */
+    transition: opacity 0.3s ease; /* Agregar la transición para mantenerla en la vista móvil */
+  }
+}

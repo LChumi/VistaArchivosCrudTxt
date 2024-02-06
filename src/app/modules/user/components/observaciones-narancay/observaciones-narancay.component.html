@@ -57,8 +57,6 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Item</th>
                 <th scope="col">Descripcion</th>
-                <th scope="col">Ubicacion bulto</th>
-                <th scope="col">Ubicacion Unidades</th>
                 <th scope="col">CXB</th>
                 <th scope="col">Stock</th>
                 <th scope="col">Precio</th>
@@ -78,8 +76,6 @@
                 <th scope="row">{{observacion.fecha}}</th>
                 <td>{{observacion.item || ''}}</td>
                 <td>{{observacion.descripcion || ''}}</td>
-                <td>{{observacion.bulto || ''}}</td>
-                <td>{{observacion.unidad || '' }}</td>
                 <td>{{observacion.cxb || '' }}</td>
                 <td>{{observacion.stock || '' }}</td>
                 <td>{{ observacion.precio !== undefined ? observacion.precio.toFixed(2) : '' }}</td>
@@ -161,3 +157,4 @@
     </div>
   </div>
 </div>
+

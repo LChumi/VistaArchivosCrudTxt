@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {API_URL} from "../../../../core/constants/constatns";
+import {API_URL} from "../../../../../core/constants/constatns";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Observacion} from "../../../../core/models/Observaciones";
-import {ObservacionCorrecion} from "../../../../core/models/ObservacionCorreccion";
+import {Observacion} from "../../../../../core/models/Observaciones";
+import {ObservacionCorrecion} from "../../../../../core/models/ObservacionCorreccion";
 
 @Injectable({
   providedIn: 'root'
