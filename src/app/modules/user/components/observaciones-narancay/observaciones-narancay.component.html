@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
           <hr>
-          <h5 class="card-title">ERRORES UBICACIONES ZHUCAY</h5>
+          <h5 class="card-title">ERRORES DE PRODUCTOS NARANCAY</h5>
           <p> LISTA DE OBSERVACIONES DE PRODUCTOS PERDIDOS EN LA BODEGA ZHUCAY </p>
           <p> USUARIO: {{usuarioLocalStorage}}</p>
           <hr>
@@ -48,6 +48,7 @@
                 <span> Observaciones sin correccion antiguas</span>
               </label>
 
+              <button class="btn btn-success" (click)="descargarExcel()"><fa-icon [icon]="faFileExcel"></fa-icon> </button>
             </div>
           </div>
           <hr>

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {
-  faArrowRightFromBracket, faBarcode , faCircleExclamation,
-  faFileCirclePlus, faListCheck,
+  faArrowRightFromBracket, faBarcode, faCircleExclamation,
+  faFileCirclePlus, faFileExcel, faListCheck,
   faListUl,
   faMessage,
   faSearch, faTriangleExclamation
@@ -132,6 +132,7 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
         this.cerrarVentana();
       },
       error: (error: any) => {
+        this.detalleOb = '';
         alert('Ingreso no válido');
       }
     });
@@ -157,9 +158,29 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
         }
       },
       error: (error: any) => {
+        this.novedad = '';
         alert('Novedad no registrada');
       }
     });
+  }
+
+  descargarExcel(){
+    this.observacionService.descargarExcel().subscribe(
+      (excelBlob: Blob) => {
+        const url= window.URL.createObjectURL(excelBlob);
+
+        // Crear un enlace temporal para descargar el archivo
+        const a = document.createElement('a');
+        a.href = url;
+        a.download='observaciones.xlsx';
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error(error)
+      }
+    )
   }
 
   selecionarObservacion(observacion: Observacion) {
@@ -233,5 +254,5 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
   protected readonly faTriangleExclamation = faTriangleExclamation;
   protected readonly faCircleExclamation = faCircleExclamation;
   protected readonly faBarcode = faBarcode;
-
+  protected readonly faFileExcel = faFileExcel;
 }

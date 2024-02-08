@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   faArrowRightFromBracket, faBarcode, faCircleExclamation,
-  faFileCirclePlus, faListCheck,
+  faFileCirclePlus, faFileExcel, faListCheck,
   faListUl,
   faMessage,
   faSearch, faTriangleExclamation
@@ -120,6 +120,7 @@ export class ObservacionesNarancayComponent implements OnInit {
         this.detalleOb = '';
         this.cerrarVentana();
       }, error => {
+        this.detalleOb = '';
         alert('Ingreso no valido');
       }
     )
@@ -145,7 +146,27 @@ export class ObservacionesNarancayComponent implements OnInit {
           this.cerrarVentanaCorreccion();
         }
       }, error => {
+        this.novedad = '';
         alert('Novedad no registrada')
+      }
+    )
+  }
+
+  descargarExcel(){
+    this.narancayService.descargarExcel().subscribe(
+      (excelBlob: Blob) => {
+        const url= window.URL.createObjectURL(excelBlob);
+
+        // Crear un enlace temporal para descargar el archivo
+        const a = document.createElement('a');
+        a.href = url;
+        a.download='observaciones.xlsx';
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error(error)
       }
     )
   }
@@ -221,4 +242,5 @@ export class ObservacionesNarancayComponent implements OnInit {
   protected readonly faTriangleExclamation = faTriangleExclamation;
   protected readonly faCircleExclamation = faCircleExclamation;
   protected readonly faBarcode = faBarcode;
+  protected readonly faFileExcel = faFileExcel;
 }

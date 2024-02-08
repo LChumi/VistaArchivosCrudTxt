@@ -26,4 +26,8 @@ export class ObservacionesNarancayService {
     return this.http.put<Observacion>(this.baseUrl+'agregarCorrecion/',correccion)
   }
 
+  descargarExcel():Observable<Blob>{
+    return this.http.get(this.baseUrl+'exportar/excel',{responseType:'blob'});
+  }
+
 }
