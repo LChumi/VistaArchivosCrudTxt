@@ -17,6 +17,7 @@ export class Observacion{
   precioTotal!:number;
   usuario!:string;
   detalle!:string;
+  diferencia!:string;
   correccion!:Correccion;
 
   get precioConIVA():number{

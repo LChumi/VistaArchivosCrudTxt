@@ -10,7 +10,7 @@
         <div class="card-body">
           <hr>
           <h5 class="card-title">ERRORES DE PRODUCTOS NARANCAY</h5>
-          <p> LISTA DE OBSERVACIONES DE PRODUCTOS PERDIDOS EN LA BODEGA ZHUCAY </p>
+          <p> LISTA DE OBSERVACIONES DE PRODUCTOS PERDIDOS EN ALMACEN NARANCAY </p>
           <p> USUARIO: {{usuarioLocalStorage}}</p>
           <hr>
           <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faFileCirclePlus"></fa-icon> Agregar
@@ -137,7 +137,7 @@
                 <h5 class="card-title">{{producto.pro_nombre || 'Producto'}}</h5>
                 <p>{{producto.pro_id1 || 'Item'}}</p>
                 <p>{{producto.pro_id || 'Barra' }}</p>
-                <p>{{producto.cxb || 'Cxb'}}</p>
+                <p>{{producto.stock_real || 'Stock'}}</p>
               </div>
             </div>
           </div>

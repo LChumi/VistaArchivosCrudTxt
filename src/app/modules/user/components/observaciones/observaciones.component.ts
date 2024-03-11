@@ -37,6 +37,7 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
   observacionSeleccionada!: Observacion;
   obCorr!: ObservacionCorrecion;
   detalleOb!: string;
+  diferencia: string = '';
   novedad!: string;
   correccion!: Correccion;
   barraItem!: string;
@@ -123,16 +124,19 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
     this.observacion.stock = this.producto.stock_real;
     this.observacion.precio = this.producto.pvp;
     this.observacion.detalle = this.detalleOb.toUpperCase();
+    this.observacion.diferencia = this.diferencia.toUpperCase();
     this.observacion.usuario = this.usuarioLocalStorage;
 
     this.observacionService.guardar(this.observacion).subscribe({
       next: (obs: Observacion) => {
         this.listarObservaciones();
         this.detalleOb = '';
+        this.diferencia='';
         this.cerrarVentana();
       },
       error: (error: any) => {
         this.detalleOb = '';
+        this.diferencia ='';
         alert('Ingreso no válido');
       }
     });

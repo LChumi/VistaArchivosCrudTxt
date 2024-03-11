@@ -67,6 +67,7 @@
                 <th scope="col">Precio Total</th>
                 <th scope="col">Responsable Reclamo</th>
                 <th scope="col">Observacion</th>
+                <th scope="col">Diferencia</th>
                 <th scope="col">Responsable Solucion</th>
                 <th scope="col">Detalle</th>
                 <th scope="col"> Fecha solucion</th>
@@ -88,6 +89,7 @@
                 <td>{{ observacion.precioTotal !== undefined ? observacion.precioTotal.toFixed(2) : '' }}</td>
                 <td>{{observacion.usuario || ''}}</td>
                 <td>{{observacion.detalle || ''}}</td>
+                <td>{{observacion.diferencia || ''}}</td>
                 <td>{{observacion.correccion?.usuario || ''}}</td>
                 <td>{{observacion.correccion?.detalle || ''}}</td>
                 <td>{{observacion.correccion?.fecha || ''}}</td>
@@ -149,6 +151,12 @@
           <label for="inputObservacion" class="form-label">Observaciones</label>
           <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese la Observacion"
                  [(ngModel)]="detalleOb" autocomplete="true"
+                 style="text-transform: uppercase;" required>
+        </div>
+        <div class="col-md-6">
+          <label for="inputObservacion" class="form-label">Diferencia</label>
+          <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese la Diferencia"
+                 [(ngModel)]="diferencia" autocomplete="true"
                  style="text-transform: uppercase;" required>
         </div>
         <div class="text-center">
