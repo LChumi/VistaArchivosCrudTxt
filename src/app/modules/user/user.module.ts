@@ -10,13 +10,15 @@ import { BodegasComponent } from './components/bodegas/bodegas.component';
 import { ObservacionesNarancayComponent } from './components/observaciones-narancay/observaciones-narancay.component';
 import { WebcamModule } from 'ngx-webcam';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/observaciones-bod-da.component';
 
 @NgModule({
   declarations: [
     ObservacionesComponent,
     FiltroColorPipe,
     BodegasComponent,
-    ObservacionesNarancayComponent
+    ObservacionesNarancayComponent,
+    ObservacionesBodDaComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   faArrowRightFromBracket, faBarcode, faCircleExclamation,
   faFileCirclePlus, faFileExcel, faListCheck,
@@ -6,32 +6,28 @@ import {
   faMessage,
   faSearch, faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
-import { Observacion } from "../../../../core/models/Observaciones";
-import { Producto } from "../../../../core/models/Producto";
-import { Correccion } from "../../../../core/models/Correccion";
-import { ObservacionCorrecion } from "../../../../core/models/ObservacionCorreccion";
-import { Router } from "@angular/router";
-import { FiltroColorPipe } from "./pipes/filtro-color.pipe";
 import { ProductoService } from '../../../../core/services/producto.service';
-import { BarcodeFormat} from '@zxing/library'
-import {Subscription} from "rxjs";
-import {ImagenService} from "../../../../core/services/imagen.service";
+import { Router } from '@angular/router';
+import { ImagenService } from '../../../../core/services/imagen.service';
+import { Observacion } from '../../../../core/models/Observaciones';
+import { Producto } from '../../../../core/models/Producto';
+import { Subscription } from 'rxjs';
+import { ObservacionCorrecion } from '../../../../core/models/ObservacionCorreccion';
+import { Correccion } from '../../../../core/models/Correccion';
+import { FiltroColorPipe } from './pipes/filtro-color.pipe';
 import { ObservacionesService } from '../../../../core/services/observaciones.service';
 
 @Component({
-  selector: 'app-observaciones',
-  templateUrl: './observaciones.component.html',
-  styleUrl: './observaciones.component.css'
+  selector: 'app-observaciones-bod-da',
+  templateUrl: './observaciones-bod-da.component.html',
+  styleUrl: './observaciones-bod-da.component.css'
 })
-export class ObservacionesComponent implements OnInit,OnDestroy  {
+export class ObservacionesBodDaComponent implements OnInit{
+
   constructor(private observacionService: ObservacionesService, private productoService: ProductoService, private route: Router,private imagen:ImagenService, private cdr: ChangeDetectorRef) { }
 
   filtroColorPipe: FiltroColorPipe = new FiltroColorPipe();
-
-  formatosCodigoBarras:any[]= [BarcodeFormat['EAN_13']];
   productoSubscription!: Subscription;
-
-  mostrarCamara = false;
   observaciones: Observacion[] = [];
   producto!: Producto;
   observacion!: Observacion;
@@ -67,7 +63,7 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
   }
 
   listarObservaciones(): void {
-    this.observacionService.getObservacionesZhucay().subscribe(
+    this.observacionService.getObservacionesBodDa().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = lista;
         this.totalObservaciones = this.observaciones.length;
@@ -77,7 +73,7 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
   }
 
   seleccionarColor() {
-    this.observacionService.getObservacionesZhucay().subscribe(
+    this.observacionService.getObservacionesBodDa().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = this.filtroColorPipe.transform(lista, this.colorSeleccionado);
         this.totalObservaciones = this.observaciones.length;
@@ -143,7 +139,7 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
     this.observacion.diferencia = this.diferencia.toUpperCase();
     this.observacion.usuario = this.usuariosessionStorage;
 
-    this.observacionService.guardarZhucay(this.observacion).subscribe({
+    this.observacionService.guardarBodDa(this.observacion).subscribe({
       next: (obs: Observacion) => {
         this.listarObservaciones();
         this.detalleOb = '';
@@ -158,34 +154,8 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
     });
   }
 
-  agregarCorreccion() {
-    if (!this.novedad) {
-      alert('Por favor ingrese la novedad antes de guardar ')
-    }
-    this.obCorr = new ObservacionCorrecion();
-    this.obCorr.observacion = this.observacionSeleccionada;
-    this.correccion = new Correccion()
-    this.correccion.detalle = this.novedad.toUpperCase();
-    this.correccion.usuario = this.usuariosessionStorage;
-    this.obCorr.correccion = this.correccion;
-
-    this.observacionService.agregarCorreccionZhucay(this.obCorr).subscribe({
-      next: (data: any) => {
-        if (data) {
-          this.listarObservaciones();
-          this.novedad = '';
-          this.cerrarVentanaCorreccion();
-        }
-      },
-      error: (error: any) => {
-        this.novedad = '';
-        alert('Novedad no registrada');
-      }
-    });
-  }
-
   descargarExcel(){
-    this.observacionService.excelZhucay().subscribe(
+    this.observacionService.excelBodDa().subscribe(
       (excelBlob: Blob) => {
         const url= window.URL.createObjectURL(excelBlob);
 
@@ -252,17 +222,6 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
   private convertirStringAFecha(fechaString: string): Date {
     const [dia, mes, anio] = fechaString.split('-').map(Number);
     return new Date(anio, mes - 1, dia);
-  }
-
-  abrirCamara(){
-    this.mostrarCamara = !this.mostrarCamara;
-  }
-
-  codigoEscaneado(event:any){
-    console.log(event)
-    this.barraItem=event;
-    this.mostrarProducto();
-    this.mostrarCamara=false;
   }
 
 

@@ -31,6 +31,8 @@ export class DialogService {
           this.router.navigate(['Cumpleaños/observaciones/zhucay'])
         }else if(/ALMACEN NARANCAY/.test(nombreBodega)){
           this.router.navigate(['Cumpleaños/observaciones/narancay'])
+        }else if(/BOD. DAÑADOS/.test(nombreBodega)){
+          this.router.navigate(['Cumpleaños/observaciones/bod_danados'])
         }else{
           alert('Proximamente')
         }

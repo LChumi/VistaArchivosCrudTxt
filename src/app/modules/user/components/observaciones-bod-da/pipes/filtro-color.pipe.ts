@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Observacion} from "../../../../../core/models/Observaciones";
+import { Observacion } from '../../../../../core/models/Observaciones';
 
 @Pipe({
   name: 'filtroColor'

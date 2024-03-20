@@ -6,7 +6,6 @@ import {
   faMessage,
   faSearch, faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
-import { ObservacionesNarancayService } from './services/observaciones-narancay.service';
 import { ProductoService } from '../../../../core/services/producto.service';
 import { Router } from '@angular/router';
 import { FiltroColorPipe } from './pipes/filtro-color.pipe';
@@ -15,6 +14,8 @@ import { Producto } from '../../../../core/models/Producto';
 import { ObservacionCorrecion } from '../../../../core/models/ObservacionCorreccion';
 import { Correccion } from '../../../../core/models/Correccion';
 import { BarcodeFormat} from '@zxing/library'
+import {ImagenService} from "../../../../core/services/imagen.service";
+import { ObservacionesService } from '../../../../core/services/observaciones.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { BarcodeFormat} from '@zxing/library'
 })
 export class ObservacionesNarancayComponent implements OnInit {
 
-  constructor(private narancayService: ObservacionesNarancayService, private productoService: ProductoService, private router: Router, private cdr: ChangeDetectorRef) { }
+  constructor(private narancayService: ObservacionesService, private productoService: ProductoService, private router: Router, private cdr: ChangeDetectorRef, private imagen:ImagenService) { }
 
   filtroColorPipe: FiltroColorPipe = new FiltroColorPipe();
 
@@ -44,19 +45,21 @@ export class ObservacionesNarancayComponent implements OnInit {
   vistaCorreccion = false;
   colorSeleccionado!: string;
   totalObservaciones!: number;
-  usuarioLocalStorage = localStorage.getItem('usuario') ?? '';
-  bodegaLocalStorage = localStorage.getItem('bodId') ?? '';
+  usuariosessionStorage = sessionStorage.getItem('usuario') ?? '';
+  bodegasessionStorage = sessionStorage.getItem('bodId') ?? '';
+  imageUrl?:string='';
 
   ngOnInit(): void {
-    if (this.bodegaLocalStorage == '' || this.usuarioLocalStorage == '') {
+    if (this.bodegasessionStorage == '' || this.usuariosessionStorage == '') {
       alert('Vuelva a iniciar sesión')
       this.logout()
     }
+    console.log(this.usuariosessionStorage)
     this.listarObservaciones();
   }
 
   listarObservaciones(): void {
-    this.narancayService.getObservaciones().subscribe(
+    this.narancayService.getObservacionesNarancay().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = lista;
         this.totalObservaciones = this.observaciones.length;
@@ -66,13 +69,12 @@ export class ObservacionesNarancayComponent implements OnInit {
   }
 
   seleccionarColor() {
-    this.narancayService.getObservaciones().subscribe(
+    this.narancayService.getObservacionesNarancay().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = this.filtroColorPipe.transform(lista, this.colorSeleccionado);
         this.totalObservaciones = this.observaciones.length;
       }
     )
-
   }
 
   mostrarProducto() {
@@ -80,16 +82,30 @@ export class ObservacionesNarancayComponent implements OnInit {
       alert('Ingrese el item o la barra')
     }
     this.barraItem = this.barraItem.toUpperCase();
-    this.productoService.getProducto(this.bodegaLocalStorage, this.barraItem).subscribe(
+    this.productoService.getProducto(this.bodegasessionStorage, this.barraItem).subscribe(
       (producto: Producto) => {
         this.producto = producto;
+        this.imagen.getImagen(this.producto.pro_id+'.jpg').subscribe(
+          data => {
+            if (data){
+              const objectUrl=URL.createObjectURL(data);
+              this.imageUrl=objectUrl;
+            }else{
+              this.imageUrl='';
+            }
+          },
+          error => {
+            this.imageUrl='';
+          }
+        )
         this.barraItem = '';
       }, error => {
         alert('Producto no encontrado')
         this.barraItem = '';
         this.producto = new Producto();
       }
-    )
+    );
+
   }
 
   guardarObservacion() {
@@ -112,12 +128,13 @@ export class ObservacionesNarancayComponent implements OnInit {
     this.observacion.stock = this.producto.stock_real;
     this.observacion.precio = this.producto.pvp;
     this.observacion.detalle = this.detalleOb.toUpperCase();
-    this.observacion.usuario = this.usuarioLocalStorage;
+    this.observacion.usuario = this.usuariosessionStorage;
 
-    this.narancayService.guardar(this.observacion).subscribe(
+    this.narancayService.guardarNarancay(this.observacion).subscribe(
       obs => {
         this.listarObservaciones();
         this.detalleOb = '';
+        this.imageUrl = '';
         this.cerrarVentana();
       }, error => {
         this.detalleOb = '';
@@ -135,10 +152,10 @@ export class ObservacionesNarancayComponent implements OnInit {
     this.obCorr.observacion = this.observacionSeleccionada;
     this.correccion = new Correccion()
     this.correccion.detalle = this.novedad.toUpperCase();
-    this.correccion.usuario = this.usuarioLocalStorage;
+    this.correccion.usuario = this.usuariosessionStorage;
     this.obCorr.correccion = this.correccion;
 
-    this.narancayService.agregarCorreccion(this.obCorr).subscribe(
+    this.narancayService.agregarCorreccionNarancay(this.obCorr).subscribe(
       data => {
         if (data) {
           this.listarObservaciones();
@@ -153,7 +170,7 @@ export class ObservacionesNarancayComponent implements OnInit {
   }
 
   descargarExcel(){
-    this.narancayService.descargarExcel().subscribe(
+    this.narancayService.excelNarancay().subscribe(
       (excelBlob: Blob) => {
         const url= window.URL.createObjectURL(excelBlob);
 
@@ -177,6 +194,7 @@ export class ObservacionesNarancayComponent implements OnInit {
   }
   abrirVentana() {
     this.producto = new Producto();
+    this.imageUrl = ''
     this.vistaAddObservacion = true;
   }
   cerrarVentana() {
@@ -190,7 +208,7 @@ export class ObservacionesNarancayComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/Cumpleaños/inicio/login'])
   }
 

@@ -12,7 +12,7 @@
           <hr>
           <h5 class="card-title">ERRORES UBICACIONES ZHUCAY</h5>
           <p> LISTA DE OBSERVACIONES DE PRODUCTOS PERDIDOS EN LA BODEGA ZHUCAY </p>
-          <p> USUARIO: {{usuarioLocalStorage}}</p>
+          <p> USUARIO: {{usuariosessionStorage}}</p>
           <hr>
           <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faFileCirclePlus"></fa-icon> Agregar Observacion </button>
           <hr>
@@ -57,20 +57,17 @@
               <thead>
               <tr>
                 <th scope="col">Fecha</th>
+                <th scope="col">Responsable</th>
                 <th scope="col">Item</th>
                 <th scope="col">Descripcion</th>
-                <th scope="col">Ubicacion bulto</th>
-                <th scope="col">Ubicacion Unidades</th>
-                <th scope="col">CXB</th>
                 <th scope="col">Stock</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Precio Total</th>
-                <th scope="col">Responsable Reclamo</th>
-                <th scope="col">Observacion</th>
+                <th scope="col">Fisico</th>
                 <th scope="col">Diferencia</th>
                 <th scope="col">Responsable Solucion</th>
                 <th scope="col">Detalle</th>
                 <th scope="col"> Fecha solucion</th>
+                <th scope="col">Ubicacion bulto</th>
+                <th scope="col">Ubicacion Unidades</th>
                 <th class="sticky-rigth"></th>
               </tr>
               </thead>
@@ -79,20 +76,17 @@
                   (click)="selecionarObservacion(observacion)"
                   [ngClass]="tieneCorreccion(observacion)">
                 <th scope="row">{{observacion.fecha}}</th>
+                <td>{{observacion.usuario || ''}}</td>
                 <td>{{observacion.item || ''}}</td>
                 <td>{{observacion.descripcion || ''}}</td>
-                <td>{{observacion.bulto || ''}}</td>
-                <td>{{observacion.unidad || '' }}</td>
-                <td>{{observacion.cxb || '' }}</td>
                 <td>{{observacion.stock || '' }}</td>
-                <td>{{ observacion.precio !== undefined ? observacion.precio.toFixed(2) : '' }}</td>
-                <td>{{ observacion.precioTotal !== undefined ? observacion.precioTotal.toFixed(2) : '' }}</td>
-                <td>{{observacion.usuario || ''}}</td>
                 <td>{{observacion.detalle || ''}}</td>
                 <td>{{observacion.diferencia || ''}}</td>
                 <td>{{observacion.correccion?.usuario || ''}}</td>
                 <td>{{observacion.correccion?.detalle || ''}}</td>
                 <td>{{observacion.correccion?.fecha || ''}}</td>
+                <td>{{observacion.bulto || ''}}</td>
+                <td>{{observacion.unidad || '' }}</td>
                 <td class="sticky-right">
                   <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad <fa-icon [icon]="faMessage"></fa-icon> </button>
                 </td>
@@ -137,19 +131,26 @@
               </div>
 
             </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">{{producto.pro_nombre || 'Producto'}}</h5>
-                <p>{{producto.pro_id1 || 'Item'}}</p>
-                <p>{{producto.pro_id || 'Barra' }}</p>
-                <p>{{producto.cxb || 'Cxb'}}</p>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{producto.pro_nombre || 'Producto'}}</h5>
+                  <p>{{producto.pro_id1 || 'Item'}}</p>
+                  <p>{{producto.pro_id || 'Barra' }}</p>
+                  <p>{{producto.stock_real || 'Stock : 0'}}</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card-body">
+                  <img [src]="imageUrl"  style="width: 100%;">
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-12">
-          <label for="inputObservacion" class="form-label">Observaciones</label>
-          <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese la Observacion"
+          <label for="inputObservacion" class="form-label">Fisico</label>
+          <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese cuanto existe fisico u observacion"
                  [(ngModel)]="detalleOb" autocomplete="true"
                  style="text-transform: uppercase;" required>
         </div>

@@ -20,8 +20,8 @@ export class BodegasComponent implements OnInit {
   constructor(private bodegaService: BodegaService, private dialogService:DialogService) { }
 
   ngOnInit(): void {
-    this.id_usuario = localStorage.getItem('idUsuario')
-    this.id_empresa = localStorage.getItem('idEmpresa')
+    this.id_usuario = sessionStorage.getItem('idUsuario')
+    this.id_empresa = sessionStorage.getItem('idEmpresa')
     this.listarBodegas()
   }
 
@@ -33,7 +33,7 @@ export class BodegasComponent implements OnInit {
 
   BodegaSelecccionada(bodega: Bodega) {
     this.bodegaSeleccionada = bodega;
-    localStorage.setItem('bodId', String(this.bodegaSeleccionada.bod_codigo));
+    sessionStorage.setItem('bodId', String(this.bodegaSeleccionada.bod_codigo));
     this.dialogService.abrirConfirmacion(bodega.bod_nombre);
   }
 

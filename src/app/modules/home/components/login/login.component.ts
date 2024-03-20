@@ -18,11 +18,13 @@ export class LoginComponent {
     this.loginService.login(loginForm.value).subscribe(
       (usuario:any) =>{
         if (usuario){
-          localStorage.setItem("usuario",String(usuario.usr_nombre))
-          localStorage.setItem("idUsuario",String(usuario.usr_codigo))
-          localStorage.setItem("idEmpresa",String(usuario.usr_empresa_def))
+          const nombres = usuario.usr_nombre.split(' ');
+          const nombre = nombres[0]; // Primer nombre
+          const segundoNombre = nombres.length > 2 ? nombres[2] : nombres.length > 1 ? nombres[1] : ''; // Segundo nombre, si existe
+          sessionStorage.setItem("usuario", nombre + (segundoNombre ? ' ' + segundoNombre : ''));
+          sessionStorage.setItem("idUsuario",String(usuario.usr_codigo))
+          sessionStorage.setItem("idEmpresa",String(usuario.usr_empresa_def))
           loginForm.resetForm();
-          console.log(usuario)
           this.goToLista()
         }
       },error => {

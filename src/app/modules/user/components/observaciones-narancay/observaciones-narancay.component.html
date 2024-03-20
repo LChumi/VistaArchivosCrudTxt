@@ -11,7 +11,7 @@
           <hr>
           <h5 class="card-title">ERRORES DE PRODUCTOS NARANCAY</h5>
           <p> LISTA DE OBSERVACIONES DE PRODUCTOS PERDIDOS EN ALMACEN NARANCAY </p>
-          <p> USUARIO: {{usuarioLocalStorage}}</p>
+          <p> USUARIO: {{usuariosessionStorage}}</p>
           <hr>
           <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon [icon]="faFileCirclePlus"></fa-icon> Agregar
             Observacion </button>
@@ -62,7 +62,6 @@
                   <th scope="col">Fecha</th>
                   <th scope="col">Item</th>
                   <th scope="col">Descripcion</th>
-                  <th scope="col">CXB</th>
                   <th scope="col">Stock</th>
                   <th scope="col">Precio</th>
                   <th scope="col">Precio Total</th>
@@ -80,7 +79,6 @@
                   <th scope="row">{{observacion.fecha}}</th>
                   <td>{{observacion.item || ''}}</td>
                   <td>{{observacion.descripcion || ''}}</td>
-                  <td>{{observacion.cxb || '' }}</td>
                   <td>{{observacion.stock || '' }}</td>
                   <td>{{ observacion.precio !== undefined ? observacion.precio.toFixed(2) : '' }}</td>
                   <td>{{ observacion.precioTotal !== undefined ? observacion.precioTotal.toFixed(2) : '' }}</td>
@@ -125,19 +123,24 @@
               <button class="btn btn-outline-primary" (click)="abrirCamara()">
                 <fa-icon [icon]="faBarcode"></fa-icon>
               </button>
-
               <div *ngIf="mostrarCamara" class="camara-container">
                 <webcam></webcam>
                 <zxing-scanner [formats]="formatosCodigoBarras" (scanSuccess)="codigoEscaneado($event)"></zxing-scanner>
               </div>
-
             </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">{{producto.pro_nombre || 'Producto'}}</h5>
-                <p>{{producto.pro_id1 || 'Item'}}</p>
-                <p>{{producto.pro_id || 'Barra' }}</p>
-                <p>{{producto.stock_real || 'Stock'}}</p>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{producto.pro_nombre || 'Producto'}}</h5>
+                  <p>{{producto.pro_id1 || 'Item'}}</p>
+                  <p>{{producto.pro_id || 'Barra' }}</p>
+                  <p>{{producto.stock_real || 'Stock : 0'}}</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card-body">
+                  <img [src]="imageUrl"  style="width: 100%;">
+                </div>
               </div>
             </div>
           </div>
