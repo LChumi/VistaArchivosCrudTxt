@@ -39,6 +39,9 @@
                                     <th scope="col">Cantidad Dañados</th>
                                     <th scope="col">Observaciones</th>
                                     <th scope="col">Responsable</th>
+                                    <th scope="col">Responsable Solucion</th>
+                                    <th scope="col">Detalle</th>
+                                    <th scope="col"> Fecha solucion</th>
                                     <th class="sticky-rigth"></th>
                                 </tr>
                             </thead>
@@ -52,6 +55,13 @@
                                     <td>{{observacion.diferencia || ''}}</td>
                                     <td>{{observacion.detalle || ''}}</td>
                                     <td>{{observacion.usuario || ''}}</td>
+                                    <td>{{observacion.correccion?.usuario || ''}}</td>
+                                    <td>{{observacion.correccion?.detalle || ''}}</td>
+                                    <td>{{observacion.correccion?.fecha || ''}}</td>
+                                    <td class="sticky-right">
+                                        <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad
+                                            <fa-icon [icon]="faMessage"></fa-icon> </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,7 +102,7 @@
                                     <p>{{producto.stock_real || 'Stock : 0'}}</p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="card-body">
                                     <img [src]="imageUrl" style="width: 100%;">
                                 </div>
@@ -114,6 +124,23 @@
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary" (click)="guardarObservacion()">Guardar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ventana_flotante_correccion" *ngIf="vistaCorreccion">
+    <div class="card">
+        <span class="close-button" (click)="cerrarVentanaCorreccion()"></span>
+        <div class="card-body">
+            <h5 class="titulo">Ingreso de Novedad</h5>
+            <div class="col-md-12">
+                <label for="inputNovedad" class="form-label">Novedad</label>
+                <input type="text" class="form-control" id="inputNovedad" placeholder="Ingrese la Observacion"
+                    [(ngModel)]="novedad" autocomplete="true" style="text-transform: uppercase;">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" (click)="agregarCorreccion()">Guardar</button>
             </div>
         </div>
     </div>

@@ -154,6 +154,32 @@ export class ObservacionesBodDaComponent implements OnInit{
     });
   }
 
+  agregarCorreccion() {
+    if (!this.novedad) {
+      alert('Por favor ingrese la novedad antes de guardar ')
+    }
+
+    this.obCorr = new ObservacionCorrecion();
+    this.obCorr.observacion = this.observacionSeleccionada;
+    this.correccion = new Correccion()
+    this.correccion.detalle = this.novedad.toUpperCase();
+    this.correccion.usuario = this.usuariosessionStorage;
+    this.obCorr.correccion = this.correccion;
+
+    this.observacionService.agregarCorreccionBodDa(this.obCorr).subscribe(
+      data => {
+        if (data) {
+          this.listarObservaciones();
+          this.novedad = '';
+          this.cerrarVentanaCorreccion();
+        }
+      }, error => {
+        this.novedad = '';
+        alert('Novedad no registrada')
+      }
+    )
+  }
+
   descargarExcel(){
     this.observacionService.excelBodDa().subscribe(
       (excelBlob: Blob) => {
@@ -224,6 +250,7 @@ export class ObservacionesBodDaComponent implements OnInit{
     return new Date(anio, mes - 1, dia);
   }
 
+  
 
   protected readonly faListUl = faListUl;
   protected readonly faMessage = faMessage;
