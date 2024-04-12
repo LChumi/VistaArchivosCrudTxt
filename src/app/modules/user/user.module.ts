@@ -11,6 +11,8 @@ import { ObservacionesNarancayComponent } from './components/observaciones-naran
 import { WebcamModule } from 'ngx-webcam';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/observaciones-bod-da.component';
+import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movimientos-zhucay.component';
+import { MovimientosNarancayComponent } from './components/movimientos-narancay/movimientos-narancay.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/o
     FiltroColorPipe,
     BodegasComponent,
     ObservacionesNarancayComponent,
-    ObservacionesBodDaComponent
+    ObservacionesBodDaComponent,
+    MovimientosZhucayComponent,
+    MovimientosNarancayComponent
   ],
   imports: [
     CommonModule,

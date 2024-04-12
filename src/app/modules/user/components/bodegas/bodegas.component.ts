@@ -16,6 +16,7 @@ export class BodegasComponent implements OnInit {
   id_empresa: any;
   idBodega:any
   alamcenNarancayImg:string = '../../../../../assets/img/bodega.jpg';
+  movimientosImg:string = '../../../../../assets/img/movimientos.jpg';
 
   constructor(private bodegaService: BodegaService, private dialogService:DialogService) { }
 
@@ -35,6 +36,24 @@ export class BodegasComponent implements OnInit {
     this.bodegaSeleccionada = bodega;
     sessionStorage.setItem('bodId', String(this.bodegaSeleccionada.bod_codigo));
     this.dialogService.abrirConfirmacion(bodega.bod_nombre);
+  }
+
+  ingresarMovimientos(nombreBodega: string){
+    console.log(nombreBodega);
+    console.log('------------------------------------------------------------------------');
+    
+    for(let bod of this.listaBodegas){
+      console.log(nombreBodega);
+      console.log(bod.bod_nombre);
+      
+      if(/BOD. ZHUCAY/.test(nombreBodega) && /BOD. ZHUCAY/.test(bod.bod_nombre)){
+        console.log('ingresa a movimientos en zhucay');
+        break;
+      }else if(/ALMACEN NARANCAY/.test(nombreBodega)&&/ALMACEN NARANCAY/.test(bod.bod_nombre)){
+        console.log('ingresa a movimientos en narancay');
+        break;
+      }
+    }
   }
 
 }

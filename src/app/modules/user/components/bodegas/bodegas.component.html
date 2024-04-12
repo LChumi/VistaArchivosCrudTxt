@@ -9,5 +9,13 @@
       <img [src]="alamcenNarancayImg" alt="Bodega">
       <h2>{{bodega.bod_nombre}}</h2>
     </div>
+    <div class="card" (click)="ingresarMovimientos('BOD. ZHUCAY')">
+      <img [src]="movimientosImg" alt="Bodega">
+      <h2>Movimientos Zhucay</h2>
+    </div>
+    <div class="card" (click)="ingresarMovimientos('ALMACEN NARANCAY')">
+      <img [src]="movimientosImg" alt="Bodega">
+      <h2>Movimientos Narancay</h2>
+    </div>
   </div>
 </main>

@@ -4,5 +4,5 @@
  */
 
 
-export const API_URL = 'http://192.168.112.36:7569/'
-//export const API_URL = 'http://localhost:7569/'
+//export const API_URL = 'http://192.168.112.36:7569/'
+export const API_URL = 'http://localhost:7569/'
