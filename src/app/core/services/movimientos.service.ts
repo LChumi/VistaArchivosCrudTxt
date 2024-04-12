@@ -3,7 +3,7 @@ import { API_URL } from '../constants/constatns';
 import { HttpClient } from '@angular/common/http';
 import { Movimiento } from '../models/Movimiento';
 import { Observable } from 'rxjs';
-import { AgregarProductoRequest } from '../models/MovimientoProducto';
+import { ProductoMov } from '../models/ProductoMov';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,8 @@ export class MovimientosService {
     return this.http.get<Movimiento[]>(`${this.baseUrl}listar/narancay`)
   }
 
-  agregarProductoNarancay(request:AgregarProductoRequest):Observable<Movimiento>{
-    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/narancay`,request)
+  agregarProductoNarancay(id: number, detalle: string ,productoMov: ProductoMov):Observable<Movimiento>{
+    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/narancay/${id}/${detalle}`,productoMov)
   }
 
   excelMovNarancay(movimiento:Movimiento):Observable<Blob>{
@@ -38,8 +38,8 @@ export class MovimientosService {
     return this.http.get<Movimiento[]>(`${this.baseUrl}listar/zhucay`)
   }
 
-  agregarProductoZhucay(request:AgregarProductoRequest):Observable<Movimiento>{
-    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/zhucay`,request)
+  agregarProductoZhucay(id: number, detalle: string ,productoMov: ProductoMov):Observable<Movimiento>{
+    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/zhucay/${id}/${detalle}`,productoMov)
   }
 
   excelMovZhucay(movimiento:Movimiento):Observable<Blob>{

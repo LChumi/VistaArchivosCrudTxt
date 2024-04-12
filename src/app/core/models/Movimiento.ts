@@ -8,7 +8,7 @@ import { ProductoMov } from "./ProductoMov";
 export class Movimiento {
     id!:        number;
     fecha!:     string;
-    nombre!:    string;
+    detalle!:    string;
     usuario!:   string;
     productos!: ProductoMov[];
 }

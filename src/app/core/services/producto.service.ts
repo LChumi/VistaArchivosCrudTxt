@@ -20,4 +20,12 @@ export class ProductoService {
 
     return this.http.get<Producto>(`${this.baseUrl}BuscarProducto/${bodega}`,options);
   }
+
+  buscarProducto(barraItem:any):Observable<Producto>{
+    const options ={
+      params: { data:barraItem}
+    };
+
+    return this.http.get<Producto>(`${this.baseUrl}BuscarProducto`,options);
+  }
 }
