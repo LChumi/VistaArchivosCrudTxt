@@ -1,1 +1,97 @@
-<p>movimientos-narancay works!</p>
+<section>
+  <div></div>
+  <div class="container">
+    <h1>Movimientos de productos </h1>
+
+    <span>Registro de items y cantidades </span>
+    <label for="detalle">Ingrese el detalle</label>
+    <input type="text" id="detalle" placeholder="Detalle" [(ngModel)]="detalle">
+
+    <button type="button" class="btn btn-primary" title="Agregar" (click)="nuevoMovimiento()">Agregar <fa-icon
+        [icon]="faFolderPlus"></fa-icon> </button>
+
+    <hr>
+
+    <table class="table table-sm table-responsive table-primary">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Detalle</th>
+          <th scope="col">Usuario</th>
+          <th class="sticky-rigth"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movimiento of listaMovimientos" (click)="movSeleccionado= movimiento">
+          <th scope="row">{{movimiento.id}}</th>
+          <td>{{movimiento.fecha}}</td>
+          <td>{{movimiento.detalle}}</td>
+          <td>{{movimiento.usuario}}</td>
+          <td class="sticky-rigth">
+            <button type="button" class="btn btn-primary" (click)="buscarMovimiento(movimiento.id,movimiento.detalle)">
+              Continuar <fa-icon [icon]="faFolderOpen"></fa-icon> </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+
+
+
+<div *ngIf="ventanaAddProd">
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="title">Productos</h5>
+
+      <div class="col-md-4">
+        <label for="inputProducto" class="form-label">Producto</label>
+        <input type="text" class="form-check" id="inputProducto" [(ngModel)]="barraItem" placeholder="Item o Barra"
+          (keyup.enter)="mostrarProducto()" style="text-transform: uppercase;" autocomplete="true" required>
+      </div>
+      <div class="col-md-4">
+        <label for="inputProducto" class="form-label">Producto</label>
+        <input type="text" class="form-check" id="inputProducto" [(ngModel)]="cantidad" placeholder="Item o Barra"
+           style="text-transform: uppercase;" autocomplete="true" required>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card-body">
+      <h5 class="card-title">{{producto?.pro_nombre || 'Producto'}}</h5>
+      <p>{{producto?.pro_id1 || 'Item'}}</p>
+      <p>{{producto?.pro_id || 'Barra' }}</p>
+      <p>{{producto?.stock_real || 'Stock : 0'}}</p>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card-body">
+      <img [src]="imageUrl" style="width: 100%;">
+    </div>
+  </div>
+
+
+
+
+  <h1 class="titulo">Productos</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 mt-4">
+        <ul class="list-group">
+          <li style="border-bottom:2px solid grey; padding:10px;" *ngFor="let producto of movSeleccionado?.productos">
+            <span class="badge badge-primary">{{producto.item}}</span>
+            {{producto.detalle}} - {{producto.cantidad}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <button (click)="ventanaAddProd = false"><i class="fas fa-eye"></i>Cerrar</button>
+</div>

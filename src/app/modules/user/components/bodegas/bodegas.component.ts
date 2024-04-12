@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Bodega } from '../../../../core/models/Bodega';
 import { BodegaService } from './services/bodega.service';
 import { DialogService } from '../../../../components/notification/services/dialog.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bodegas',
@@ -18,7 +19,7 @@ export class BodegasComponent implements OnInit {
   alamcenNarancayImg:string = '../../../../../assets/img/bodega.jpg';
   movimientosImg:string = '../../../../../assets/img/movimientos.jpg';
 
-  constructor(private bodegaService: BodegaService, private dialogService:DialogService) { }
+  constructor(private bodegaService: BodegaService, private dialogService:DialogService,private router: Router) { }
 
   ngOnInit(): void {
     this.id_usuario = sessionStorage.getItem('idUsuario')
@@ -48,9 +49,11 @@ export class BodegasComponent implements OnInit {
       
       if(/BOD. ZHUCAY/.test(nombreBodega) && /BOD. ZHUCAY/.test(bod.bod_nombre)){
         console.log('ingresa a movimientos en zhucay');
+        this.router.navigate(['Cumpleaños/observaciones/mov_zhucay'])
         break;
       }else if(/ALMACEN NARANCAY/.test(nombreBodega)&&/ALMACEN NARANCAY/.test(bod.bod_nombre)){
         console.log('ingresa a movimientos en narancay');
+        this.router.navigate(['Cumpleaños/observaciones/mov_narancay'])
         break;
       }
     }

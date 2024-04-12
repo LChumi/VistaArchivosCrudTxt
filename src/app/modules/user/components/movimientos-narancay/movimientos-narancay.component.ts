@@ -6,6 +6,7 @@ import { ProductoService } from '../../../../core/services/producto.service';
 import { Producto } from '../../../../core/models/Producto';
 import { ProductoMov } from '../../../../core/models/ProductoMov';
 import { Subscription } from 'rxjs';
+import {faFolderOpen, faFolderPlus} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-movimientos-narancay',
@@ -34,7 +35,7 @@ export class MovimientosNarancayComponent implements OnInit {
   constructor(private movimientoService: MovimientosService, private imagenService: ImagenService, private productoService: ProductoService) { }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.listarMovimientos();
   }
 
   listarMovimientos(){
@@ -45,7 +46,19 @@ export class MovimientosNarancayComponent implements OnInit {
     )
   }
 
+  buscarMovimiento(id:number,detalle:string){
+    this.movimientoService.buscarNarancay(id,detalle).subscribe(
+      (mov:Movimiento)=>{
+        this.movSeleccionado=mov
+        console.log(this.movSeleccionado);
+        this.ventanaAddProd= !this.ventanaAddProd        
+      }
+    )
+  }
+
   nuevoMovimiento(){
+    console.log(this.detalle);
+    
     if(!this.detalle){
       alert('Por favort ingrese el detalle del movimiento');
       return;
@@ -59,8 +72,9 @@ export class MovimientosNarancayComponent implements OnInit {
       next:(mov: Movimiento) => {
         this.listarMovimientos();
         this.detalle='';
+        this.movSeleccionado=mov
         this.ventanaAddProd = !this.ventanaAddProd
-        
+
       },
       error:(error:any)=> {
         this.detalle= '';
@@ -68,8 +82,27 @@ export class MovimientosNarancayComponent implements OnInit {
     })
   }
 
-  agregarProducto(){
+  agregarProducto(producto: Producto){
+    console.log('ingresa');
+    
+    this.productoMov= new ProductoMov()
+    this.productoMov.barra= producto.pro_id;
+    this.productoMov.cantidad=this.cantidad;
+    this.productoMov.detalle = producto.pro_nombre;
+    this.productoMov.item =producto.pro_id1;
 
+    if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
+      console.log('entra al if ');
+      
+      this.movimientoService.agregarProductoNarancay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
+        (mov: Movimiento)=>{
+          console.log('ok');
+          this.movSeleccionado=mov
+        }
+      );
+    } else {
+      alert('El movimiento seleccionado no tiene un ID o detalle definido.');
+    }
   }
 
   mostrarProducto() {
@@ -97,6 +130,7 @@ export class MovimientosNarancayComponent implements OnInit {
               this.imageUrl = '';
             }
           )
+          this.agregarProducto(producto)
           this.barraItem = '';
         },
         error: error => {
@@ -108,4 +142,6 @@ export class MovimientosNarancayComponent implements OnInit {
       });
   }
 
+  protected readonly faFolderOpen = faFolderOpen;
+  protected readonly faFolderPlus = faFolderPlus;
 }

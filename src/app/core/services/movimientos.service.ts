@@ -18,6 +18,10 @@ export class MovimientosService {
     return this.http.post<Movimiento>(`${this.baseUrl}guardar/narancay`,movimineto)
   }
 
+  buscarNarancay(id:number,detalle:string):Observable<Movimiento>{
+    return this.http.get<Movimiento>(`${this.baseUrl}buscar/narancay/${id}/${detalle}`)
+  }
+
   listarNarancay():Observable<Movimiento[]>{
     return this.http.get<Movimiento[]>(`${this.baseUrl}listar/narancay`)
   }
@@ -32,6 +36,10 @@ export class MovimientosService {
 
   guardarZhucay(movimineto : Movimiento):Observable<Movimiento>{
     return this.http.post<Movimiento>(`${this.baseUrl}guardar/zhucay`,movimineto)
+  }
+
+  buscarZhucay(id:number,detalle:string):Observable<Movimiento>{
+    return this.http.get<Movimiento>(`${this.baseUrl}buscar/zhucay/${id}/${detalle}`)
   }
 
   listarZhucay():Observable<Movimiento[]>{
