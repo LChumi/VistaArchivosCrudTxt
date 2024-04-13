@@ -1,0 +1,18 @@
+.floating-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 800px;
+    height: 80%;
+    max-height: 600px;
+    background: linear-gradient(90deg, rgb(220, 220, 220) 0%, rgb(200, 200, 200) 35%, rgb(180, 180, 180));  border: 1px solid #000000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    z-index: 999;
+    overflow: auto;
+    padding: 20px;
+    font-size: 16px;
+  }
+  

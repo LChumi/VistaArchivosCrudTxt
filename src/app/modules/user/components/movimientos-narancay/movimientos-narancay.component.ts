@@ -83,7 +83,6 @@ export class MovimientosNarancayComponent implements OnInit {
   }
 
   agregarProducto(producto: Producto){
-    console.log('ingresa');
     
     this.productoMov= new ProductoMov()
     this.productoMov.barra= producto.pro_id;
@@ -92,11 +91,9 @@ export class MovimientosNarancayComponent implements OnInit {
     this.productoMov.item =producto.pro_id1;
 
     if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
-      console.log('entra al if ');
       
       this.movimientoService.agregarProductoNarancay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
         (mov: Movimiento)=>{
-          console.log('ok');
           this.movSeleccionado=mov
         }
       );
