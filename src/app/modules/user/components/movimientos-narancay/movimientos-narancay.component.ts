@@ -6,7 +6,7 @@ import { ProductoService } from '../../../../core/services/producto.service';
 import { Producto } from '../../../../core/models/Producto';
 import { ProductoMov } from '../../../../core/models/ProductoMov';
 import { Subscription } from 'rxjs';
-import {faFolderOpen, faFolderPlus} from "@fortawesome/free-solid-svg-icons";
+import {faFileExcel, faFolderOpen, faFolderPlus} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-movimientos-narancay',
@@ -22,10 +22,12 @@ export class MovimientosNarancayComponent implements OnInit {
   producto?:             Producto
   productoMov?:          ProductoMov
 
-  detalle:          string=''
-  barraItem:        string=''
-  imageUrl?:        string='';
+  detalle:          string='';
+  barraItem:        string='';
+  imageUrl:         string='';
   cantidad:         number=0;
+  cantProd:         number=0;
+  numProd:          number=0;
 
   usuariosessionStorage = sessionStorage.getItem('usuario') ?? '';
 
@@ -51,20 +53,23 @@ export class MovimientosNarancayComponent implements OnInit {
       (mov:Movimiento)=>{
         this.movSeleccionado=mov
         console.log(this.movSeleccionado);
-        this.ventanaAddProd= !this.ventanaAddProd        
+        this.limpiar();
+        this.numProd=mov.productos.length;
+        this.ventanaAddProd= !this.ventanaAddProd
       }
     )
   }
 
   nuevoMovimiento(){
     console.log(this.detalle);
-    
+
     if(!this.detalle){
       alert('Por favort ingrese el detalle del movimiento');
       return;
     }
 
     this.movimiento = new Movimiento()
+    this.limpiar();
     this.movimiento.detalle= this.detalle.toUpperCase();
     this.movimiento.usuario= this.usuariosessionStorage;
 
@@ -83,7 +88,7 @@ export class MovimientosNarancayComponent implements OnInit {
   }
 
   agregarProducto(producto: Producto){
-    
+
     this.productoMov= new ProductoMov()
     this.productoMov.barra= producto.pro_id;
     this.productoMov.cantidad=this.cantidad;
@@ -91,10 +96,12 @@ export class MovimientosNarancayComponent implements OnInit {
     this.productoMov.item =producto.pro_id1;
 
     if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
-      
       this.movimientoService.agregarProductoNarancay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
         (mov: Movimiento)=>{
           this.movSeleccionado=mov
+          this.buscarProductoCant(producto);
+          this.numProd=mov.productos.length;
+          this.cantidad=0;
         }
       );
     } else {
@@ -121,13 +128,15 @@ export class MovimientosNarancayComponent implements OnInit {
                 this.imageUrl = objectUrl;
               } else {
                 this.imageUrl = '';
+                this.cantidad=0;
               }
             },
             error => {
               this.imageUrl = '';
+              this.cantidad=0;
             }
           )
-          this.agregarProducto(producto)
+          this.agregarProducto(producto);
           this.barraItem = '';
         },
         error: error => {
@@ -139,6 +148,49 @@ export class MovimientosNarancayComponent implements OnInit {
       });
   }
 
+  buscarProductoCant(productoSis:Producto){
+    if (this.movSeleccionado?.productos) {
+      for (let producto of this.movSeleccionado.productos) {
+        if(producto.item === productoSis.pro_id1){
+          this.cantProd=producto.cantidad
+          break;
+        }
+      }
+    }
+  }
+
+  descargarExcel(){
+    console.log(this.movSeleccionado)
+    if (this.movSeleccionado){
+      console.log('Entro al if ')
+      this.movimientoService.excelMovNarancay(this.movSeleccionado).subscribe(
+        (excelBlob: Blob) => {
+          const  url = window.URL.createObjectURL(excelBlob);
+
+          const a = document.createElement('a');
+          a.href = url;
+          a.download=`movimiento-${this.movSeleccionado?.detalle}.xlsx`
+          document.body.appendChild(a)
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+        },
+        error => {
+          console.log('Entro al error ')
+          console.error(error)
+        }
+      )
+    }
+
+  }
+
+  limpiar(){
+    this.producto=new Producto()
+    this.imageUrl=''
+    this.cantProd=0;
+  }
+
   protected readonly faFolderOpen = faFolderOpen;
   protected readonly faFolderPlus = faFolderPlus;
+  protected readonly faFileExcel = faFileExcel;
 }

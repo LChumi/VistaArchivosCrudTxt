@@ -1,16 +1,26 @@
-<section>
-  <div></div>
+<section *ngIf="!ventanaAddProd">
   <div class="container">
-    <h1>Movimientos de productos </h1>
+    <p class="h1">Movimientos de productos</p>
 
     <span>Registro de items y cantidades </span>
-    <label for="detalle">Ingrese el detalle</label>
-    <input type="text" id="detalle" placeholder="Detalle" [(ngModel)]="detalle">
 
-    <button type="button" class="btn btn-primary" title="Agregar" (click)="nuevoMovimiento()">Agregar <fa-icon
-        [icon]="faFolderPlus"></fa-icon> </button>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">Ingrese el detalle</span>
+      </div>
+      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="detalle">
+    </div>
 
-    <hr>
+    <button
+      type="button"
+      class="btn btn-primary"
+      title="Agregar"
+      (click)="nuevoMovimiento()"
+    >
+      Agregar <fa-icon [icon]="faFolderPlus"></fa-icon>
+    </button>
+
+    <hr />
 
     <table class="table table-sm table-responsive table-primary">
       <thead>
@@ -22,13 +32,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let movimiento of listaMovimientos" (click)="movSeleccionado= movimiento">
-          <td scope="row">{{movimiento.fecha}}</td>
-          <td>{{movimiento.detalle}}</td>
-          <td>{{movimiento.usuario}}</td>
+        <tr
+          *ngFor="let movimiento of listaMovimientos"
+          (click)="movSeleccionado = movimiento"
+        >
+          <td scope="row">{{ movimiento.fecha }}</td>
+          <td>{{ movimiento.detalle }}</td>
+          <td>{{ movimiento.usuario }}</td>
           <td class="sticky-rigth">
-            <button type="button" class="btn btn-primary" (click)="buscarMovimiento(movimiento.id,movimiento.detalle)">
-              Continuar <fa-icon [icon]="faFolderOpen"></fa-icon> </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="buscarMovimiento(movimiento.id, movimiento.detalle)"
+            >
+              Continuar <fa-icon [icon]="faFolderOpen"></fa-icon>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -36,57 +54,79 @@
   </div>
 </section>
 
-<div class="floating-window">
-  <div *ngIf="ventanaAddProd">
-
-    <div class="card">
-      <div class="card-body">
-        <h5 class="title">Productos</h5>
-
-        <div class="col-md-4">
-          <label for="inputProducto" class="form-label">Producto</label>
-          <input type="text" class="form-check" id="inputProducto" [(ngModel)]="barraItem" placeholder="Item o Barra"
-            (keyup.enter)="mostrarProducto()" style="text-transform: uppercase;" autocomplete="true" required>
-        </div>
-        <div class="col-md-4">
-          <label for="inputProducto" class="form-label">Producto</label>
-          <input type="text" class="form-check" id="inputProducto" [(ngModel)]="cantidad" placeholder="Item o Barra"
-            style="text-transform: uppercase;" autocomplete="true" required>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{producto?.pro_nombre || 'Producto'}}</h5>
-        <p>{{producto?.pro_id1 || 'Item'}}</p>
-        <p>{{producto?.pro_id || 'Barra' }}</p>
-        <p>{{producto?.stock_real || 'Stock : 0'}}</p>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card-body">
-        <img [src]="imageUrl" style="width: 100%;">
-      </div>
-    </div>
-
+<section class="floating-window" *ngIf="ventanaAddProd">
+  <div class="container">
     <h1 class="titulo">Productos</h1>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 mt-4">
-          <ul class="list-group">
-            <li style="border-bottom:2px solid grey; padding:10px;" *ngFor="let producto of movSeleccionado?.productos">
-              <span class="badge badge-primary">{{producto.item}}</span>
-              {{producto.detalle}} - {{producto.cantidad}}
-            </li>
-          </ul>
+    <p>{{numProd}}</p>
+    <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
+      [icon]="faFileExcel"></fa-icon> </button>
+    <!-- Contenedor de la tabla con scroll -->
+    <div class="table-container">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Detalle</th>
+          <th scope="col">Cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let producto of movSeleccionado?.productos">
+          <td>{{ producto.item }}</td>
+          <td>{{ producto.detalle }}</td>
+          <td>{{ producto.cantidad }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Contenedor de los inputs -->
+    <div class="inputs-container">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card-body">
+              <img [src]="imageUrl" style="width: 100%" alt="" class="rounded" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card-body">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Barra y cantidad </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputProducto"
+                  [(ngModel)]="barraItem"
+                  placeholder="Item o Barra"
+                  (keyup.enter)="mostrarProducto()"
+                  style="text-transform: uppercase"
+                  required
+                />
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputCantidad"
+                  [(ngModel)]="cantidad"
+                  placeholder="Cantidad"
+                  style="text-transform: uppercase"
+                />
+              </div>
+              <hr>
+              <p class="h1">{{ producto?.pro_nombre || "Producto" }}</p>
+              <p class="display-1">{{cantProd}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <button (click)="ventanaAddProd = false"><i class="fas fa-eye"></i>Cerrar</button>
+
+    <button class="btn btn-danger" type="button" (click)="ventanaAddProd = false">
+      Cerrar
+    </button>
   </div>
-</div>
-
-
+</section>
 
