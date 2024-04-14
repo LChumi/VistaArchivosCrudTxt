@@ -39,24 +39,21 @@ export class BodegasComponent implements OnInit {
     this.dialogService.abrirConfirmacion(bodega.bod_nombre);
   }
 
-  ingresarMovimientos(nombreBodega: string){
-    console.log(nombreBodega);
-    console.log('------------------------------------------------------------------------');
-    
-    for(let bod of this.listaBodegas){
-      console.log(nombreBodega);
-      console.log(bod.bod_nombre);
-      
-      if(/BOD. ZHUCAY/.test(nombreBodega) && /BOD. ZHUCAY/.test(bod.bod_nombre)){
-        console.log('ingresa a movimientos en zhucay');
-        this.router.navigate(['Cumpleaños/observaciones/mov_zhucay'])
+  ingresarMovimientos(nombreBodega: string) {
+    switch (true) {
+      case this.listaBodegas.some(bod => /BOD. ZHUCAY/.test(nombreBodega) && /BOD. ZHUCAY/.test(bod.bod_nombre)):
+        this.router.navigate(['Cumpleaños/observaciones/mov_zhucay']);
         break;
-      }else if(/ALMACEN NARANCAY/.test(nombreBodega)&&/ALMACEN NARANCAY/.test(bod.bod_nombre)){
-        console.log('ingresa a movimientos en narancay');
-        this.router.navigate(['Cumpleaños/observaciones/mov_narancay'])
+      case this.listaBodegas.some(bod => /ALMACEN NARANCAY/.test(nombreBodega) && /ALMACEN NARANCAY/.test(bod.bod_nombre)):
+        this.router.navigate(['Cumpleaños/observaciones/mov_narancay']);
         break;
-      }
+      // Agrega más casos según sea necesario para otras bodegas
+      default:
+        alert('No tienes acceso a esta funcion')
+        // Haz algo en caso de que el nombre de la bodega no coincida con ningún caso
+        break;
     }
   }
+
 
 }
