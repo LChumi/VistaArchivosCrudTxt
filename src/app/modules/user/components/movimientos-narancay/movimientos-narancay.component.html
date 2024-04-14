@@ -6,9 +6,9 @@
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default">Ingrese el detalle</span>
+        <span class="input-group-text" id="inputGroup-sizing-default" style="text-transform: uppercase">Ingrese el detalle</span>
       </div>
-      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="detalle">
+      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="text-transform: uppercase" [(ngModel)]="detalle" >
     </div>
 
     <button
@@ -56,7 +56,7 @@
 
 <section class="floating-window" *ngIf="ventanaAddProd">
   <div class="container">
-    <h1 class="titulo">Productos</h1>
+    <h1 class="titulo" style="text-transform: uppercase">Productos  {{movSeleccionado?.detalle}}</h1>
     <p>{{numProd}}</p>
     <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
       [icon]="faFileExcel"></fa-icon> Finalizar y descargar Excel</button>
