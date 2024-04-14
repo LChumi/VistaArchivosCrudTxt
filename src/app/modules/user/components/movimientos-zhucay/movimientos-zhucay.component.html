@@ -1,1 +1,132 @@
-<p>movimientos-zhucay works!</p>
+<section *ngIf="!ventanaAddProd">
+  <div class="container">
+    <p class="h1">Movimientos de productos Zhucay</p>
+
+    <span>Registro de items y cantidades </span>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">Ingrese el detalle</span>
+      </div>
+      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="detalle">
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      title="Agregar"
+      (click)="nuevoMovimiento()"
+    >
+      Agregar <fa-icon [icon]="faFolderPlus"></fa-icon>
+    </button>
+
+    <hr />
+
+    <table class="table table-sm table-responsive table-primary">
+      <thead>
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Detalle</th>
+        <th scope="col">Usuario</th>
+        <th class="sticky-rigth">.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let movimiento of listaMovimientos"
+        (click)="movSeleccionado = movimiento"
+      >
+        <td scope="row">{{ movimiento.fecha }}</td>
+        <td>{{ movimiento.detalle }}</td>
+        <td>{{ movimiento.usuario }}</td>
+        <td class="sticky-rigth">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="buscarMovimiento(movimiento.id, movimiento.detalle)"
+          >
+            Continuar <fa-icon [icon]="faFolderOpen"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="floating-window" *ngIf="ventanaAddProd">
+  <div class="container">
+    <h1 class="titulo">Productos</h1>
+    <p>{{numProd}}</p>
+    <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
+      [icon]="faFileExcel"></fa-icon> Finalizar y descargar Excel </button>
+    <!-- Contenedor de la tabla con scroll -->
+    <div class="table-container">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Detalle</th>
+          <th scope="col">Cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let producto of movSeleccionado?.productos">
+          <td>{{ producto.item }}</td>
+          <td>{{ producto.detalle }}</td>
+          <td>{{ producto.cantidad }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Contenedor de los inputs -->
+    <div class="inputs-container">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card-body">
+              <img [src]="imageUrl" style="width: 100%" alt="" class="rounded" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card-body">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Barra y cantidad </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputProducto"
+                  [(ngModel)]="barraItem"
+                  placeholder="Item o Barra"
+                  (keyup.enter)="mostrarProducto()"
+                  style="text-transform: uppercase"
+                  required
+                />
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputCantidad"
+                  [(ngModel)]="cantidad"
+                  placeholder="Cantidad"
+                  style="text-transform: uppercase"
+                />
+              </div>
+              <hr>
+              <p class="h1">{{ producto?.pro_nombre || "Producto" }}</p>
+              <p class="display-1">{{cantProd}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" type="button" (click)="ventanaAddProd = false">
+      Cerrar
+    </button>
+  </div>
+</section>
+

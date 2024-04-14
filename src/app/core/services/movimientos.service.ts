@@ -51,7 +51,7 @@ export class MovimientosService {
   }
 
   excelMovZhucay(movimiento:Movimiento):Observable<Blob>{
-    return this.http.post<Blob>(`${this.baseUrl}exportar/excel/zhucay`,movimiento)
+    return this.http.post(`${this.baseUrl}exportar/excel/zhucay`,movimiento,{responseType: 'blob'})
   }
 
 }

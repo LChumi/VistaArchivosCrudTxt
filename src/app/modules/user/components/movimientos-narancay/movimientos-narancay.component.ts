@@ -52,7 +52,6 @@ export class MovimientosNarancayComponent implements OnInit {
     this.movimientoService.buscarNarancay(id,detalle).subscribe(
       (mov:Movimiento)=>{
         this.movSeleccionado=mov
-        console.log(this.movSeleccionado);
         this.limpiar();
         this.numProd=mov.productos.length;
         this.ventanaAddProd= !this.ventanaAddProd
@@ -61,8 +60,6 @@ export class MovimientosNarancayComponent implements OnInit {
   }
 
   nuevoMovimiento(){
-    console.log(this.detalle);
-
     if(!this.detalle){
       alert('Por favort ingrese el detalle del movimiento');
       return;
@@ -141,7 +138,6 @@ export class MovimientosNarancayComponent implements OnInit {
         },
         error: error => {
           alert('Producto no encontrado');
-          console.log(error);
           this.barraItem = '';
           this.producto = new Producto();
         }
@@ -160,23 +156,21 @@ export class MovimientosNarancayComponent implements OnInit {
   }
 
   descargarExcel(){
-    console.log(this.movSeleccionado)
     if (this.movSeleccionado){
-      console.log('Entro al if ')
       this.movimientoService.excelMovNarancay(this.movSeleccionado).subscribe(
         (excelBlob: Blob) => {
           const  url = window.URL.createObjectURL(excelBlob);
 
           const a = document.createElement('a');
           a.href = url;
-          a.download=`movimiento-${this.movSeleccionado?.detalle}.xlsx`
+          a.download=`${this.movSeleccionado?.detalle}.xlsx`
           document.body.appendChild(a)
           a.click();
 
           window.URL.revokeObjectURL(url);
+          this.ventanaAddProd=!this.ventanaAddProd
         },
         error => {
-          console.log('Entro al error ')
           console.error(error)
         }
       )
