@@ -64,7 +64,7 @@
 <section class="floating-window" *ngIf="ventanaAddProd">
   <div class="container">
     <h1 class="titulo" style="text-transform: uppercase">Productos  {{movSeleccionado?.detalle}}</h1>
-    <p>{{numProd}}</p>
+    <p>Total productos digitados : {{numProd}}</p>
     <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
       [icon]="faFileExcel"></fa-icon> Finalizar y descargar Excel </button>
     <!-- Contenedor de la tabla con scroll -->
