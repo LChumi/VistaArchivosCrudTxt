@@ -20,8 +20,8 @@ export class BodegasComponent implements OnInit {
 
   bodegaSeleccionada!: Bodega;
   listaBodegas!: Bodega[];
-  id_usuario: any;
-  id_empresa: any;
+  id_usuario = sessionStorage.getItem('idUsuario') ?? '';
+  id_empresa = sessionStorage.getItem('idEmpresa') ?? '';
   idBodega:any
   alamcenNarancayImg:string = '../../../../../assets/img/bodega.jpg';
   movimientosImg:string = '../../../../../assets/img/movimientos.jpg';
@@ -29,8 +29,10 @@ export class BodegasComponent implements OnInit {
   constructor(private bodegaService: BodegaService, private dialogService:DialogService,private router: Router) { }
 
   ngOnInit(): void {
-    this.id_usuario = sessionStorage.getItem('idUsuario')
-    this.id_empresa = sessionStorage.getItem('idEmpresa')
+    if (this.id_usuario == '' || this.id_empresa == '') {
+      alert('Vuelva a iniciar sesión')
+      this.logout()
+    }
     this.listarBodegas()
   }
 
@@ -60,6 +62,11 @@ export class BodegasComponent implements OnInit {
         // Haz algo en caso de que el nombre de la bodega no coincida con ningún caso
         break;
     }
+  }
+
+  logout() {
+    sessionStorage.clear();
+    this.router.navigate(['/Cumpleaños/inicio/login'])
   }
 
 

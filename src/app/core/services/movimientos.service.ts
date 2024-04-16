@@ -26,7 +26,10 @@ export class MovimientosService {
   }
 
   buscarNarancay(id:number,detalle:string):Observable<Movimiento>{
-    return this.http.get<Movimiento>(`${this.baseUrl}buscar/narancay/${id}/${detalle}`)
+    const options ={
+      params: {detalle:detalle}
+    }
+    return this.http.get<Movimiento>(`${this.baseUrl}buscar/narancay/${id}/`,options)
   }
 
   listarNarancay():Observable<Movimiento[]>{
@@ -34,7 +37,10 @@ export class MovimientosService {
   }
 
   agregarProductoNarancay(id: number, detalle: string ,productoMov: ProductoMov):Observable<Movimiento>{
-    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/narancay/${id}/${detalle}`,productoMov)
+    const options ={
+      params: {detalle:detalle}
+    }
+    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/narancay/${id}/`,productoMov,options)
   }
 
   excelMovNarancay(movimiento:Movimiento):Observable<Blob>{
@@ -46,7 +52,10 @@ export class MovimientosService {
   }
 
   buscarZhucay(id:number,detalle:string):Observable<Movimiento>{
-    return this.http.get<Movimiento>(`${this.baseUrl}buscar/zhucay/${id}/${detalle}`)
+    const options ={
+      params: {detalle:detalle}
+    }
+    return this.http.get<Movimiento>(`${this.baseUrl}buscar/zhucay/${id}/`,options)
   }
 
   listarZhucay():Observable<Movimiento[]>{
@@ -54,7 +63,10 @@ export class MovimientosService {
   }
 
   agregarProductoZhucay(id: number, detalle: string ,productoMov: ProductoMov):Observable<Movimiento>{
-    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/zhucay/${id}/${detalle}`,productoMov)
+    const options ={
+      params: {detalle:detalle}
+    }
+    return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/zhucay/${id}/`,productoMov,options)
   }
 
   excelMovZhucay(movimiento:Movimiento):Observable<Blob>{
