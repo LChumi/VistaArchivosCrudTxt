@@ -1,0 +1,148 @@
+
+<div class="section">
+    <div class="row">
+        <div>
+            <div class="card-group">
+                <div class="card-body">
+                    <div class="logout-container">
+                        <button class="btn btn-info" (click)="logout()">
+                            Cerrar Sesión <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
+                        </button>
+                    </div>
+                    <hr>
+                    <h5 class="card-title">ERRORES EN ALMACEN GRAN COLOMBIA</h5>
+                    <p> LISTA DE OBSERVACIONES DE PRODUCTOS</p>
+                    <p> USUARIO: {{usuariosessionStorage}}</p>
+                    <hr>
+                    <button class="btn btn-primary" (click)="abrirVentana()"><fa-icon
+                            [icon]="faFileCirclePlus"></fa-icon> Agregar Observacion </button>
+                    <hr>
+
+                    <div>
+                        <label>Lista de Observaciones </label>
+                        <div class="color-buttons">
+                            <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
+                                    [icon]="faFileExcel"></fa-icon> </button>
+
+                        </div>
+                    </div>
+                    <hr>
+                    <span>Total Observaciones : </span>
+                    <span>{{totalObservaciones}}</span>
+                    <hr>
+                    <div>
+                        <table class="tableList table-responsive">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Cantidad Dañados</th>
+                                    <th scope="col">Observaciones</th>
+                                    <th scope="col">Responsable</th>
+                                    <th scope="col">Responsable Solucion</th>
+                                    <th scope="col">Detalle</th>
+                                    <th scope="col"> Fecha solucion</th>
+                                    <th class="sticky-rigth"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let observacion of observaciones  | filtroColor: colorSeleccionado "
+                                    (click)="selecionarObservacion(observacion)"
+                                    [ngClass]="tieneCorreccion(observacion)">
+                                    <th scope="row">{{observacion.fecha}}</th>
+                                    <td>{{observacion.item || ''}}</td>
+                                    <td>{{observacion.descripcion || ''}}</td>
+                                    <td>{{observacion.diferencia || ''}}</td>
+                                    <td>{{observacion.detalle || ''}}</td>
+                                    <td>{{observacion.usuario || ''}}</td>
+                                    <td>{{observacion.correccion?.usuario || ''}}</td>
+                                    <td>{{observacion.correccion?.detalle || ''}}</td>
+                                    <td>{{observacion.correccion?.fecha || ''}}</td>
+                                    <td class="sticky-right">
+                                        <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad
+                                            <fa-icon [icon]="faMessage"></fa-icon> </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="ventana_flotante" *ngIf="vistaAddObservacion">
+    <div class="card">
+        <span class="close-button" (click)="cerrarVentana()"></span>
+        <hr>
+        <div class="card-body">
+            <h5 class="titulo">Ingreso de Observacion</h5>
+            <div class="div form-group row g-3">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <label for="inputProducto" class="form-label">Producto</label>
+                            <input type="text" class="form-check" id="inputProducto" [(ngModel)]="barraItem"
+                                placeholder="Item o Barra" (keyup.enter)="mostrarProducto()"
+                                style="text-transform: uppercase;" autocomplete="true" required>
+                            <button class="btn btn-outline-primary" (click)="mostrarProducto()">
+                                <fa-icon [icon]="faSearch"></fa-icon>
+                            </button>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{producto.pro_nombre || 'Producto'}}</h5>
+                                    <p>{{producto.pro_id1 || 'Item'}}</p>
+                                    <p>{{producto.pro_id || 'Barra' }}</p>
+                                    <p>{{producto.stock_real || 'Stock : 0'}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <img [src]="imageUrl" style="width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputObservacion" class="form-label">CANTIDAD DAÑADOS</label>
+                    <input type="text" class="form-control" id="inputObservacion"
+                        placeholder="Ingrese la cantidad de productos dañados" [(ngModel)]="diferencia"
+                        autocomplete="true" style="text-transform: uppercase;" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputObservacion" class="form-label">OBSERVACIONES</label>
+                    <input type="text" class="form-control" id="inputObservacion" placeholder="Ingrese la observacion"
+                        [(ngModel)]="detalleOb" autocomplete="true" style="text-transform: uppercase;" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" (click)="guardarObservacion()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ventana_flotante_correccion" *ngIf="vistaCorreccion">
+    <div class="card">
+        <span class="close-button" (click)="cerrarVentanaCorreccion()"></span>
+        <div class="card-body">
+            <h5 class="titulo">Ingreso de Novedad</h5>
+            <div class="col-md-12">
+                <label for="inputNovedad" class="form-label">Novedad</label>
+                <input type="text" class="form-control" id="inputNovedad" placeholder="Ingrese la Observacion"
+                    [(ngModel)]="novedad" autocomplete="true" style="text-transform: uppercase;">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" (click)="agregarCorreccion()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

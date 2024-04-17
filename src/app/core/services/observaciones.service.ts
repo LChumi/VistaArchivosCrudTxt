@@ -60,4 +60,30 @@ export class ObservacionesService {
   excelBodDa():Observable<Blob>{
     return this.http.get(this.baseUrl+'excel/bodDañados/',{responseType:'blob'});
   }
+  /** Crud para api Gran colombia  */
+  guardarGColombia(observacion:Observacion):Observable<Observacion>{
+    return this.http.post<Observacion>(this.baseUrl+'guardar/gColombia',observacion)
+  }
+  getObservacionesGColombia():Observable<Observacion[]>{
+    return this.http.get<Observacion[]>(this.baseUrl+'listarGColombia');
+  }
+  agregarCorreccionGColombia(correccion:ObservacionCorrecion):Observable<Observacion>{
+    return this.http.put<Observacion>(this.baseUrl+'agregarCorrecionGColombia/',correccion)
+  }
+  excelGColombia():Observable<Blob>{
+    return this.http.get(this.baseUrl+'excel/gColombia/',{responseType:'blob'});
+  }
+  /** Crud para api Vergel */
+  guardarVergel(observacion:Observacion):Observable<Observacion>{
+    return this.http.post<Observacion>(this.baseUrl+'guardar/vergel',observacion)
+  }
+  getObservacionesVergel():Observable<Observacion[]>{
+    return this.http.get<Observacion[]>(this.baseUrl+'listarVergel');
+  }
+  agregarCorreccionVergel(correccion:ObservacionCorrecion):Observable<Observacion>{
+    return this.http.put<Observacion>(this.baseUrl+'agregarCorrecionVergel/',correccion)
+  }
+  excelVergel():Observable<Blob>{
+    return this.http.get(this.baseUrl+'excel/vergel/',{responseType:'blob'});
+  }
 }

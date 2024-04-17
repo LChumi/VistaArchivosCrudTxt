@@ -1,0 +1,248 @@
+
+ .logout-container {
+    align-content: flex-end;
+}
+
+.ventana_flotante {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 800px;
+    height: 80%;
+    max-height: 480px;
+    background: linear-gradient(90deg, rgba(220, 220, 220, 0.849) 0%, rgba(200, 200, 200, 0.747) 35%, rgba(180, 180, 180, 0.733));
+    border: 1px solid #000000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    z-index: 999;
+    overflow: auto;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.ventana_flotante_correccion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 600px;
+    height: 80%;
+    max-height: 230px;
+    background: linear-gradient(90deg, rgba(220, 220, 220, 0.849) 0%, rgba(200, 200, 200, 0.747) 35%, rgba(180, 180, 180, 0.733));
+    border: 1px solid #000000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    z-index: 999;
+    overflow: auto;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.titulo {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.close-button {
+    box-sizing: content-box;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: white;
+    background-color: red;
+    border-radius: 30%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.close-button :hover {
+    color: #555;
+    text-decoration: none;
+}
+
+.tableList {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 1rem;
+}
+
+table thead {
+    background-color: #d0dae7;
+    color: #000000;
+    font-size: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+table thead th {
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+table tbody th,
+table tbody td {
+    padding: 10px 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table tbody th {
+    text-align: center;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:hover {
+    background-color: #fcfcfc;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.sticky-right {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #fcfcfd;
+}
+
+.rojo {
+    background-color: rgba(255, 99, 71, 0.34);
+}
+
+.tomate {
+    background-color: rgba(225, 231, 48, 0.34);
+}
+
+.verde {
+    background-color: rgba(48, 213, 48, 0.34);
+}
+
+/* botones para listas  */
+.color-buttons {
+    display: flex;
+    gap: 20px;
+    /* Espacio entre los botones */
+}
+
+.color-buttons label {
+    background-color: #cfd9e6;
+    /* Color de fondo de los botones */
+    padding: 5px 10px;
+    /* Espaciado interno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+}
+
+.color-buttons input[type="radio"] {
+    display: none;
+    /* Ocultar los botones de radio por defecto */
+}
+
+.color-buttons input[type="radio"]:checked+label {
+    background-color: #0d6dfb;
+    /* Color de fondo cuando está seleccionado */
+    color: #D4D3E8;
+}
+
+/* Estilos para el contenedor de la cámara */
+.camara-container {
+    position: relative;
+    width: 100%;
+    /* O el ancho deseado */
+    max-width: 800px;
+    /* O el ancho máximo deseado */
+    margin: 0 auto;
+    /* Centrar horizontalmente */
+}
+
+/* Estilos para el componente de cámara */
+.camara-container div {
+    width: 100%;
+}
+
+/* Estilos para el componente de escáner */
+zxing-scanner {
+    width: 100%;
+    /* O el ancho deseado */
+    height: auto;
+    /* Para mantener la proporción de aspecto */
+    display: block;
+    /* Para eliminar el espacio adicional debajo del elemento inline */
+}
+
+
+
+@media (max-width: 600px) {
+    .ventana_flotante {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 380px;
+        height: 80%;
+        max-height: 550px;
+        background: linear-gradient(90deg, rgba(220, 220, 220, 0.849) 0%, rgba(200, 200, 200, 0.747) 35%, rgba(180, 180, 180, 0.733));
+        border: 1px solid #000000;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        z-index: 999;
+        overflow: auto;
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    .ventana_flotante_correccion {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 380px;
+        height: 80%;
+        max-height: 220px;
+        background: linear-gradient(90deg, rgba(220, 220, 220, 0.849) 0%, rgba(200, 200, 200, 0.747) 35%, rgba(180, 180, 180, 0.733));
+        border: 1px solid #000000;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        z-index: 999;
+        overflow: auto;
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    .color-buttons label {
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .color-buttons label i {
+        display: inline-block;
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .color-buttons label span {
+        display: none;
+    }
+
+}

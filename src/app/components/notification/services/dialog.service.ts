@@ -40,6 +40,10 @@ export class DialogService {
           this.router.navigate(['Cumpleaños/observaciones/narancay'])
         }else if(/BOD. DAÑADOS/.test(nombreBodega)){
           this.router.navigate(['Cumpleaños/observaciones/bod_danados'])
+        }else if(/EL VERGEL/.test(nombreBodega)){
+          this.router.navigate(['Cumpleaños/observaciones/vergel'])
+        }else if(/ALMACEN GRAN COLOMBIA/.test(nombreBodega)){
+          this.router.navigate(['Cumpleaños/observaciones/colombia'])
         }else{
           alert('Proximamente')
         }

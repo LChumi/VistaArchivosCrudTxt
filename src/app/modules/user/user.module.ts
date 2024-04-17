@@ -20,6 +20,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/observaciones-bod-da.component';
 import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movimientos-zhucay.component';
 import { MovimientosNarancayComponent } from './components/movimientos-narancay/movimientos-narancay.component';
+import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
+import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { MovimientosNarancayComponent } from './components/movimientos-narancay/
     ObservacionesNarancayComponent,
     ObservacionesBodDaComponent,
     MovimientosZhucayComponent,
-    MovimientosNarancayComponent
+    MovimientosNarancayComponent,
+    ObservacionesGColombiaComponent,
+    ObservacionesVergelComponent
   ],
   imports: [
     CommonModule,

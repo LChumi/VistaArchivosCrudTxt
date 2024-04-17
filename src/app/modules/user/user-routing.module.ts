@@ -13,12 +13,16 @@ import { ObservacionesNarancayComponent } from './components/observaciones-naran
 import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/observaciones-bod-da.component';
 import { MovimientosNarancayComponent } from './components/movimientos-narancay/movimientos-narancay.component';
 import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movimientos-zhucay.component';
+import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
+import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
 
 const routes: Routes = [
   {path:'bodegas', component:BodegasComponent},
   {path:'zhucay',component:ObservacionesComponent},
   {path:'narancay',component:ObservacionesNarancayComponent},
   {path:'bod_danados',component:ObservacionesBodDaComponent},
+  {path:'vergel',component:ObservacionesVergelComponent},
+  {path:'colombia',component:ObservacionesGColombiaComponent},
   {path:'mov_narancay',component:MovimientosNarancayComponent},
   {path:'mov_zhucay',component:MovimientosZhucayComponent},
   {path:'',redirectTo:'bodegas',pathMatch:'full'},
