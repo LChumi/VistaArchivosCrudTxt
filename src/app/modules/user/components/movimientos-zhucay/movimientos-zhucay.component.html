@@ -57,6 +57,7 @@
         </td>
       </tr>
       </tbody>
+      
     </table>
   </div>
 </section>
@@ -65,6 +66,12 @@
   <div class="container">
     <h1 class="titulo" style="text-transform: uppercase">Productos  {{movSeleccionado?.detalle}}</h1>
     <p>Total productos digitados : {{numProd}}</p>
+    <div class="col-md-4">
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Filtrar Producto</span>
+      <input type="text" [(ngModel)]="searchItem" class="form-control" placeholder="Item" aria-label="Item" aria-describedby="basic-addon1" (input)="filtrarProductos()">
+    </div>
+  </div>
     <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
       [icon]="faFileExcel"></fa-icon> Finalizar y descargar Excel </button>
     <!-- Contenedor de la tabla con scroll -->
@@ -78,7 +85,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let producto of movSeleccionado?.productos">
+        <tr *ngFor="let producto of productosFiltrados">
           <td>{{ producto.item }}</td>
           <td>{{ producto.detalle }}</td>
           <td>{{ producto.cantidad }}</td>
@@ -122,6 +129,9 @@
                   placeholder="Cantidad"
                   style="text-transform: uppercase"
                 />
+                <button class="btn btn-outline-primary" (click)="mostrarProducto()">
+                  <fa-icon [icon]="faSearch"></fa-icon>
+                </button>
               </div>
               <hr>
               <p class="h1">{{ producto?.pro_nombre || "Producto" }}</p>

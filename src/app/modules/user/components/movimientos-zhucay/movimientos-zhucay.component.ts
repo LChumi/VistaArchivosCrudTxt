@@ -13,7 +13,7 @@ import {ProductoMov} from "../../../../core/models/ProductoMov";
 import {MovimientosService} from "../../../../core/services/movimientos.service";
 import {ImagenService} from "../../../../core/services/imagen.service";
 import {ProductoService} from "../../../../core/services/producto.service";
-import {faFileExcel, faFolderOpen, faFolderPlus} from "@fortawesome/free-solid-svg-icons";
+import {faFileExcel, faFolderOpen, faFolderPlus, faSearch} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-movimientos-zhucay',
@@ -24,6 +24,7 @@ export class MovimientosZhucayComponent implements OnInit {
 
   productoSubscription!: Subscription;
   listaMovimientos:      Movimiento[] = []
+  productosFiltrados:    ProductoMov[] =[]
   movimiento?:           Movimiento
   movSeleccionado?:      Movimiento
   producto?:             Producto
@@ -35,6 +36,7 @@ export class MovimientosZhucayComponent implements OnInit {
   cantidad:         number=0;
   cantProd:         number=0;
   numProd:          number=0;
+  searchItem:       string='';
 
   usuariosessionStorage = sessionStorage.getItem('usuario') ?? '';
 
@@ -59,6 +61,7 @@ export class MovimientosZhucayComponent implements OnInit {
     this.movimientoService.buscarZhucay(id,detalle).subscribe(
       (mov:Movimiento)=>{
         this.movSeleccionado=mov
+        this.actualizarProductosFiltrados();
         this.limpiar();
         this.numProd=mov.productos.length;
         this.ventanaAddProd= !this.ventanaAddProd
@@ -103,6 +106,7 @@ export class MovimientosZhucayComponent implements OnInit {
       this.movimientoService.agregarProductoZhucay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
         (mov: Movimiento)=>{
           this.movSeleccionado=mov
+          this.actualizarProductosFiltrados()
           this.buscarProductoCant(producto);
           this.numProd=mov.productos.length;
           this.cantidad=0;
@@ -192,7 +196,22 @@ export class MovimientosZhucayComponent implements OnInit {
     this.cantProd=0;
   }
 
+  filtrarProductos(){
+    this.actualizarProductosFiltrados()
+  }
+
+  actualizarProductosFiltrados(){
+    if (this.movSeleccionado) {
+      this.productosFiltrados = this.movSeleccionado.productos.filter((prod) =>
+        prod.item.toLowerCase().includes(this.searchItem.toLowerCase())
+      );
+    } else {
+      this.productosFiltrados = [];
+    }
+  }
+
   protected readonly faFolderOpen = faFolderOpen;
   protected readonly faFolderPlus = faFolderPlus;
   protected readonly faFileExcel = faFileExcel;
+  protected readonly faSearch = faSearch;
 }

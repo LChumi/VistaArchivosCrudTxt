@@ -43,6 +43,14 @@ export class MovimientosService {
     return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/narancay/${id}/`,productoMov,options)
   }
 
+  eliminarProductoNarancay(id:number,detalle:string,productoMov: ProductoMov):Observable<Movimiento>{
+    const options ={
+      params: {detalle:detalle},
+      body:productoMov
+    }
+    return this.http.delete<Movimiento>(`${this.baseUrl}eliminarProducto/narancay/${id}/`,options)
+  }
+
   excelMovNarancay(movimiento:Movimiento):Observable<Blob>{
     return this.http.post(`${this.baseUrl}exportar/excel/narancay`,movimiento,{responseType: 'blob'})
   }
@@ -67,6 +75,15 @@ export class MovimientosService {
       params: {detalle:detalle}
     }
     return this.http.put<Movimiento>(`${this.baseUrl}agregarProducto/zhucay/${id}/`,productoMov,options)
+  }
+
+  eliminarProductoZhucay(id:number,detalle:string,productoMov: ProductoMov):Observable<Movimiento>{
+    const options ={
+      params: {detalle:detalle},
+      body:productoMov
+
+    }
+    return this.http.delete<Movimiento>(`${this.baseUrl}eliminarProducto/zhucay/${id}/`,options)
   }
 
   excelMovZhucay(movimiento:Movimiento):Observable<Blob>{
