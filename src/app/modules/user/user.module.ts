@@ -22,6 +22,7 @@ import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movi
 import { MovimientosNarancayComponent } from './components/movimientos-narancay/movimientos-narancay.component';
 import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
 import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
+import { MovimientosPedidosComponent } from './components/movimientos-pedidos/movimientos-pedidos.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ObservacionesVergelComponent } from './components/observaciones-vergel/
     MovimientosZhucayComponent,
     MovimientosNarancayComponent,
     ObservacionesGColombiaComponent,
-    ObservacionesVergelComponent
+    ObservacionesVergelComponent,
+    MovimientosPedidosComponent
   ],
   imports: [
     CommonModule,

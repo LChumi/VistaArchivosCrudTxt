@@ -1,0 +1,8 @@
+.table-container {
+  max-height: 300px; /* Altura máxima de la tabla */
+  overflow-y: auto; /* Hacer scrollable verticalmente */
+}
+
+.inputs-container {
+  margin-top: 20px; /* Espacio entre la tabla y los inputs */
+}
