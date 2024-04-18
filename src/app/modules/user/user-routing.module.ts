@@ -15,6 +15,7 @@ import { MovimientosNarancayComponent } from './components/movimientos-narancay/
 import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movimientos-zhucay.component';
 import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
 import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
+import {MovimientosPedidosComponent} from "./components/movimientos-pedidos/movimientos-pedidos.component";
 
 const routes: Routes = [
   {path:'bodegas', component:BodegasComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'colombia',component:ObservacionesGColombiaComponent},
   {path:'mov_narancay',component:MovimientosNarancayComponent},
   {path:'mov_zhucay',component:MovimientosZhucayComponent},
+  {path:'mov_pedidos',component:MovimientosPedidosComponent},
   {path:'',redirectTo:'bodegas',pathMatch:'full'},
   {path:'**',redirectTo:'bodegas'}
 ];

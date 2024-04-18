@@ -14,6 +14,6 @@ export class DespachoPedidosService {
   constructor(private http:HttpClient) { }
 
   listarPedidos(pedido_interno:number):Observable<Pedido[]>{
-    return this.http.get<Pedido[]>(`${this.baseUrl}/listar/${pedido_interno}`);
+    return this.http.get<Pedido[]>(`${this.baseUrl}listar/${pedido_interno}`);
   }
 }

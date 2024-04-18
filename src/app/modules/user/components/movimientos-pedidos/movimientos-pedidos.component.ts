@@ -4,6 +4,8 @@ import {ProductoDespacho} from "../../../../core/models/ProductoDespacho";
 import {DespachoPedidosService} from "../../../../core/services/despacho-pedidos.service";
 import {DespachoProductosService} from "../../../../core/services/despacho-productos.service";
 import {Producto} from "../../../../core/models/Producto";
+import {faFolderOpen, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-movimientos-pedidos',
@@ -19,6 +21,7 @@ export class MovimientosPedidosComponent implements OnInit{
   productoDespachoSelecionado!: ProductoDespacho;
 
   pedidoInterno:number =0;
+  ventanaVista=false
 
   constructor(private pedidoService:DespachoPedidosService, private productoDespachoService:DespachoProductosService) {
   }
@@ -34,8 +37,10 @@ export class MovimientosPedidosComponent implements OnInit{
     )
   }
 
-  ListarProductosDespacho(){
-    this.productoDespachoService.listarProductos(this.pedidoSelecionado.codigoCco).subscribe(
+  ListarProductosDespacho(pedido:Pedido){
+    this.ventanaVista=!this.ventanaVista
+    const codigoCcoBigInt = new BehaviorSubject <string>(pedido.codigoCco.toString());
+    this.productoDespachoService.listarProductos(codigoCcoBigInt.value).subscribe(
       (productos:ProductoDespacho[]) =>{
         this.listaProductosPedidos=productos;
       }
@@ -43,4 +48,6 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
 
+  protected readonly faSearch = faSearch;
+  protected readonly faFolderOpen = faFolderOpen;
 }

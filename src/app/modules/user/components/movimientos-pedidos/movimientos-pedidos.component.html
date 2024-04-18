@@ -1,0 +1,70 @@
+<section *ngIf="!ventanaVista">
+  <div>
+    <label for="estadoSelect">Buscar Pedido </label>
+    <select class="form-control" id="estadoSelect" [(ngModel)]="pedidoInterno">
+      <option value=""></option>
+      <option value="1">Interno</option>
+      <option value="0">Clientes</option>
+    </select>
+  </div>
+
+  <button class="btn btn-outline-primary" (click)="listarPedidos()">
+    <fa-icon [icon]="faSearch"></fa-icon>
+  </button>
+
+  <div class="table-container">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Cliente</th>
+        <th scope="col">Comprobante</th>
+        <th scope="col">Empresa</th>
+        <th>.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let pedido of listaPedidos" (click)="pedidoSelecionado=pedido">
+        <td>{{ pedido.cliente }}</td>
+        <td>{{ pedido.comprobante }}</td>
+        <td>{{ pedido.empresa }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="ListarProductosDespacho(pedido)"
+          >
+            Continuar <fa-icon [icon]="faFolderOpen"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section *ngIf="ventanaVista">
+  <div class="table-container">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Detalle</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Observacion</th>
+        <th>.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let producto of listaProductosPedidos">
+        <td>{{ producto.proId1 }}</td>
+        <td>{{ producto.proNombre }}</td>
+        <td>{{ producto.cantidad }}</td>
+        <td>{{ producto.observacion }}</td>
+        <td>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
