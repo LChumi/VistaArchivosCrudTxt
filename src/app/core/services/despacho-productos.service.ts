@@ -13,7 +13,7 @@ export class DespachoProductosService {
 
   constructor(private http:HttpClient) { }
 
-  listarProductos(cco:any):Observable<ProductoDespacho[]>{
+  listarProductos(cco:number):Observable<ProductoDespacho[]>{
     return this.http.get<ProductoDespacho[]>(`${this.baseUrl}listar/${cco}`);
   }
 }
