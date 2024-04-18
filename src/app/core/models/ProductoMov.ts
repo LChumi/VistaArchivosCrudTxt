@@ -6,9 +6,10 @@
  */
 
 export class ProductoMov {
-    id!:       number;
-    barra!:    string;
-    detalle!:  string;
-    item!:     string;
-    cantidad!: number;
+    id!:          number;
+    barra!:       string;
+    detalle!:     string;
+    item!:        string;
+    cantidad!:    number;
+    observacion!: string;
 }

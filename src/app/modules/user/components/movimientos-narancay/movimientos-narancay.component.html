@@ -83,6 +83,7 @@
           <th scope="col">Item</th>
           <th scope="col">Detalle</th>
           <th scope="col">Cantidad</th>
+          <th scope="col">Observacion</th>
           <th>.</th>
         </tr>
         </thead>
@@ -91,6 +92,7 @@
           <td>{{ producto.item }}</td>
           <td>{{ producto.detalle }}</td>
           <td>{{ producto.cantidad }}</td>
+          <td>{{ producto.observacion}}</td>
           <td>
             <button type="button" class="btn btn-close" (click)="eliminarProducto(producto)"></button>
           </td>
@@ -141,6 +143,15 @@
               <hr>
               <p class="h1">{{ producto?.pro_nombre || "Producto" }}</p>
               <p class="display-1">{{cantProd}}</p>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="observacion">Observacion</span>
+                <input type="text"
+                       [(ngModel)]="observacion"
+                       class="form-control"
+                       placeholder="Ingrese la observacion del producto"
+                       aria-label="observacion"
+                       aria-describedby="observacion">
+              </div>
             </div>
           </div>
         </div>

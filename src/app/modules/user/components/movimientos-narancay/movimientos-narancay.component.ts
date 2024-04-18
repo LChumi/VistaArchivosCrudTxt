@@ -37,6 +37,7 @@ export class MovimientosNarancayComponent implements OnInit {
   cantProd:         number=0;
   numProd:          number=0;
   searchItem:       string='';
+  observacion:      string='';
 
   usuariosessionStorage = sessionStorage.getItem('usuario') ?? '';
 
@@ -100,6 +101,8 @@ export class MovimientosNarancayComponent implements OnInit {
     this.productoMov.cantidad=this.cantidad;
     this.productoMov.detalle = producto.pro_nombre;
     this.productoMov.item =producto.pro_id1;
+    this.productoMov.observacion=this.observacion;
+    console.log(this.observacion)
 
     if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
       this.movimientoService.agregarProductoNarancay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
@@ -109,6 +112,7 @@ export class MovimientosNarancayComponent implements OnInit {
           this.buscarProductoCant(producto);
           this.numProd=mov.productos.length;
           this.cantidad=0;
+          this.observacion=''
         }
       );
     } else {
@@ -125,6 +129,7 @@ export class MovimientosNarancayComponent implements OnInit {
           this.actualizarProductosFiltrados()
           this.numProd=mov.productos.length;
           this.cantidad=0;
+          this.observacion=''
         }
       );
     } else {
