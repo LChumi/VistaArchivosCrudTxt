@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2024 Luis Chumi.
+ * Este software está licenciado bajo la Licencia Pública General de GNU versión 3. Puedes encontrar una copia de la licencia en https://www.gnu.org/licenses/gpl-3.0.html.
+ *
+ * Para consultas o comentarios, puedes contactarme en "luischumi.9@gmail.com".
+ * Me gustaría ser reconocido por mi trabajo y estar abierto a colaboraciones o enseñanzas sobre el programa.
+ */
+
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   faArrowRightFromBracket, faBarcode, faCircleExclamation,
@@ -167,7 +175,7 @@ export class ObservacionesGColombiaComponent implements OnInit{
     this.correccion.detalle = this.novedad.toUpperCase();
     this.correccion.usuario = this.usuariosessionStorage;
     this.obCorr.correccion = this.correccion;
-    
+
     if(this.usuariosessionStorage == 'SANDRA OCHOA' || this.usuariosessionStorage == 'TORRES DANIEL'){
       alert('No esta autorizado a corregir')
       return

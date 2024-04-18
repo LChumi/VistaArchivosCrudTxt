@@ -1,3 +1,11 @@
+<!--
+  ~ Copyright (c) 2024 Luis Chumi.
+  ~ Este software está licenciado bajo la Licencia Pública General de GNU versión 3. Puedes encontrar una copia de la licencia en https://www.gnu.org/licenses/gpl-3.0.html.
+  ~
+  ~ Para consultas o comentarios, puedes contactarme en "luischumi.9@gmail.com".
+  ~ Me gustaría ser reconocido por mi trabajo y estar abierto a colaboraciones o enseñanzas sobre el programa.
+  -->
+
 <section *ngIf="!ventanaVista">
   <div>
     <label for="estadoSelect">Buscar Pedido </label>
@@ -47,10 +55,10 @@
     <table class="table">
       <thead>
       <tr>
-        <th scope="col">Item</th>
-        <th scope="col">Detalle</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col">Observacion</th>
+        <th scope="col">Item Pedido</th>
+        <th scope="col">Detalle Pedido</th>
+        <th scope="col">Cantidad Pedido</th>
+        <th scope="col">Observacion Pedido</th>
         <th>.</th>
       </tr>
       </thead>
@@ -61,7 +69,6 @@
         <td>{{ producto.cantidad }}</td>
         <td>{{ producto.observacion }}</td>
         <td>
-
         </td>
       </tr>
       </tbody>
