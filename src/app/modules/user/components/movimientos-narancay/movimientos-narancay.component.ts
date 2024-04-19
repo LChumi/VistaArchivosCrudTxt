@@ -15,6 +15,7 @@ import { Producto } from '../../../../core/models/Producto';
 import { ProductoMov } from '../../../../core/models/ProductoMov';
 import { Subscription } from 'rxjs';
 import {faFileExcel, faFolderOpen, faFolderPlus, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movimientos-narancay',
@@ -45,9 +46,16 @@ export class MovimientosNarancayComponent implements OnInit {
   ventanaAddProd = false;
 
 
-  constructor(private movimientoService: MovimientosService, private imagenService: ImagenService, private productoService: ProductoService) { }
+  constructor(private movimientoService: MovimientosService,
+              private imagenService: ImagenService,
+              private productoService: ProductoService,
+              private route: Router) { }
 
   ngOnInit(): void {
+    if (this.usuariosessionStorage == '') {
+      alert('Vuelva a iniciar sesión')
+      this.logout()
+    }
     this.listarMovimientos();
   }
 
@@ -228,6 +236,11 @@ export class MovimientosNarancayComponent implements OnInit {
     } else {
       this.productosFiltrados = [];
     }
+  }
+
+  logout() {
+    sessionStorage.clear();
+    this.route.navigate(['/Cumpleaños/inicio/login'])
   }
 
   protected readonly faFolderOpen = faFolderOpen;

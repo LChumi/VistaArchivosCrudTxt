@@ -7,13 +7,17 @@
   -->
 
 <section *ngIf="!ventanaVista">
-  <div>
-    <label for="estadoSelect">Buscar Pedido </label>
-    <select class="form-control" id="estadoSelect" [(ngModel)]="pedidoInterno">
-      <option value=""></option>
-      <option value="1">Interno</option>
-      <option value="0">Clientes</option>
-    </select>
+  <div class="container">
+    <p class="h2">Movimiento de pedidos de zhucay</p>
+
+    <div class="mb-4">
+      <label for="estadoSelect">Buscar Pedido </label>
+      <select class="form-select" aria-label="Buscar Pedido" id="estadoSelect" [(ngModel)]="pedidoInterno">
+        <option value=""></option>
+        <option value="1">Interno</option>
+        <option value="0">Clientes</option>
+      </select>
+    </div>
   </div>
 
   <button class="btn btn-outline-primary" (click)="listarPedidos()">
@@ -21,7 +25,7 @@
   </button>
 
   <div class="table-container">
-    <table class="table">
+    <table class="table table-sm table-responsive table-primary">
       <thead>
       <tr>
         <th scope="col">Cliente</th>
@@ -39,7 +43,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            (click)="ListarProductosDespacho(pedido)"
+            (click)="buscarMovPed(pedido)"
           >
             Continuar <fa-icon [icon]="faFolderOpen"></fa-icon>
           </button>
@@ -51,7 +55,14 @@
 </section>
 
 <section *ngIf="ventanaVista">
-  <div class="table-container">
+  <div class="container">
+
+    <h1 class="titulo" style="Text-transform: uppercase">Productos  {{pedidoSelecionado.comprobante}}</h1>
+
+    <div class="col-md-4">
+
+    </div>
+
     <table class="table">
       <thead>
       <tr>
@@ -59,6 +70,8 @@
         <th scope="col">Detalle Pedido</th>
         <th scope="col">Cantidad Pedido</th>
         <th scope="col">Observacion Pedido</th>
+        <th scope="col">Cantidad Diogitada</th>
+        <th scope="col">Observacion </th>
         <th>.</th>
       </tr>
       </thead>
@@ -68,6 +81,8 @@
         <td>{{ producto.proNombre }}</td>
         <td>{{ producto.cantidad }}</td>
         <td>{{ producto.observacion }}</td>
+        <td>{{ producto.cantDigitada }}</td>
+        <td>{{ producto.observacionDigitada }}</td>
         <td>
         </td>
       </tr>

@@ -15,6 +15,7 @@ import {MovimientosService} from "../../../../core/services/movimientos.service"
 import {ImagenService} from "../../../../core/services/imagen.service";
 import {ProductoService} from "../../../../core/services/producto.service";
 import {faFileExcel, faFolderOpen, faFolderPlus, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movimientos-zhucay',
@@ -44,9 +45,16 @@ export class MovimientosZhucayComponent implements OnInit {
   ventanaAddProd = false;
 
 
-  constructor(private movimientoService: MovimientosService, private imagenService: ImagenService, private productoService: ProductoService) { }
+  constructor(private movimientoService: MovimientosService,
+              private imagenService: ImagenService,
+              private productoService: ProductoService,
+              private route: Router) { }
 
   ngOnInit(): void {
+    if (this.usuariosessionStorage == '') {
+      alert('Vuelva a iniciar sesión')
+      this.logout()
+    }
     this.listarMovimientos();
   }
 
@@ -208,6 +216,11 @@ export class MovimientosZhucayComponent implements OnInit {
     } else {
       this.productosFiltrados = [];
     }
+  }
+
+  logout() {
+    sessionStorage.clear();
+    this.route.navigate(['/Cumpleaños/inicio/login'])
   }
 
   protected readonly faFolderOpen = faFolderOpen;

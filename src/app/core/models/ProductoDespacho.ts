@@ -18,4 +18,7 @@ export interface ProductoDespacho {
   proPrecio:   number;
   cantidad:    number;
   observacion: null;
+
+  cantDigitada:        number;
+  observacionDigitada: string;
 }
