@@ -84,17 +84,17 @@
                   (click)="selecionarObservacion(observacion)"
                   [ngClass]="tieneCorreccion(observacion)">
                 <th scope="row">{{observacion.fecha}}</th>
-                <td>{{observacion.usuario || ''}}</td>
-                <td>{{observacion.item || ''}}</td>
-                <td>{{observacion.descripcion || ''}}</td>
-                <td>{{observacion.stock || '' }}</td>
-                <td>{{observacion.detalle || ''}}</td>
-                <td>{{observacion.diferencia || ''}}</td>
-                <td>{{observacion.correccion?.usuario || ''}}</td>
-                <td>{{observacion.correccion?.detalle || ''}}</td>
-                <td>{{observacion.correccion?.fecha || ''}}</td>
-                <td>{{observacion.bulto || ''}}</td>
-                <td>{{observacion.unidad || '' }}</td>
+                <td>{{observacion.usuario || ' '}}</td>
+                <td>{{observacion.item || ' '}}</td>
+                <td>{{observacion.descripcion || ' '}}</td>
+                <td>{{observacion.stock || ' ' }}</td>
+                <td>{{observacion.detalle || ' '}}</td>
+                <td>{{observacion.diferencia || ' '}}</td>
+                <td>{{observacion.correccion.usuario || ' '}}</td>
+                <td>{{observacion.correccion.detalle || ' '}}</td>
+                <td>{{observacion.correccion.fecha || ' '}}</td>
+                <td>{{observacion.bulto || ' '}}</td>
+                <td>{{observacion.unidad || ' ' }}</td>
                 <td class="sticky-right">
                   <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad <fa-icon [icon]="faMessage"></fa-icon> </button>
                 </td>
