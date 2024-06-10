@@ -81,7 +81,7 @@ export class MovimientosNarancayComponent implements OnInit {
 
   nuevoMovimiento(){
     if(!this.detalle){
-      alert('Por favort ingrese el detalle del movimiento');
+      alert('Por favor ingrese el detalle del movimiento');
       return;
     }
 

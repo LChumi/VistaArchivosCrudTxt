@@ -51,8 +51,8 @@ export class BodegasComponent implements OnInit {
 
   ingresarMovimientos(nombreBodega: string) {
     switch (true) {
-      case this.listaBodegas.some(bod => /BOD. ZHUCAY/.test(nombreBodega) && /BOD. ZHUCAY/.test(bod.bod_nombre)):
-        this.router.navigate(['Cumpleaños/observaciones/mov_zhucay']);
+      case this.listaBodegas.some(bod => /SUGERIDOS/.test(nombreBodega)):
+        this.router.navigate(['Cumpleaños/observaciones/sugeridos']);
         break;
       case this.listaBodegas.some(bod => /ALMACEN NARANCAY/.test(nombreBodega) && /ALMACEN NARANCAY/.test(bod.bod_nombre)):
         this.router.navigate(['Cumpleaños/observaciones/mov_narancay']);

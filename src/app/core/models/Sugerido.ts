@@ -6,5 +6,12 @@
  * Me gustaría ser reconocido por mi trabajo y estar abierto a colaboraciones o enseñanzas sobre el programa.
  */
 
-//export const API_URL = 'http://192.168.112.36:7569/'
-export const API_URL = 'http://localhost:7569/'
+import {ProductoShowroom} from "./ProductoShowroom";
+
+export class SugeridoShowroom {
+  id!: number;
+  fecha!: string;
+  detalle!: string;
+  usuario!: string;
+  productoShowrooms!: ProductoShowroom[];
+}

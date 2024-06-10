@@ -89,4 +89,56 @@
       </tbody>
     </table>
   </div>
+
+  <div class="inputs-container">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card-body">
+            <img [src]="imageUrl" style="width: 100%" alt="" class="rounded" />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-body">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Barra y cantidad </span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="inputProducto"
+                [(ngModel)]="barraItem"
+                placeholder="Item o Barra"
+                (keyup.enter)="mostrarProducto()"
+                style="text-transform: uppercase"
+                required
+                autofocus
+              />
+              <input
+                type="number"
+                class="form-control"
+                id="inputCantidad"
+                [(ngModel)]="cantidad"
+                placeholder="Cantidad"
+                style="text-transform: uppercase"
+              />
+              <button class="btn btn-outline-primary" (click)="mostrarProducto()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </button>
+            </div>
+            <hr>
+            <p class="h1">{{ productoSis?.pro_nombre || "Producto" }}</p>
+            <p class="display-1">{{cantProd}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-danger" type="button" (click)="ventanaVista = false">
+    Cerrar
+  </button>
+
 </section>
