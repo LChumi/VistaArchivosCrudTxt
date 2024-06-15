@@ -106,7 +106,7 @@ export class MovimientosZhucayComponent implements OnInit {
   agregarProducto(producto: Producto){
     this.productoMov= new ProductoMov()
     this.productoMov.barra= producto.pro_id;
-    this.productoMov.cantidad=this.cantidad;
+    this.productoMov.cantidadDigitada=this.cantidad;
     this.productoMov.detalle = producto.pro_nombre;
     this.productoMov.item =producto.pro_id1;
 
@@ -168,7 +168,7 @@ export class MovimientosZhucayComponent implements OnInit {
     if (this.movSeleccionado?.productos) {
       for (let producto of this.movSeleccionado.productos) {
         if(producto.item === productoSis.pro_id1){
-          this.cantProd=producto.cantidad
+          this.cantProd=producto.cantidadDigitada
           break;
         }
       }

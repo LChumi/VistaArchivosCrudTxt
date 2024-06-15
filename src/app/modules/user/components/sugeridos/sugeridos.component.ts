@@ -111,6 +111,10 @@ export class SugeridosComponent implements OnInit{
     this.productoShowroom.descripcion = this.producto.pro_nombre;
     this.productoShowroom.item =this.producto.pro_id1;
     this.productoShowroom.observacion=this.observacion;
+    this.productoShowroom.stockNc=this.stockNarancay;
+    this.productoShowroom.stockZh=this.producto.stock_real
+    this.productoShowroom.stockSh=this.stockShowroom
+
 
     if (this.sugeridoSelect && this.sugeridoSelect.id && this.sugeridoSelect.detalle) {
       this.sugeridoService.agregarProducto(this.sugeridoSelect.id, this.sugeridoSelect.detalle, this.productoShowroom).subscribe(

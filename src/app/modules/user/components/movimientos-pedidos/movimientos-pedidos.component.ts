@@ -14,9 +14,7 @@ import {DespachoProductosService} from "../../../../core/services/despacho-produ
 import {faFileExcel, faFolderOpen, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
 import {MovimientosService} from "../../../../core/services/movimientos.service";
-import {ProductoService} from "../../../../core/services/producto.service";
 import {Movimiento} from "../../../../core/models/Movimiento";
-import {Producto} from "../../../../core/models/Producto";
 import {ProductoMov} from "../../../../core/models/ProductoMov";
 import {Subscription} from "rxjs";
 import {ImagenService} from "../../../../core/services/imagen.service";
@@ -28,175 +26,205 @@ import {ImagenService} from "../../../../core/services/imagen.service";
 })
 export class MovimientosPedidosComponent implements OnInit{
 
-  listaPedidos!:                Pedido[];
-  listaProductosPedidos!:       ProductoDespacho[];
-  pedidoSelecionado!:           Pedido
-  productoDespachoSelecionado!: ProductoDespacho;
-  listaMovimientosPedidos:      Movimiento[] = []
-  listaMovimientos:             Movimiento[] = []
-  movimiento?:                  Movimiento
-  movSeleccionado?:             Movimiento
-  productoSis?:                 Producto
-  productoMov?:                 ProductoMov
-  productoSubscription!:        Subscription;
+  listaPedidos!: Pedido[];
+  listaProductosPedidos!: ProductoDespacho[];
+  listaProductosMov: ProductoMov[] = [];
+  pedidoSelecionado!: Pedido;
+  listaMovimientos: Movimiento[] = [];
+  movimiento?: Movimiento;
+  movSeleccionado?: Movimiento;
+  productoSis?: ProductoDespacho;
+  productoSubscription!: Subscription;
 
+  pedidoInterno: number = 0;
+  barraItem: string = '';
+  imageUrl: string = '';
+  observacion: string = '';
+  cantidad: number = 0;
+  cantProd: number = 0;
+  numProd: number = 0;
 
-  pedidoInterno:  number =0;
-  barraItem:      string='';
-  imageUrl:       string='';
-  cantidad:       number=0;
-  cantProd:       number=0;
-  numProd:        number=0;
-
-  ventanaVista=false
+  ventanaVista = false;
 
   usuariosessionStorage = sessionStorage.getItem('usuario') ?? '';
 
-
-  constructor(private pedidoService:DespachoPedidosService,
-              private productoDespachoService:DespachoProductosService,
-              private movimientoService: MovimientosService,
-              private productoService: ProductoService,
-              private imagenService: ImagenService,
-              private route:Router) {
-  }
+  constructor(
+    private pedidoService: DespachoPedidosService,
+    private productoDespachoService: DespachoProductosService,
+    private movimientoService: MovimientosService,
+    private imagenService: ImagenService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
-    if (this.usuariosessionStorage == '') {
-      alert('Vuelva a iniciar sesión')
-      this.logout()
+    if (this.usuariosessionStorage === '') {
+      alert('Vuelva a iniciar sesión');
+      this.logout();
     }
     this.listarMovimientos();
   }
 
-  listarPedidos(){
+  listarPedidos() {
     this.pedidoService.listarPedidos(this.pedidoInterno).subscribe(
-      (pedidos:Pedido[]) =>{
-        this.listaPedidos=pedidos;
+      (pedidos: Pedido[]) => {
+        this.listaPedidos = pedidos;
       }
-    )
+    );
   }
 
-  ListarProductosDespacho(pedido:Pedido){
-    this.ventanaVista=!this.ventanaVista
+  ListarProductosDespacho(pedido: Pedido) {
+    this.ventanaVista = !this.ventanaVista;
     this.productoDespachoService.listarProductos(pedido.codigoCco).subscribe(
-      (productos:ProductoDespacho[]) =>{
-        this.listaProductosPedidos=productos;
+      (productos: ProductoDespacho[]) => {
+        this.listaProductosPedidos = productos;
+        if (this.movSeleccionado?.productos) {
+          this.cargarProducDespConMovProduct();
+        }
       }
-    )
-  }
-  listarMovimientos(){
-    this.movimientoService.listarZhucay().subscribe(
-      (movimientos: Movimiento[]) =>{
-        this.listaMovimientos=movimientos
-      }
-    )
+    );
   }
 
-  nuevoMovimiento(pedido:Pedido){
-    this.movimiento= new Movimiento()
-    this.movimiento.detalle= pedido.comprobante
-    this.movimiento.usuario= this.usuariosessionStorage;
-    this.limpiar()
+  listarMovimientos() {
+    this.movimientoService.listarZhucay().subscribe(
+      (movimientos: Movimiento[]) => {
+        this.listaMovimientos = movimientos;
+      }
+    );
+  }
+
+  nuevoMovimiento(pedido: Pedido) {
+    this.movimiento = new Movimiento();
+    this.movimiento.detalle = pedido.comprobante;
+    this.movimiento.usuario = this.usuariosessionStorage;
+    this.limpiar();
     this.movimientoService.guardarZhucay(this.movimiento).subscribe(
-      (mov:Movimiento) => {
+      (mov: Movimiento) => {
         this.listarMovimientos();
-        this.movSeleccionado= mov;
+        this.movSeleccionado = mov;
         this.ListarProductosDespacho(pedido);
       }
-    )
+    );
   }
 
-  buscarMovPed(pedido:Pedido){
-      for (const movimiento of this.listaMovimientos){
-        if (movimiento.detalle == pedido.comprobante){
+  buscarMovPed(pedido: Pedido) {
+    if (this.listaMovimientos.length != 0) {
+      for (const movimiento of this.listaMovimientos) {
+        if (movimiento.detalle === pedido.comprobante) {
+          this.movSeleccionado = movimiento;
           this.ListarProductosDespacho(pedido);
-          this.cargarProducDespConMovProduct()
-          break;
-        }else {
-          this.nuevoMovimiento(pedido)
+          this.cargarProducDespConMovProduct();
+          return;
         }
       }
+    }
+    this.nuevoMovimiento(pedido);
   }
 
-  cargarProducDespConMovProduct(){
-    if (this.movSeleccionado?.productos){
-      for (const prodDigitados of this.movSeleccionado.productos){
-        for (const prodPedidos of this.listaProductosPedidos){
-          if (prodDigitados.item == prodPedidos.proId1){
-            prodPedidos.cantDigitada=prodDigitados.cantidad;
-            prodPedidos.observacionDigitada=prodDigitados.observacion;
+  cargarProducDespConMovProduct() {
+    if (this.movSeleccionado?.productos) {
+      const promises = this.listaProductosPedidos.map(pedido => {
+        const productoMov = this.movSeleccionado?.productos.find(mov => mov.item === pedido.proId1);
+        if (!productoMov) {
+          return this.agregarProductoAsync(pedido);
+        }
+        return Promise.resolve(); // No need to do anything if productoMov exists
+      });
+
+      Promise.all(promises).then(() => {
+        // Once all products are added, update listaProductosMov
+        this.listaProductosMov = this.listaProductosPedidos.map(pedido => {
+          const productoMov = this.movSeleccionado?.productos.find(mov => mov.item === pedido.proId1);
+          return {
+            id: productoMov ? productoMov.id : 0,
+            barra: pedido.proId,
+            detalle: pedido.proNombre,
+            item: pedido.proId1,
+            cantidadPedido: pedido.cantidad,
+            observacionPedido: pedido.observacion || '',
+            cantidadDigitada: productoMov ? productoMov.cantidadDigitada : 0,
+            novedad: productoMov ? productoMov.novedad : ''
+          };
+        });
+      }).catch(error => {
+        console.error('Error adding products:', error);
+      });
+    }
+  }
+
+  agregarProductoAsync(producto: ProductoDespacho): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const nuevoProductoMov = new ProductoMov();
+      nuevoProductoMov.barra = producto.proId;
+      nuevoProductoMov.cantidadDigitada = this.cantidad;
+      nuevoProductoMov.detalle = producto.proNombre;
+      nuevoProductoMov.item = producto.proId1;
+      nuevoProductoMov.cantidadPedido = producto.cantidad;
+      nuevoProductoMov.observacionPedido = producto.observacion || '';
+      nuevoProductoMov.novedad = this.observacion;
+
+      if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
+        this.movimientoService.agregarProductoZhucay(this.movSeleccionado.id, this.movSeleccionado.detalle, nuevoProductoMov).subscribe(
+          (mov: Movimiento) => {
+            this.movSeleccionado = mov;
+            this.listaProductosMov = mov.productos;
+            this.numProd = mov.productos.length;
+            this.cantidad = 0;
+            this.observacion = '';
+            resolve(); // Resolve the promise when the product is successfully added
+          },
+          error => {
+            console.error('Error adding product:', error);
+            reject(error); // Reject the promise if there's an error
           }
-        }
+        );
+      } else {
+        alert('El movimiento seleccionado no tiene un ID o detalle definido.');
+        reject(new Error('El movimiento seleccionado no tiene un ID o detalle definido.'));
       }
-    }
-  }
-
-  agregarProducto(producto: Producto){
-    this.productoMov= new ProductoMov()
-    this.productoMov.barra= producto.pro_id;
-    this.productoMov.cantidad=this.cantidad;
-    this.productoMov.detalle = producto.pro_nombre;
-    this.productoMov.item =producto.pro_id1;
-
-    if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
-      this.movimientoService.agregarProductoZhucay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
-        (mov: Movimiento)=>{
-          this.movSeleccionado=mov
-          this.buscarProductoCant(producto);
-          this.numProd=mov.productos.length;
-          this.cantidad=0;
-        }
-      );
-    } else {
-      alert('El movimiento seleccionado no tiene un ID o detalle definido.');
-    }
+    });
   }
 
   mostrarProducto() {
-    this.productoSis = new Producto()
+    this.productoSis = new ProductoDespacho();
     if (!this.barraItem) {
       alert('Ingrese el item o la barra');
       return;
     }
 
     this.barraItem = this.barraItem.toUpperCase();
-    this.productoSubscription = this.productoService.buscarProducto(this.barraItem)
-      .subscribe({
-        next: (producto: Producto) => {
-          this.productoSis = producto;
-          this.imagenService.getImagen(this.productoSis.pro_id + '.jpg').subscribe(
-            data => {
-              if (data) {
-                const objectUrl = URL.createObjectURL(data);
-                this.imageUrl = objectUrl;
-              } else {
-                this.imageUrl = '';
-                this.cantidad=0;
-              }
-            },
-            error => {
+    const cco = this.pedidoSelecionado.codigoCco;
+    this.productoSubscription = this.productoDespachoService.buscarProducto(cco, this.barraItem).subscribe({
+      next: producto => {
+        this.productoSis = producto;
+        this.imagenService.getImagen(producto.proId + '.jpg').subscribe(
+          data => {
+            if (data) {
+              this.imageUrl = URL.createObjectURL(data);
+            } else {
               this.imageUrl = '';
-              this.cantidad=0;
+              this.cantidad = 0;
             }
-          )
-          this.agregarProducto(producto);
-          this.barraItem = '';
-        },
-        error: error => {
-          alert('Producto no encontrado');
-          console.error(error);
-          this.barraItem = '';
-          this.productoSis = new Producto();
-        }
-      });
+          },
+          error => {
+            this.imageUrl = '';
+            this.cantidad = 0;
+          }
+        );
+        this.barraItem = '';
+      },
+      error: error => {
+        alert('Producto no encontrado');
+        this.barraItem = '';
+        this.productoSis = new ProductoDespacho();
+      }
+    });
   }
 
-  buscarProductoCant(productoSis:Producto){
+  buscarProductoCant(productoSis: ProductoDespacho) {
     if (this.movSeleccionado?.productos) {
       for (let producto of this.movSeleccionado.productos) {
-        if(producto.item === productoSis.pro_id1){
-          this.cantProd=producto.cantidad
+        if (producto.item === productoSis.proId1) {
+          this.cantProd = producto.cantidadDigitada;
           break;
         }
       }
@@ -205,13 +233,13 @@ export class MovimientosPedidosComponent implements OnInit{
 
   logout() {
     sessionStorage.clear();
-    this.route.navigate(['/Cumpleaños/inicio/login'])
+    this.route.navigate(['/Cumpleaños/inicio/login']);
   }
 
-  limpiar(){
-    this.productoSis=new Producto()
-    this.imageUrl=''
-    this.cantProd=0;
+  limpiar() {
+    this.productoSis = new ProductoDespacho();
+    this.imageUrl = '';
+    this.cantProd = 0;
   }
 
   protected readonly faSearch = faSearch;

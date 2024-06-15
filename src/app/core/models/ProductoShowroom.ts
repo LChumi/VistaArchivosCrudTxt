@@ -3,9 +3,9 @@ export class ProductoShowroom{
   barra!:        string
   item!:         string
   descripcion!:  string
-  stockNc!:      string
-  stockZh!:      string
-  stockSh!:      string
+  stockNc!:      number
+  stockZh!:      number
+  stockSh!:      number
   cantidad!:     number
   observacion!:  string
 }

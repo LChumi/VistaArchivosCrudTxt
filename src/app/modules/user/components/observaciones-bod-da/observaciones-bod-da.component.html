@@ -63,9 +63,9 @@
                                     <td>{{observacion.diferencia || ''}}</td>
                                     <td>{{observacion.detalle || ''}}</td>
                                     <td>{{observacion.usuario || ''}}</td>
-                                    <td>{{observacion.correccion.usuario || ''}}</td>
-                                    <td>{{observacion.correccion.detalle || ''}}</td>
-                                    <td>{{observacion.correccion.fecha || ''}}</td>
+                                    <td>{{observacion.correccion?.usuario || ''}}</td>
+                                    <td>{{observacion.correccion?.detalle || ''}}</td>
+                                    <td>{{observacion.correccion?.fecha || ''}}</td>
                                     <td class="sticky-right">
                                         <button class="btn btn-primary" (click)="abrirVentanaCorreccion()">Novedad
                                             <fa-icon [icon]="faMessage"></fa-icon> </button>

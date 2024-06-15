@@ -24,4 +24,11 @@ export class DespachoProductosService {
   listarProductos(cco:number):Observable<ProductoDespacho[]>{
     return this.http.get<ProductoDespacho[]>(`${this.baseUrl}listar/${cco}`);
   }
+
+  buscarProducto(cco:number,data:string):Observable<ProductoDespacho>{
+    const params= {
+      params: { data: data}
+    }
+    return this.http.get<ProductoDespacho>(`${this.baseUrl}producto/${cco}`,params)
+  }
 }

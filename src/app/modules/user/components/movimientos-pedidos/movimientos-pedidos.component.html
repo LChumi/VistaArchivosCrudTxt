@@ -25,7 +25,7 @@
   </button>
 
   <div class="table-container">
-    <table class="table table-sm table-responsive table-primary">
+    <table class="table">
       <thead>
       <tr>
         <th scope="col">Cliente</th>
@@ -57,37 +57,40 @@
 <section *ngIf="ventanaVista">
   <div class="container">
 
-    <h1 class="titulo" style="Text-transform: uppercase">Productos  {{pedidoSelecionado.comprobante}}</h1>
+    <h1 class="titulo" style="Text-transform: uppercase">Productos  {{pedidoSelecionado.comprobante ? pedidoSelecionado.comprobante : ''}}</h1>
 
     <div class="col-md-4">
 
     </div>
-
-    <table class="table">
-      <thead>
-      <tr>
-        <th scope="col">Item Pedido</th>
-        <th scope="col">Detalle Pedido</th>
-        <th scope="col">Cantidad Pedido</th>
-        <th scope="col">Observacion Pedido</th>
-        <th scope="col">Cantidad Diogitada</th>
-        <th scope="col">Observacion </th>
-        <th>.</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let producto of listaProductosPedidos">
-        <td>{{ producto.proId1 }}</td>
-        <td>{{ producto.proNombre }}</td>
-        <td>{{ producto.cantidad }}</td>
-        <td>{{ producto.observacion }}</td>
-        <td>{{ producto.cantDigitada }}</td>
-        <td>{{ producto.observacionDigitada }}</td>
-        <td>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="table table-sm table-responsive table-primary">
+        <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Barra</th>
+          <th scope="col">Detalle</th>
+          <th scope="col">Cantidad Pedido</th>
+          <th scope="col">Observacion Pedido</th>
+          <th scope="col">Cantidad Digitada </th>
+          <th scope="col">Novedad </th>
+          <th>.</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let productoMov of listaProductosMov; let i = index">
+          <td>{{ productoMov.item}}</td>
+          <td>{{ productoMov.barra }}</td>
+          <td>{{ productoMov.detalle }}</td>
+          <td>{{ productoMov.cantidadPedido }}</td>
+          <td>{{ productoMov.observacionPedido }}</td>
+          <td>{{ productoMov.cantidadDigitada }}</td>
+          <td>{{ productoMov.novedad }}</td>
+          <td>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="inputs-container">
@@ -129,8 +132,19 @@
               </button>
             </div>
             <hr>
-            <p class="h1">{{ productoSis?.pro_nombre || "Producto" }}</p>
-            <p class="display-1">{{cantProd}}</p>
+            <p class="h5">{{ productoSis?.proNombre || "Producto" }}</p>
+            <p class="h5">{{productoSis?.proId1}}</p>
+            <p class="h6">{{productoSis?.cantidad}}</p>
+            <p class="h6">{{productoSis?.observacion}}</p>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="observacion">Observacion</span>
+              <input type="text"
+                     [(ngModel)]="observacion"
+                     class="form-control"
+                     placeholder="Ingrese la observacion del producto"
+                     aria-label="observacion"
+                     aria-describedby="observacion">
+            </div>
           </div>
         </div>
       </div>
