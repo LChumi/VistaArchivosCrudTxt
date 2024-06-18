@@ -269,6 +269,29 @@ export class MovimientosPedidosComponent implements OnInit{
     }
   }
 
+  descargarExcel(){
+    if (this.movSeleccionado){
+      this.movimientoService.excelMovNarancay(this.movSeleccionado).subscribe(
+        (excelBlob: Blob) => {
+          const  url = window.URL.createObjectURL(excelBlob);
+
+          const a = document.createElement('a');
+          a.href = url;
+          a.download=`${this.movSeleccionado?.detalle}.xlsx`
+          document.body.appendChild(a)
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+          this.ventanaVista=!this.ventanaVista
+        },
+        error => {
+          console.error(error)
+        }
+      )
+    }
+
+  }
+
   protected readonly faSearch = faSearch;
   protected readonly faFolderOpen = faFolderOpen;
   protected readonly faFileExcel = faFileExcel;

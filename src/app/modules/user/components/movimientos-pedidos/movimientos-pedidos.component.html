@@ -24,7 +24,6 @@
     <fa-icon [icon]="faSearch"></fa-icon>
   </button>
 
-  <div class="table-container">
     <table class="table">
       <thead>
       <tr>
@@ -51,7 +50,6 @@
       </tr>
       </tbody>
     </table>
-  </div>
 </section>
 
 <section *ngIf="ventanaVista">
@@ -64,6 +62,8 @@
         <span class="input-group-text" id="basic-addon1">Filtrar Producto</span>
         <input type="text" [(ngModel)]="searchItem" class="form-control" placeholder="Item" aria-label="Item" aria-describedby="basic-addon1" (input)="filtrarProductos()">
       </div>
+      <button class="btn btn-success" (click)="descargarExcel()"><fa-icon
+        [icon]="faFileExcel"></fa-icon> Finalizar y descargar Excel</button>
     </div>
     <div class="table-container">
       <table class="table table-sm table-responsive ">
