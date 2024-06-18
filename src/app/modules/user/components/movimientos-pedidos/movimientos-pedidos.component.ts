@@ -26,23 +26,25 @@ import {ImagenService} from "../../../../core/services/imagen.service";
 })
 export class MovimientosPedidosComponent implements OnInit{
 
-  listaPedidos!: Pedido[];
+  listaPedidos!:          Pedido[];
   listaProductosPedidos!: ProductoDespacho[];
-  listaProductosMov: ProductoMov[] = [];
-  pedidoSelecionado!: Pedido;
-  listaMovimientos: Movimiento[] = [];
-  movimiento?: Movimiento;
-  movSeleccionado?: Movimiento;
-  productoSis?: ProductoDespacho;
-  productoSubscription!: Subscription;
+  listaProductosMov:      ProductoMov[] = [];
+  productosFiltrados:     ProductoMov[] =[]
+  pedidoSelecionado!:     Pedido;
+  listaMovimientos:       Movimiento[] = [];
+  movimiento?:            Movimiento;
+  movSeleccionado?:       Movimiento;
+  productoSis?:           ProductoDespacho;
+  productoSubscription!:  Subscription;
 
-  pedidoInterno: number = 0;
-  barraItem: string = '';
-  imageUrl: string = '';
-  observacion: string = '';
-  cantidad: number = 0;
-  cantProd: number = 0;
-  numProd: number = 0;
+  pedidoInterno:    number = 0;
+  barraItem:        string = '';
+  imageUrl:         string = '';
+  observacion:      string = '';
+  searchItem:       string='';
+  cantidad:         number = 0;
+  cantProd:         number = 0;
+  numProd:          number = 0;
 
   ventanaVista = false;
 
@@ -73,13 +75,14 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   ListarProductosDespacho(pedido: Pedido) {
+    console.log('Entra a listar Producto de despacho');
     this.ventanaVista = !this.ventanaVista;
+    this.pedidoSelecionado= pedido
     this.productoDespachoService.listarProductos(pedido.codigoCco).subscribe(
       (productos: ProductoDespacho[]) => {
+        console.log(productos.length);
         this.listaProductosPedidos = productos;
-        if (this.movSeleccionado?.productos) {
-          this.cargarProducDespConMovProduct();
-        }
+        this.cargarProducDespConMovProduct();
       }
     );
   }
@@ -107,12 +110,14 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   buscarMovPed(pedido: Pedido) {
+    console.log('Buscar movimiento pedido', pedido.comprobante);
+    console.log(this.listaMovimientos.length);
     if (this.listaMovimientos.length != 0) {
       for (const movimiento of this.listaMovimientos) {
         if (movimiento.detalle === pedido.comprobante) {
           this.movSeleccionado = movimiento;
+            console.log(this.movSeleccionado.productos.length);
           this.ListarProductosDespacho(pedido);
-          this.cargarProducDespConMovProduct();
           return;
         }
       }
@@ -121,7 +126,9 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   cargarProducDespConMovProduct() {
+    console.log(`Número de productos en movimiento seleccionado: ${this.movSeleccionado?.productos.length}`);
     if (this.movSeleccionado?.productos) {
+      console.log(this.movSeleccionado.productos)
       const promises = this.listaProductosPedidos.map(pedido => {
         const productoMov = this.movSeleccionado?.productos.find(mov => mov.item === pedido.proId1);
         if (!productoMov) {
@@ -131,27 +138,31 @@ export class MovimientosPedidosComponent implements OnInit{
       });
 
       Promise.all(promises).then(() => {
-        // Once all products are added, update listaProductosMov
-        this.listaProductosMov = this.listaProductosPedidos.map(pedido => {
-          const productoMov = this.movSeleccionado?.productos.find(mov => mov.item === pedido.proId1);
-          return {
-            id: productoMov ? productoMov.id : 0,
-            barra: pedido.proId,
-            detalle: pedido.proNombre,
-            item: pedido.proId1,
-            cantidadPedido: pedido.cantidad,
-            observacionPedido: pedido.observacion || '',
-            cantidadDigitada: productoMov ? productoMov.cantidadDigitada : 0,
-            novedad: productoMov ? productoMov.novedad : ''
-          };
-        });
+        this.actualizarListaProductosMov();
       }).catch(error => {
         console.error('Error adding products:', error);
       });
     }
   }
 
+  actualizarListaProductosMov() {
+    this.productosFiltrados = this.listaProductosPedidos.map(pedido => {
+      const productoMov = this.movSeleccionado?.productos.find(mov => mov.item === pedido.proId1);
+      return {
+        id: productoMov ? productoMov.id : 0,
+        barra: pedido.proId,
+        detalle: pedido.proNombre,
+        item: pedido.proId1,
+        cantidadPedido: pedido.cantidad,
+        observacionPedido: pedido.observacion || '',
+        cantidadDigitada: productoMov ? productoMov.cantidadDigitada : 0,
+        novedad: productoMov ? productoMov.novedad : ''
+      };
+    });
+  }
+
   agregarProductoAsync(producto: ProductoDespacho): Promise<void> {
+    console.log('Agregar Producto');
     return new Promise((resolve, reject) => {
       const nuevoProductoMov = new ProductoMov();
       nuevoProductoMov.barra = producto.proId;
@@ -166,8 +177,9 @@ export class MovimientosPedidosComponent implements OnInit{
         this.movimientoService.agregarProductoZhucay(this.movSeleccionado.id, this.movSeleccionado.detalle, nuevoProductoMov).subscribe(
           (mov: Movimiento) => {
             this.movSeleccionado = mov;
-            this.listaProductosMov = mov.productos;
+            this.productosFiltrados = mov.productos;
             this.numProd = mov.productos.length;
+            this.buscarProductoCant(producto);
             this.cantidad = 0;
             this.observacion = '';
             resolve(); // Resolve the promise when the product is successfully added
@@ -210,6 +222,7 @@ export class MovimientosPedidosComponent implements OnInit{
             this.cantidad = 0;
           }
         );
+        this.agregarProductoAsync(producto);
         this.barraItem = '';
       },
       error: error => {
@@ -240,6 +253,20 @@ export class MovimientosPedidosComponent implements OnInit{
     this.productoSis = new ProductoDespacho();
     this.imageUrl = '';
     this.cantProd = 0;
+  }
+
+  filtrarProductos(){
+    this.actualizarProductosFiltrados()
+  }
+
+  actualizarProductosFiltrados(){
+    if (this.movSeleccionado) {
+      this.productosFiltrados = this.movSeleccionado.productos.filter((prod) =>
+        prod.item.toLowerCase().includes(this.searchItem.toLowerCase())
+      );
+    } else {
+      this.productosFiltrados = [];
+    }
   }
 
   protected readonly faSearch = faSearch;

@@ -54,8 +54,8 @@ export class BodegasComponent implements OnInit {
       case this.listaBodegas.some(bod => /SUGERIDOS/.test(nombreBodega)):
         this.router.navigate(['Cumpleaños/observaciones/sugeridos']);
         break;
-      case this.listaBodegas.some(bod => /ALMACEN NARANCAY/.test(nombreBodega) && /ALMACEN NARANCAY/.test(bod.bod_nombre)):
-        this.router.navigate(['Cumpleaños/observaciones/mov_narancay']);
+      case this.listaBodegas.some(bod => /BOD. ZHUCAY/.test(nombreBodega) && /BOD. ZHUCAY/.test(bod.bod_nombre)):
+        this.router.navigate(['Cumpleaños/observaciones/mov_pedidos']);
         break;
       // Agrega más casos según sea necesario para otras bodegas
       default:

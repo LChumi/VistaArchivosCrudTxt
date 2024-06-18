@@ -60,10 +60,13 @@
     <h1 class="titulo" style="Text-transform: uppercase">Productos  {{pedidoSelecionado.comprobante ? pedidoSelecionado.comprobante : ''}}</h1>
 
     <div class="col-md-4">
-
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Filtrar Producto</span>
+        <input type="text" [(ngModel)]="searchItem" class="form-control" placeholder="Item" aria-label="Item" aria-describedby="basic-addon1" (input)="filtrarProductos()">
+      </div>
     </div>
     <div class="table-container">
-      <table class="table table-sm table-responsive table-primary">
+      <table class="table table-sm table-responsive ">
         <thead>
         <tr>
           <th scope="col">Item</th>
@@ -77,7 +80,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let productoMov of listaProductosMov; let i = index">
+        <tr *ngFor="let productoMov of productosFiltrados; let i = index">
           <td>{{ productoMov.item}}</td>
           <td>{{ productoMov.barra }}</td>
           <td>{{ productoMov.detalle }}</td>
@@ -133,9 +136,10 @@
             </div>
             <hr>
             <p class="h5">{{ productoSis?.proNombre || "Producto" }}</p>
-            <p class="h5">{{productoSis?.proId1}}</p>
-            <p class="h6">{{productoSis?.cantidad}}</p>
-            <p class="h6">{{productoSis?.observacion}}</p>
+            <p class="h5">Item: {{productoSis?.proId1}}</p>
+            <p class="h6">Cantidad solicitada{{productoSis?.cantidad}}</p>
+            <p class="h6">Observacion {{productoSis?.observacion || 'sin observacion'}}</p>
+            <p class="display-1">Cantidad Marcada {{cantProd ? cantProd : 0}}</p>
             <div class="input-group mb-3">
               <span class="input-group-text" id="observacion">Observacion</span>
               <input type="text"
