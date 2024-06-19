@@ -28,7 +28,6 @@ export class MovimientosPedidosComponent implements OnInit{
 
   listaPedidos!:          Pedido[];
   listaProductosPedidos!: ProductoDespacho[];
-  listaProductosMov:      ProductoMov[] = [];
   productosFiltrados:     ProductoMov[] =[]
   pedidoSelecionado!:     Pedido;
   listaMovimientos:       Movimiento[] = [];
@@ -75,12 +74,10 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   ListarProductosDespacho(pedido: Pedido) {
-    console.log('Entra a listar Producto de despacho');
     this.ventanaVista = !this.ventanaVista;
     this.pedidoSelecionado= pedido
     this.productoDespachoService.listarProductos(pedido.codigoCco).subscribe(
       (productos: ProductoDespacho[]) => {
-        console.log(productos.length);
         this.listaProductosPedidos = productos;
         this.cargarProducDespConMovProduct();
       }
@@ -110,13 +107,10 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   buscarMovPed(pedido: Pedido) {
-    console.log('Buscar movimiento pedido', pedido.comprobante);
-    console.log(this.listaMovimientos.length);
     if (this.listaMovimientos.length != 0) {
       for (const movimiento of this.listaMovimientos) {
         if (movimiento.detalle === pedido.comprobante) {
           this.movSeleccionado = movimiento;
-            console.log(this.movSeleccionado.productos.length);
           this.ListarProductosDespacho(pedido);
           return;
         }
@@ -126,9 +120,7 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   cargarProducDespConMovProduct() {
-    console.log(`Número de productos en movimiento seleccionado: ${this.movSeleccionado?.productos.length}`);
     if (this.movSeleccionado?.productos) {
-      console.log(this.movSeleccionado.productos)
       const promises = this.listaProductosPedidos.map(pedido => {
         const productoMov = this.movSeleccionado?.productos.find(mov => mov.item === pedido.proId1);
         if (!productoMov) {
@@ -140,7 +132,7 @@ export class MovimientosPedidosComponent implements OnInit{
       Promise.all(promises).then(() => {
         this.actualizarListaProductosMov();
       }).catch(error => {
-        console.error('Error adding products:', error);
+        console.error('Error agregando products:', error);
       });
     }
   }
@@ -162,7 +154,6 @@ export class MovimientosPedidosComponent implements OnInit{
   }
 
   agregarProductoAsync(producto: ProductoDespacho): Promise<void> {
-    console.log('Agregar Producto');
     return new Promise((resolve, reject) => {
       const nuevoProductoMov = new ProductoMov();
       nuevoProductoMov.barra = producto.proId;
@@ -172,6 +163,13 @@ export class MovimientosPedidosComponent implements OnInit{
       nuevoProductoMov.cantidadPedido = producto.cantidad;
       nuevoProductoMov.observacionPedido = producto.observacion || '';
       nuevoProductoMov.novedad = this.observacion;
+
+      this.buscarProductoCant(producto);
+
+      if (producto.cantidad <= this.cantProd || producto.cantidad <= this.cantidad){
+        alert("la cantidad es mayor a la cantidad Pedida ")
+        return
+      }
 
       if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
         this.movimientoService.agregarProductoZhucay(this.movSeleccionado.id, this.movSeleccionado.detalle, nuevoProductoMov).subscribe(
@@ -228,6 +226,7 @@ export class MovimientosPedidosComponent implements OnInit{
       error: error => {
         alert('Producto no encontrado');
         this.barraItem = '';
+        this.imageUrl = '';
         this.productoSis = new ProductoDespacho();
       }
     });

@@ -80,7 +80,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let productoMov of productosFiltrados; let i = index">
+        <tr *ngFor="let productoMov of productosFiltrados; let i = index"
+            [ngClass]="{'table-success': productoMov.cantidadPedido === productoMov.cantidadDigitada, 'table-waring': productoMov.cantidadPedido !== productoMov.cantidadDigitada}">
           <td>{{ productoMov.item}}</td>
           <td>{{ productoMov.barra }}</td>
           <td>{{ productoMov.detalle }}</td>
@@ -137,9 +138,9 @@
             <hr>
             <p class="h5">{{ productoSis?.proNombre || "Producto" }}</p>
             <p class="h5">Item: {{productoSis?.proId1}}</p>
-            <p class="h6">Cantidad solicitada{{productoSis?.cantidad}}</p>
-            <p class="h6">Observacion {{productoSis?.observacion || 'sin observacion'}}</p>
-            <p class="display-1">Cantidad Marcada {{cantProd ? cantProd : 0}}</p>
+            <p class="h6">Cantidad solicitada: {{productoSis?.cantidad}}</p>
+            <p class="h6">Observacion: {{productoSis?.observacion || 'sin observacion'}}</p>
+            <p class="display-1">Cantidad Marcada: {{cantProd ? cantProd : 0}}</p>
             <div class="input-group mb-3">
               <span class="input-group-text" id="observacion">Observacion</span>
               <input type="text"
