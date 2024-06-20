@@ -29,7 +29,6 @@
       <tr>
         <th scope="col">Cliente</th>
         <th scope="col">Comprobante</th>
-        <th scope="col">Empresa</th>
         <th>.</th>
       </tr>
       </thead>
@@ -37,7 +36,6 @@
       <tr *ngFor="let pedido of listaPedidos" (click)="pedidoSelecionado=pedido">
         <td>{{ pedido.cliente }}</td>
         <td>{{ pedido.comprobante }}</td>
-        <td>{{ pedido.empresa }}</td>
         <td>
           <button
             type="button"
@@ -140,7 +138,7 @@
             <p class="h5">Item: {{productoSis?.proId1}}</p>
             <p class="h6">Cantidad solicitada: {{productoSis?.cantidad}}</p>
             <p class="h6">Observacion: {{productoSis?.observacion || 'sin observacion'}}</p>
-            <p class="display-1">Cantidad Marcada: {{cantProd ? cantProd : 0}}</p>
+            <p class="display-2">Cantidad Marcada: {{cantProd ? cantProd : 0}}</p>
             <div class="input-group mb-3">
               <span class="input-group-text" id="observacion">Observacion</span>
               <input type="text"

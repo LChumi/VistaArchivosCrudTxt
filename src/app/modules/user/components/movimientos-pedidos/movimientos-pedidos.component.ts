@@ -167,7 +167,10 @@ export class MovimientosPedidosComponent implements OnInit{
       this.buscarProductoCant(producto);
 
       if (producto.cantidad <= this.cantProd || producto.cantidad <= this.cantidad){
-        alert("la cantidad es mayor a la cantidad Pedida ")
+        this.reproducirError()
+        setTimeout(() => {
+          alert("la cantidad es mayor a la cantidad Pedida")
+        },1000)
         return
       }
 
@@ -184,7 +187,7 @@ export class MovimientosPedidosComponent implements OnInit{
           },
           error => {
             console.error('Error adding product:', error);
-            reject(error); // Reject the promise if there's an error
+            reject(error); // Rechaza la promesa en caso e que se rompa el codigo
           }
         );
       } else {
@@ -205,6 +208,17 @@ export class MovimientosPedidosComponent implements OnInit{
     const cco = this.pedidoSelecionado.codigoCco;
     this.productoSubscription = this.productoDespachoService.buscarProducto(cco, this.barraItem).subscribe({
       next: producto => {
+        if (!producto){
+          this.reproducirAlerta();
+          this.barraItem = '';
+          this.imageUrl = '';
+          this.productoSis = new ProductoDespacho();
+          setTimeout(() => {
+            alert('Producto no encontrado en el pedido ');
+          }, 1000)
+          return;
+        }
+        console.log("producto encontrado: ", producto)
         this.productoSis = producto;
         this.imagenService.getImagen(producto.proId + '.jpg').subscribe(
           data => {
@@ -224,7 +238,7 @@ export class MovimientosPedidosComponent implements OnInit{
         this.barraItem = '';
       },
       error: error => {
-        alert('Producto no encontrado');
+        alert('Producto no encontrado en el pedido ');
         this.barraItem = '';
         this.imageUrl = '';
         this.productoSis = new ProductoDespacho();
@@ -289,6 +303,20 @@ export class MovimientosPedidosComponent implements OnInit{
       )
     }
 
+  }
+
+  reproducirAlerta(){
+    const audio = new Audio();
+    audio.src = 'assets/sounds/stwime__brlip.mp3'
+    audio.load();
+    audio.play();
+  }
+
+  reproducirError(){
+    const audio = new Audio();
+    audio.src = 'assets/sounds/alert.mp3'
+    audio.load();
+    audio.play();
   }
 
   protected readonly faSearch = faSearch;
