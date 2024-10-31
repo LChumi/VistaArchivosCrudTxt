@@ -81,15 +81,23 @@
         <thead>
         <tr>
           <th scope="col">Item</th>
+          <th scope="col">Barra</th>
           <th scope="col">Detalle</th>
-          <th scope="col">Cantidad</th>
+          <th scope="col">Cantidad Pedido</th>
+          <th scope="col">Observacion Pedido</th>
+          <th scope="col">Cantidad Digitada </th>
+          <th scope="col">Novedad </th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let producto of productosFiltrados">
+        <tr *ngFor="let producto of productosFiltrados" (click)="mostrarProducto(producto)">
           <td>{{ producto.item }}</td>
+          <td>{{ producto.barra }}</td>
           <td>{{ producto.detalle }}</td>
+          <td>{{ producto.cantidadPedido}}</td>
+          <td>{{ producto.observacionPedido}}</td>
           <td>{{ producto.cantidadDigitada}}</td>
+          <td>{{ producto.novedad}}</td>
         </tr>
         </tbody>
       </table>
@@ -107,36 +115,9 @@
 
           <div class="col-md-6">
             <div class="card-body">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Barra y cantidad </span>
-                </div>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputProducto"
-                  [(ngModel)]="barraItem"
-                  placeholder="Item o Barra"
-                  (keyup.enter)="mostrarProducto()"
-                  style="text-transform: uppercase"
-                  required
-                  autofocus
-                />
-                <input
-                  type="number"
-                  class="form-control"
-                  id="inputCantidad"
-                  [(ngModel)]="cantidad"
-                  placeholder="Cantidad"
-                  style="text-transform: uppercase"
-                />
-                <button class="btn btn-outline-primary" (click)="mostrarProducto()">
-                  <fa-icon [icon]="faSearch"></fa-icon>
-                </button>
-              </div>
-              <hr>
-              <p class="h1">{{ producto?.pro_nombre || "Producto" }}</p>
-              <p class="display-1">{{cantProd}}</p>
+              <p class="h1">{{productoName || "Producto" }}</p>
+              <p class="display-1">{{obs}}</p>
+              <p class="display-1">{{nov}}</p>
             </div>
           </div>
         </div>

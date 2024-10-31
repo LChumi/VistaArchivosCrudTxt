@@ -11,6 +11,11 @@
 <main class="main">
   <div class="tittle-container">
     <h1>LISTA DE BODEGAS</h1>
+    <div class="bg-light-subtle align-items-center" *ngIf="isConta">
+      <button type="button" class="btn btn-info" (click)="modalConta=true"> Subir archivos de comprobantes
+        <fa-icon [icon]="faFileExport"></fa-icon>
+      </button>
+    </div>
   </div>
   <div class="card-row">
     <div class="card" *ngFor="let bodega of listaBodegas" (click)="BodegaSelecccionada(bodega)" >
@@ -25,5 +30,117 @@
       <img [src]="movimientosImg" alt="Bodega">
       <h2>Bodega Zhucay</h2>
     </div>
+    <div class="card" (click)="ingresarMovimientos('PED. ZHUCAY')">
+      <img [src]="movimientosImg" alt="Bodega">
+      <h2>Pedidos Generados</h2>
+    </div>
   </div>
+  <hr>
+  <div class="bg-light-subtle align-items-center">
+    <button type="button" class="btn btn-info" (click)="showModal=true"> Generar archivo de pedidos
+      <fa-icon [icon]="faFileExport"></fa-icon>
+    </button>
+  </div>
+
+
+  <div class="modal-opciones" *ngIf="showModal ">
+    <div class="modal-content-opciones">
+      <span>Pedido</span>
+      <div class="input-group mb-auto">
+        <span class="input-group-text" id="basic-addon3">Pedido #</span>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="codigo"
+          id="basic-url"
+          autocomplete="off"
+          aria-describedby="basic-addon3">
+      </div>
+      <div class="close" (click)="showModal=false">
+        <fa-icon [icon]="faWindowClose"></fa-icon>
+      </div>
+      <div class="content">
+        <ul class="icons">
+          <button
+            (click)="descargarExcel()"
+            [disabled]="donwloading"
+            type="button"
+            class="btn btn-primary"
+            title="Excel"
+            [ngClass]="{'opacity-50 cursor-not-allowed': donwloading}"
+           >
+            <fa-icon [icon]="faFileExcel"></fa-icon>
+            <div *ngIf="donwloading" class="spinner-container">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </button>
+          <button
+            (click)="descargarPdf()"
+            [disabled]="donwloading"
+            class="btn btn-primary"
+            title="Pdf"
+            [ngClass]="{'opacity-50 cursor-not-allowed': donwloading}"
+            >
+            <fa-icon *ngIf="!donwloading" [icon]="faFilePdf"></fa-icon>
+            <div *ngIf="donwloading" class="spinner-container">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </button>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-opciones" *ngIf="modalConta">
+    <div class="modal-content-opciones p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="h5">Envío de archivos (CSV - XML - JSON)</span>
+        <div class="close" (click)="modalConta = false">
+          <fa-icon [icon]="faWindowClose"></fa-icon>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="string-data" class="form-label">Ingrese el texto</label>
+        <textarea
+          class="form-control"
+          [(ngModel)]="data"
+          id="string-data"
+          rows="5"
+          style="resize: none; overflow-y: auto;"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="file-upload" class="form-label">Subir archivo</label>
+        <input
+          type="file"
+          class="form-control"
+          id="file-upload"
+          (change)="onFileChange($event)"
+        >
+      </div>
+
+      <div class="content d-flex justify-content-between mt-4">
+        <button (click)="sendString(data)" class="btn btn-primary" [disabled]="!data">
+          <span *ngIf="isSending" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="!isSending">Enviar Texto</span>
+        </button>
+        <button (click)="sendFile()" class="btn btn-primary" [disabled]="!selectedFile || !emailEmpresarial">
+          <span *ngIf="isSending" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="!isSending">Enviar Archivo</span>
+        </button>
+      </div>
+
+
+      <div *ngIf="message" class="alert alert-info mt-3">{{ message }}</div>
+    </div>
+  </div>
+
 </main>
+
+

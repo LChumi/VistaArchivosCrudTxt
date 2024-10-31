@@ -7,13 +7,10 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
 import {Movimiento} from "../../../../core/models/Movimiento";
-import {Producto} from "../../../../core/models/Producto";
 import {ProductoMov} from "../../../../core/models/ProductoMov";
 import {MovimientosService} from "../../../../core/services/movimientos.service";
 import {ImagenService} from "../../../../core/services/imagen.service";
-import {ProductoService} from "../../../../core/services/producto.service";
 import {faFileExcel, faFolderOpen, faFolderPlus, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
 
@@ -24,13 +21,10 @@ import {Router} from "@angular/router";
 })
 export class MovimientosZhucayComponent implements OnInit {
 
-  productoSubscription!: Subscription;
   listaMovimientos:      Movimiento[] = []
   productosFiltrados:    ProductoMov[] =[]
   movimiento?:           Movimiento
   movSeleccionado?:      Movimiento
-  producto?:             Producto
-  productoMov?:          ProductoMov
 
   detalle:          string='';
   barraItem:        string='';
@@ -39,6 +33,9 @@ export class MovimientosZhucayComponent implements OnInit {
   cantProd:         number=0;
   numProd:          number=0;
   searchItem:       string='';
+  productoName:     string='';
+  obs:              string='';
+  nov:              string='';
 
   usuariosessionStorage = sessionStorage.getItem('usuario') ?? '';
 
@@ -47,7 +44,6 @@ export class MovimientosZhucayComponent implements OnInit {
 
   constructor(private movimientoService: MovimientosService,
               private imagenService: ImagenService,
-              private productoService: ProductoService,
               private route: Router) { }
 
   ngOnInit(): void {
@@ -103,76 +99,26 @@ export class MovimientosZhucayComponent implements OnInit {
     })
   }
 
-  agregarProducto(producto: Producto){
-    this.productoMov= new ProductoMov()
-    this.productoMov.barra= producto.pro_id;
-    this.productoMov.cantidadDigitada=this.cantidad;
-    this.productoMov.detalle = producto.pro_nombre;
-    this.productoMov.item =producto.pro_id1;
-
-    if (this.movSeleccionado && this.movSeleccionado.id && this.movSeleccionado.detalle) {
-      this.movimientoService.agregarProductoZhucay(this.movSeleccionado.id, this.movSeleccionado.detalle, this.productoMov).subscribe(
-        (mov: Movimiento)=>{
-          this.movSeleccionado=mov
-          this.actualizarProductosFiltrados()
-          this.buscarProductoCant(producto);
-          this.numProd=mov.productos.length;
-          this.cantidad=0;
-        }
-      );
-    } else {
-      alert('El movimiento seleccionado no tiene un ID o detalle definido.');
-    }
-  }
-
-  mostrarProducto() {
-    this.producto = new Producto()
-    if (!this.barraItem) {
-      alert('Ingrese el item o la barra');
-      return;
-    }
-
-    this.barraItem = this.barraItem.toUpperCase();
-    this.productoSubscription = this.productoService.buscarProducto(this.barraItem)
-      .subscribe({
-        next: (producto: Producto) => {
-          this.producto = producto;
-          this.imagenService.getImagen(this.producto.pro_id + '.jpg').subscribe(
+  mostrarProducto(prod:ProductoMov) {
+          this.imagenService.getImagen(prod.barra + '.jpg').subscribe(
             data => {
               if (data) {
-                const objectUrl = URL.createObjectURL(data);
-                this.imageUrl = objectUrl;
+                this.imageUrl = URL.createObjectURL(data);
+                this.obs=prod.observacionPedido
+                this.nov=prod.novedad
+                this.productoName=prod.detalle
               } else {
                 this.imageUrl = '';
                 this.cantidad=0;
+                this.productoName=''
               }
             },
             error => {
               this.imageUrl = '';
               this.cantidad=0;
+              this.productoName=''
             }
           )
-          this.agregarProducto(producto);
-          this.barraItem = '';
-        },
-        error: error => {
-          alert('Producto no encontrado');
-          console.error(error);
-          this.barraItem = '';
-          this.producto = new Producto();
-        }
-      });
-  }
-
-  buscarProductoCant(productoSis:Producto){
-    if (this.movSeleccionado?.productos) {
-      for (let producto of this.movSeleccionado.productos) {
-        if(producto.item === productoSis.pro_id1){
-          this.cantProd=producto.cantidadDigitada
-          break;
-        }
-      }
-    }
   }
 
   descargarExcel(){
@@ -195,11 +141,9 @@ export class MovimientosZhucayComponent implements OnInit {
         }
       )
     }
-
   }
 
   limpiar(){
-    this.producto=new Producto()
     this.imageUrl=''
     this.cantProd=0;
   }

@@ -115,6 +115,13 @@ export class SugeridosComponent implements OnInit{
     this.productoShowroom.stockZh=this.producto.stock_real
     this.productoShowroom.stockSh=this.stockShowroom
 
+    // Verificar propiedades importantes
+    if (!this.productoShowroom.barra || !this.productoShowroom.item || !this.productoShowroom.descripcion) {
+      alert("El producto tiene propiedades nulas. Por favor, verifique y complete toda la información requerida.");
+      this.botonBloq = false;
+      return;
+    }
+
 
     if (this.sugeridoSelect && this.sugeridoSelect.id && this.sugeridoSelect.detalle) {
       this.sugeridoService.agregarProducto(this.sugeridoSelect.id, this.sugeridoSelect.detalle, this.productoShowroom).subscribe(
