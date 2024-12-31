@@ -17,21 +17,23 @@ import { ConfirmacionDialogComponent } from './components/notification/confirmac
 import { MatDialogModule } from '@angular/material/dialog';
 import {WebcamModule} from 'ngx-webcam';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {MatButton} from "@angular/material/button";
 
 @NgModule({
   declarations: [
     AppComponent,
     ConfirmacionDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    FontAwesomeModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatDialogModule,
-    WebcamModule,
-    ZXingScannerModule
-  ],
+    imports: [
+        BrowserModule,
+        FontAwesomeModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatDialogModule,
+        WebcamModule,
+        ZXingScannerModule,
+        MatButton
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
