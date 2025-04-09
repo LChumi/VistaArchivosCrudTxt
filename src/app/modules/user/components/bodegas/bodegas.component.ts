@@ -6,7 +6,7 @@
  * Me gustaría ser reconocido por mi trabajo y estar abierto a colaboraciones o enseñanzas sobre el programa.
  */
 
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Bodega } from '../../../../core/models/Bodega';
 import { BodegaService } from './services/bodega.service';
 import { DialogService } from '../../../../components/notification/services/dialog.service';
