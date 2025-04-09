@@ -27,11 +27,11 @@ import {FiltroColorPipe} from "../observaciones/pipes/filtro-color.pipe";
 
 
 @Component({
-  selector: 'app-observaciones-gcolombia',
-  templateUrl: './observaciones-gcolombia.component.html',
-  styleUrl: './observaciones-gcolombia.component.css'
+  selector: 'app-observaciones-gcolombia2',
+  templateUrl: './observaciones-gcolombia2.component.html',
+  styleUrl: './observaciones-gcolombia2.component.css'
 })
-export class ObservacionesGColombiaComponent implements OnInit{
+export class ObservacionesGColombia2Component implements OnInit{
 
   constructor(private observacionService: ObservacionesService, private productoService: ProductoService, private route: Router,private imagen:ImagenService, private cdr: ChangeDetectorRef) { }
 
@@ -72,7 +72,7 @@ export class ObservacionesGColombiaComponent implements OnInit{
   }
 
   listarObservaciones(): void {
-    this.observacionService.getObservacionesGColombia().subscribe(
+    this.observacionService.getObservacionesGColombia2().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = lista;
         this.totalObservaciones = this.observaciones.length;
@@ -82,7 +82,7 @@ export class ObservacionesGColombiaComponent implements OnInit{
   }
 
   seleccionarColor() {
-    this.observacionService.getObservacionesGColombia().subscribe(
+    this.observacionService.getObservacionesGColombia2().subscribe(
       (lista: Observacion[]) => {
         this.observaciones = this.filtroColorPipe.transform(lista, this.colorSeleccionado);
         this.totalObservaciones = this.observaciones.length;
@@ -148,7 +148,7 @@ export class ObservacionesGColombiaComponent implements OnInit{
     this.observacion.diferencia = this.diferencia.toUpperCase();
     this.observacion.usuario = this.usuariosessionStorage;
 
-    this.observacionService.guardarGColombia(this.observacion).subscribe({
+    this.observacionService.guardarGColombia2(this.observacion).subscribe({
       next: (obs: Observacion) => {
         this.listarObservaciones();
         this.detalleOb = '';
@@ -181,7 +181,7 @@ export class ObservacionesGColombiaComponent implements OnInit{
       return
     }
 
-    this.observacionService.agregarCorreccionGColombia(this.obCorr).subscribe(
+    this.observacionService.agregarCorreccionGColombia2(this.obCorr).subscribe(
       data => {
         if (data) {
           this.listarObservaciones();

@@ -65,14 +65,20 @@ export class ObservacionesService {
   guardarGColombia(observacion:Observacion):Observable<Observacion>{
     return this.http.post<Observacion>(this.baseUrl+'guardar/gColombia',observacion)
   }
+  guardarGColombia2(observacion:Observacion):Observable<Observacion>{
+    return this.http.post<Observacion>(this.baseUrl+'guardar/gColombia2',observacion)
+  }
   getObservacionesGColombia():Observable<Observacion[]>{
     return this.http.get<Observacion[]>(this.baseUrl+'listarGColombia');
+  }
+  getObservacionesGColombia2():Observable<Observacion[]>{
+    return this.http.get<Observacion[]>(this.baseUrl+'listarGColombia2');
   }
   agregarCorreccionGColombia(correccion:ObservacionCorrecion):Observable<Observacion>{
     return this.http.put<Observacion>(this.baseUrl+'agregarCorrecionGColombia/',correccion)
   }
-  excelGColombia():Observable<Blob>{
-    return this.http.get(this.baseUrl+'excel/gColombia/',{responseType:'blob'});
+  agregarCorreccionGColombia2(correccion:ObservacionCorrecion):Observable<Observacion>{
+    return this.http.put<Observacion>(this.baseUrl+'agregarCorrecionGColombia2/',correccion)
   }
   /** Crud para api Vergel */
   guardarVergel(observacion:Observacion):Observable<Observacion>{

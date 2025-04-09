@@ -22,8 +22,8 @@ import { Producto } from '../../../../core/models/Producto';
 import { Subscription } from 'rxjs';
 import { ObservacionCorrecion } from '../../../../core/models/ObservacionCorreccion';
 import { Correccion } from '../../../../core/models/Correccion';
-import { FiltroColorPipe } from './pipes/filtro-color.pipe';
 import { ObservacionesService } from '../../../../core/services/observaciones.service';
+import {FiltroColorPipe} from "../observaciones/pipes/filtro-color.pipe";
 
 @Component({
   selector: 'app-observaciones-vergel',

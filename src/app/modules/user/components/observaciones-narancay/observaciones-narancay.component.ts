@@ -16,7 +16,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ProductoService } from '../../../../core/services/producto.service';
 import { Router } from '@angular/router';
-import { FiltroColorPipe } from './pipes/filtro-color.pipe';
 import { Observacion } from '../../../../core/models/Observaciones';
 import { Producto } from '../../../../core/models/Producto';
 import { ObservacionCorrecion } from '../../../../core/models/ObservacionCorreccion';
@@ -24,6 +23,7 @@ import { Correccion } from '../../../../core/models/Correccion';
 import { BarcodeFormat} from '@zxing/library'
 import {ImagenService} from "../../../../core/services/imagen.service";
 import { ObservacionesService } from '../../../../core/services/observaciones.service';
+import {FiltroColorPipe} from "../observaciones/pipes/filtro-color.pipe";
 
 
 @Component({

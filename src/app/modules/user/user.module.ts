@@ -25,6 +25,7 @@ import { ObservacionesGColombiaComponent } from './components/observaciones-gcol
 import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
 import { MovimientosPedidosComponent } from './components/movimientos-pedidos/movimientos-pedidos.component';
 import { SugeridosComponent } from './components/sugeridos/sugeridos.component';
+import { ObservacionesGColombia2Component} from "./components/observaciones-gcolombia2/observaciones-gcolombia2.component";
 
 @NgModule({
   declarations: [
@@ -36,9 +37,13 @@ import { SugeridosComponent } from './components/sugeridos/sugeridos.component';
     MovimientosZhucayComponent,
     MovimientosNarancayComponent,
     ObservacionesGColombiaComponent,
+    ObservacionesGColombia2Component,
     ObservacionesVergelComponent,
     MovimientosPedidosComponent,
     SugeridosComponent
+  ],
+  exports: [
+    FiltroColorPipe
   ],
   imports: [
     CommonModule,

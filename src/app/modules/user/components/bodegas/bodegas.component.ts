@@ -53,6 +53,7 @@ export class BodegasComponent implements OnInit {
 
 
   BodegaSelecccionada(bodega: Bodega) {
+    console.log(bodega)
     this.bodegaSeleccionada = bodega;
     sessionStorage.setItem('bodId', String(this.bodegaSeleccionada.bod_codigo));
     this.dialogService.abrirConfirmacion(bodega.bod_nombre);

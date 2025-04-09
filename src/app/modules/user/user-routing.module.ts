@@ -18,6 +18,9 @@ import { ObservacionesVergelComponent } from './components/observaciones-vergel/
 import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
 import {MovimientosPedidosComponent} from "./components/movimientos-pedidos/movimientos-pedidos.component";
 import {SugeridosComponent} from "./components/sugeridos/sugeridos.component";
+import {
+  ObservacionesGColombia2Component
+} from "./components/observaciones-gcolombia2/observaciones-gcolombia2.component";
 
 const routes: Routes = [
   {path:'bodegas', component:BodegasComponent},
@@ -26,6 +29,7 @@ const routes: Routes = [
   {path:'bod_danados',component:ObservacionesBodDaComponent},
   {path:'vergel',component:ObservacionesVergelComponent},
   {path:'colombia',component:ObservacionesGColombiaComponent},
+  {path:'colombia2',component:ObservacionesGColombia2Component},
   {path:'mov_narancay',component:MovimientosNarancayComponent},
   {path:'mov_zhucay',component:MovimientosZhucayComponent},
   {path:'mov_pedidos',component:MovimientosPedidosComponent},
