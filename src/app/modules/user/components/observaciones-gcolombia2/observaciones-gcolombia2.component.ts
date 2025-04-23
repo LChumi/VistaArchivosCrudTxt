@@ -176,23 +176,25 @@ export class ObservacionesGColombia2Component implements OnInit{
     this.correccion.usuario = this.usuariosessionStorage;
     this.obCorr.correccion = this.correccion;
 
-    if(this.usuariosessionStorage == 'SANDRA OCHOA' || this.usuariosessionStorage == 'TORRES DANIEL'){
+    if(this.usuariosessionStorage == 'SANDRA OCHOA'){
       alert('No esta autorizado a corregir')
       return
     }
 
-    this.observacionService.agregarCorreccionGColombia2(this.obCorr).subscribe(
-      data => {
+    this.observacionService.agregarCorreccionGColombia2(this.obCorr).subscribe({
+      next: data => {
         if (data) {
           this.listarObservaciones();
           this.novedad = '';
           this.cerrarVentanaCorreccion();
         }
-      }, error => {
+      },
+      error: error => {
         this.novedad = '';
+        console.error(error)
         alert('Novedad no registrada')
       }
-    )
+    })
   }
 
   descargarExcel(){
