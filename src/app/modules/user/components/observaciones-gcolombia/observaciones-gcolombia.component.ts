@@ -8,11 +8,10 @@
 
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
-  faArrowRightFromBracket, faBarcode, faCircleExclamation,
-  faFileCirclePlus, faFileExcel, faListCheck,
-  faListUl,
+  faArrowRightFromBracket,
+  faFileCirclePlus, faFileExcel,
   faMessage,
-  faSearch, faTriangleExclamation
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { ProductoService } from '../../../../core/services/producto.service';
 import { Router } from '@angular/router';
@@ -103,7 +102,7 @@ export class ObservacionesGColombiaComponent implements OnInit{
       .subscribe({
         next: (producto: Producto) => {
           this.producto = producto;
-          this.imagen.getImagen(this.producto.pro_id+'.jpg').subscribe(
+          this.imagen.getImagen(this.producto.proId+'.jpg').subscribe(
             data => {
               if (data){
                 const objectUrl=URL.createObjectURL(data);
@@ -131,18 +130,18 @@ export class ObservacionesGColombiaComponent implements OnInit{
       alert('Por favor ingrese una observacion antes de guardar.');
       return;
     }
-    if (this.producto.pro_nombre === undefined) {
+    if (this.producto.nombre === undefined) {
       alert('Por favor Ingrese el producto ');
       return;
     }
 
     this.observacion = new Observacion()
-    this.observacion.item = this.producto.pro_id1;
-    this.observacion.descripcion = this.producto.pro_nombre;
+    this.observacion.item = this.producto.proId1;
+    this.observacion.descripcion = this.producto.nombre;
     this.observacion.unidad = this.producto.unidad;
     this.observacion.bulto = this.producto.bulto;
     this.observacion.cxb = this.producto.cxb;
-    this.observacion.stock = this.producto.stock_real;
+    this.observacion.stock = this.producto.stockReal;
     this.observacion.precio = this.producto.pvp;
     this.observacion.detalle = this.detalleOb.toUpperCase();
     this.observacion.diferencia = this.diferencia.toUpperCase();
@@ -265,16 +264,9 @@ export class ObservacionesGColombiaComponent implements OnInit{
     return new Date(anio, mes - 1, dia);
   }
 
-
-
-  protected readonly faListUl = faListUl;
   protected readonly faMessage = faMessage;
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faSearch = faSearch;
   protected readonly faFileCirclePlus = faFileCirclePlus;
-  protected readonly faListCheck = faListCheck;
-  protected readonly faTriangleExclamation = faTriangleExclamation;
-  protected readonly faCircleExclamation = faCircleExclamation;
-  protected readonly faBarcode = faBarcode;
   protected readonly faFileExcel = faFileExcel;
 }

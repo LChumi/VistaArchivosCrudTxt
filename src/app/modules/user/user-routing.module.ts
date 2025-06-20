@@ -12,12 +12,8 @@ import {ObservacionesComponent} from "./components/observaciones/observaciones.c
 import {BodegasComponent} from "./components/bodegas/bodegas.component";
 import { ObservacionesNarancayComponent } from './components/observaciones-narancay/observaciones-narancay.component';
 import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/observaciones-bod-da.component';
-import { MovimientosNarancayComponent } from './components/movimientos-narancay/movimientos-narancay.component';
-import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movimientos-zhucay.component';
 import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
 import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
-import {MovimientosPedidosComponent} from "./components/movimientos-pedidos/movimientos-pedidos.component";
-import {SugeridosComponent} from "./components/sugeridos/sugeridos.component";
 import {
   ObservacionesGColombia2Component
 } from "./components/observaciones-gcolombia2/observaciones-gcolombia2.component";
@@ -30,10 +26,6 @@ const routes: Routes = [
   {path:'vergel',component:ObservacionesVergelComponent},
   {path:'colombia',component:ObservacionesGColombiaComponent},
   {path:'colombia2',component:ObservacionesGColombia2Component},
-  {path:'mov_narancay',component:MovimientosNarancayComponent},
-  {path:'mov_zhucay',component:MovimientosZhucayComponent},
-  {path:'mov_pedidos',component:MovimientosPedidosComponent},
-  {path:'sugeridos',component:SugeridosComponent},
   {path:'',redirectTo:'bodegas',pathMatch:'full'},
   {path:'**',redirectTo:'bodegas'}
 ];

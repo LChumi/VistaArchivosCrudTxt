@@ -103,7 +103,7 @@ export class ObservacionesGColombia2Component implements OnInit{
       .subscribe({
         next: (producto: Producto) => {
           this.producto = producto;
-          this.imagen.getImagen(this.producto.pro_id+'.jpg').subscribe(
+          this.imagen.getImagen(this.producto.proId+'.jpg').subscribe(
             data => {
               if (data){
                 const objectUrl=URL.createObjectURL(data);
@@ -131,18 +131,18 @@ export class ObservacionesGColombia2Component implements OnInit{
       alert('Por favor ingrese una observacion antes de guardar.');
       return;
     }
-    if (this.producto.pro_nombre === undefined) {
+    if (this.producto.nombre === undefined) {
       alert('Por favor Ingrese el producto ');
       return;
     }
 
     this.observacion = new Observacion()
-    this.observacion.item = this.producto.pro_id1;
-    this.observacion.descripcion = this.producto.pro_nombre;
+    this.observacion.item = this.producto.proId1;
+    this.observacion.descripcion = this.producto.nombre;
     this.observacion.unidad = this.producto.unidad;
     this.observacion.bulto = this.producto.bulto;
     this.observacion.cxb = this.producto.cxb;
-    this.observacion.stock = this.producto.stock_real;
+    this.observacion.stock = this.producto.stockReal;
     this.observacion.precio = this.producto.pvp;
     this.observacion.detalle = this.detalleOb.toUpperCase();
     this.observacion.diferencia = this.diferencia.toUpperCase();

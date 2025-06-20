@@ -8,14 +8,14 @@
 
 export class Producto{
   secuencia!:string;
-  pro_id!:string;
-  pro_id1!:string;
+  proId!:string;
+  proId1!:string;
   cxb!:number;
-  pro_nombre!:string;
-  bod_nombre!:string;
+  nombre!:string;
+  bodega!:string;
   pvp!:number;
   unidad!:string;
   bulto!:string;
-  stock_real!:number;
-  bod_codigo!:number;
+  stockReal!:number;
+  bodCodigo!:number;
 }

@@ -19,12 +19,8 @@ import { ObservacionesNarancayComponent } from './components/observaciones-naran
 import { WebcamModule } from 'ngx-webcam';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ObservacionesBodDaComponent } from './components/observaciones-bod-da/observaciones-bod-da.component';
-import { MovimientosZhucayComponent } from './components/movimientos-zhucay/movimientos-zhucay.component';
-import { MovimientosNarancayComponent } from './components/movimientos-narancay/movimientos-narancay.component';
 import { ObservacionesGColombiaComponent } from './components/observaciones-gcolombia/observaciones-gcolombia.component';
 import { ObservacionesVergelComponent } from './components/observaciones-vergel/observaciones-vergel.component';
-import { MovimientosPedidosComponent } from './components/movimientos-pedidos/movimientos-pedidos.component';
-import { SugeridosComponent } from './components/sugeridos/sugeridos.component';
 import { ObservacionesGColombia2Component} from "./components/observaciones-gcolombia2/observaciones-gcolombia2.component";
 
 @NgModule({
@@ -34,13 +30,9 @@ import { ObservacionesGColombia2Component} from "./components/observaciones-gcol
     BodegasComponent,
     ObservacionesNarancayComponent,
     ObservacionesBodDaComponent,
-    MovimientosZhucayComponent,
-    MovimientosNarancayComponent,
     ObservacionesGColombiaComponent,
     ObservacionesGColombia2Component,
     ObservacionesVergelComponent,
-    MovimientosPedidosComponent,
-    SugeridosComponent
   ],
   exports: [
     FiltroColorPipe
