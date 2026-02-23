@@ -11,6 +11,7 @@ import { API_URL } from '../constants/constatns';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Producto } from '../models/Producto';
+import {ConfiteriaRepor} from "../models/confiteria-repor";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class ProductoService {
     };
 
     return this.http.get<Producto>(`${this.baseUrl}BuscarProducto`,options);
+  }
+
+  listaConfiteria(nombre: string): Observable<ConfiteriaRepor[]>{
+    return this.http.get(`${this.baseUrl}confiteria/${nombre}`);
   }
 }
