@@ -17,6 +17,7 @@ import { ObservacionesGColombiaComponent } from './components/observaciones-gcol
 import {
   ObservacionesGColombia2Component
 } from "./components/observaciones-gcolombia2/observaciones-gcolombia2.component";
+import {ConfiteriaComponent} from "./components/confiteria/confiteria.component";
 
 const routes: Routes = [
   {path:'bodegas', component:BodegasComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path:'vergel',component:ObservacionesVergelComponent},
   {path:'colombia',component:ObservacionesGColombiaComponent},
   {path:'colombia2',component:ObservacionesGColombia2Component},
+  {path:'confiteria', component:ConfiteriaComponent},
   {path:'',redirectTo:'bodegas',pathMatch:'full'},
   {path:'**',redirectTo:'bodegas'}
 ];

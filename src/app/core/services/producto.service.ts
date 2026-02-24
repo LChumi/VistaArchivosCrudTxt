@@ -39,6 +39,6 @@ export class ProductoService {
   }
 
   listaConfiteria(nombre: string): Observable<ConfiteriaRepor[]>{
-    return this.http.get(`${this.baseUrl}confiteria/${nombre}`);
+    return this.http.get<ConfiteriaRepor[]>(`${this.baseUrl}confiteria/${nombre}`);
   }
 }
