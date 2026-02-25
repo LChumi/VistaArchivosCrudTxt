@@ -1,0 +1,28 @@
+.section {
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.table thead th {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.table td {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.table tbody tr:hover {
+  background-color: #eef5ff;
+}
+
+.sticky-col {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.05);
+}

@@ -43,7 +43,7 @@ export class LoginComponent {
   }
 
   goToLista(){
-    this.router.navigate(['/Cumpleaños/observaciones/bodegas'])
+    this.router.navigate(['/observaciones/bodegas'])
   }
 
   protected readonly faUser = faUser;

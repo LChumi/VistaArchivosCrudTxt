@@ -1,0 +1,141 @@
+<div class="section py-4">
+  <div class="container-fluid">
+
+    <!-- FILTROS -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+
+        <h4 class="fw-bold text-primary mb-3">
+          Productos de Confitería
+        </h4>
+
+        <div class="row g-3 align-items-end">
+
+            @if (!buttonBlock) {
+              <div class="col-md-6 col-lg-4">
+                <label for="proveedores" class="form-label fw-semibold">
+                  Seleccione un Proveedor
+                </label>
+
+                <select
+                  id="proveedores"
+                  class="form-select"
+                  [(ngModel)]="proveedor">
+
+                  @for (prov of proveedores; track $index){
+                    <option [value]="prov.nombre">
+                      {{prov.nombre}}
+                    </option>
+                  }
+
+                </select>
+              </div>
+              <div class="col-md-4 col-lg-2">
+                <button
+                  class="btn btn-primary w-100"
+                  (click)="obtenerProductos()">
+                  <fa-icon [icon]="faSearch"></fa-icon>
+                  Buscar
+                </button>
+              </div>
+            } @else {
+              <div class="col-md-4 col-lg-2">
+                <button
+                  class="btn btn-primary w-100"
+                  (click)="buttonBlock = false">
+                  <fa-icon [icon]="faSearch"></fa-icon>
+                  Seleccionar otro proveedor
+                </button>
+              </div>
+            }
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TABLA -->
+    @defer {
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+
+          @if (!loadingProducto){
+            <div class="table-responsive">
+
+              <table class="table table-hover table-striped align-middle mb-0">
+
+                <thead class="table-primary text-center">
+                <tr>
+                  <th>Barra</th>
+                  <th>Item</th>
+                  <th>Descripción</th>
+                  <th>Última Venta</th>
+                  <th>Última Compra</th>
+                  <th>Total Compra</th>
+                  <th>Últ. Cant. Comprada</th>
+                  <th>Costo Compra</th>
+                  <th>Cant. Venta</th>
+                  <th>Stock Inicial</th>
+                  <th>Stock Disp.</th>
+                  <th>Stock Real</th>
+                  <th>PVP</th>
+                  <th>% Rotación</th>
+                  <th class="sticky-col"></th>
+                </tr>
+                </thead>
+
+                <tbody class="text-center">
+
+                  @for (producto of listaPorductos; track $index){
+
+                    <tr>
+                      <td>{{producto.barra}}</td>
+                      <td>{{producto.item }}</td>
+                      <td class="text-start">{{producto.proNombre }}</td>
+                      <td>{{producto.ultVenta }}</td>
+                      <td>{{producto.ultComp }}</td>
+                      <td>{{producto.totCom }}</td>
+                      <td>{{producto.ultCantCom }}</td>
+                      <td>{{producto.costoCom }}</td>
+                      <td>{{producto.cantVenta }}</td>
+                      <td>{{producto.stockIni }}</td>
+                      <td>{{producto.stockDisp }}</td>
+                      <td>{{producto.stockReal }}</td>
+                      <td class="fw-bold text-success">
+                        {{producto.pvp }}
+                      </td>
+                      <td class="fw-bold text-success">
+                        {{ calcularRotacion(producto) | percent:'0.0-0' }}
+                      </td>
+                      <td class="sticky-col bg-white">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <fa-icon [icon]="faMessage"></fa-icon>
+                        </button>
+                      </td>
+
+                    </tr>
+
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+          } @else {
+            <div class="d-flex justify-content-center p-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+    }
+    @loading (minimum 200) {
+      <span>Inicializando tabla...</span>
+    } @placeholder (minimum 200) { <span>Espere por favor</span> }
+
+  </div>
+</div>

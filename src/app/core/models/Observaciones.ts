@@ -21,7 +21,7 @@ export class Observacion{
   usuario!:string;
   detalle!:string;
   diferencia!:string;
-  correccion!:Correccion;
+  correccion?:Correccion | null;
 
   get precioConIVA():number{
     const porcentajeIva = 1.12;

@@ -36,17 +36,17 @@ export class DialogService {
      this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if(/BOD. ZHUCAY/.test(nombreBodega)){
-          this.router.navigate(['Cumpleaños/observaciones/zhucay']).then(r => {})
+          this.router.navigate(['observaciones/zhucay']).then(r => {})
         }else if(/ALMACEN NARANCAY/.test(nombreBodega)){
-          this.router.navigate(['Cumpleaños/observaciones/narancay']).then(r => {})
+          this.router.navigate(['observaciones/narancay']).then(r => {})
         }else if(/BOD. DAÑADOS/.test(nombreBodega)){
-          this.router.navigate(['Cumpleaños/observaciones/bod_danados']).then(r => {})
+          this.router.navigate(['observaciones/bod_danados']).then(r => {})
         }else if(/EL VERGEL/.test(nombreBodega)){
-          this.router.navigate(['Cumpleaños/observaciones/vergel']).then(r => {})
+          this.router.navigate(['observaciones/vergel']).then(r => {})
         }else if (/^(ALMACEN GRAN COLOMBIA P1)$/.test(nombreBodega)) {
-          this.router.navigate(['Cumpleaños/observaciones/colombia']).then(r => {})
+          this.router.navigate(['observaciones/colombia']).then(r => {})
         }else if (/^(ALMACEN GRAN COLOMBIA P2)$/.test(nombreBodega)) {
-          this.router.navigate(['Cumpleaños/observaciones/colombia2']).then(r => {})
+          this.router.navigate(['observaciones/colombia2']).then(r => {})
         }else{
           alert('Proximamente')
         }

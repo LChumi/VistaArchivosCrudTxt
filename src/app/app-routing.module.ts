@@ -11,32 +11,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'Cumpleaños',
-    children:[
-      {
-        path:'inicio',
-        loadChildren:() => import('./modules/home/home.module').then(m => m.HomeModule)
-      },
-      {
-        path:'observaciones',
-        loadChildren:() => import('./modules/user/user.module').then(m => m.UserModule)
-      },
-      {
-        path:'',
-        redirectTo:'inicio',
-        pathMatch:'full'
-      },
-      {
-        path:'**',
-        redirectTo:'inicio'
-      }
-    ]
+    path:'inicio',
+    loadChildren:() => import('./modules/home/home.module').then(m => m.HomeModule)
+  },
+  {
+    path:'observaciones',
+    loadChildren:() => import('./modules/user/user.module').then(m => m.UserModule)
   },
   {
     path:'',
-    redirectTo:'Cumpleaños/',
+    redirectTo:'inicio',
     pathMatch:'full'
-  }
+  },
+  {
+    path:'**',
+    redirectTo:'inicio'
+  },
 ];
 
 @NgModule({
