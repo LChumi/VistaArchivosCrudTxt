@@ -1,42 +1,90 @@
-/* Card más limpia */
-.custom-card {
-  border: none;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+/* CONTENEDOR GENERAL */
+.section {
+  background: #f8f9fc;
+  min-height: 100vh;
 }
 
-/* Título elegante */
+/* CARD PRINCIPAL */
+.custom-card {
+  max-width: 900px;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  transition: 0.3s ease;
+}
+
+/* TÍTULOS */
 .section-title {
   font-weight: 600;
-  color: #0d6efd;
-  letter-spacing: 0.5px;
+  color: #212529;
 }
 
-/* Inputs más modernos */
+.section-subtitle {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* INPUTS */
 .custom-input {
   height: 48px;
-  border-radius: 10px;
-  border: 1px solid #dee2e6;
-  transition: all 0.2s ease-in-out;
+  border-radius: 12px;
+  border: 1px solid #e3e6ea;
+  transition: all 0.2s ease;
 }
 
-/* Efecto focus premium */
 .custom-input:focus {
   border-color: #0d6efd;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
 }
 
-/* Labels más limpios */
-.form-label {
-  font-size: 0.85rem;
+/* BOTÓN */
+.custom-btn {
+  height: 48px;
+  border-radius: 12px;
   font-weight: 500;
-  color: #6c757d;
-  margin-bottom: 6px;
+  transition: all 0.2s ease;
 }
 
-/* Espaciado en móvil */
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 1.2rem;
-  }
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25);
+}
+
+/* RESULTADO */
+.result-card {
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.result-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.result-code {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #198754;
+  letter-spacing: 1px;
+}
+
+/* SPINNER */
+.custom-spinner {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* ANIMACIÓN */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -1,25 +1,27 @@
-<div class="section py-4">
-  <div class="container-fluid">
+<div class="section py-5">
+  <div class="container">
 
-    <div class="card custom-card mb-4">
-      <div class="card-body">
+    <div class="card custom-card mx-auto">
+      <div class="card-body p-4 p-md-5">
 
         <!-- TÍTULO -->
         <div class="text-center mb-4">
-          <h4 class="section-title">
+          <h4 class="section-title mb-1">
             Generar Consignación
           </h4>
+          <p class="section-subtitle">
+            Complete los datos para generar la transacción
+          </p>
         </div>
 
-        <!-- FILTROS -->
-        <div class="row justify-content-center g-3">
+        <!-- FORM -->
+        <div class="row g-4">
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6">
             <label class="form-label">Consignación</label>
             <select class="form-select custom-input"
                     [(ngModel)]="consignacionSeleccionada"
                     (ngModelChange)="onChangeConsignacion()">
-
               <option [ngValue]="undefined">Seleccione</option>
 
               @for (rel of relaciones; track rel.consignacion.codigo) {
@@ -30,7 +32,7 @@
             </select>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6">
             <label class="form-label">Bodega Destino</label>
             <select class="form-select custom-input" [(ngModel)]="bodFin">
               @for (b of bodegaDestino; track b.codigo) {
@@ -41,7 +43,7 @@
             </select>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6">
             <label class="form-label">CCO</label>
             <input type="text"
                    id="cco"
@@ -49,30 +51,33 @@
                    [(ngModel)]="cco">
           </div>
 
-          <div class="col-md-4 col-lg-2">
+          <div class="col-12 col-md-6 d-flex align-items-end">
             <button
-              class="btn btn-primary w-100"
+              class="btn btn-primary custom-btn w-100"
               (click)="generarConsignacion()">
-              <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-              Generar Consignacion
+              <fa-icon [icon]="faArrowUpFromBracket" class="me-2"></fa-icon>
+              Generar Consignación
             </button>
           </div>
 
         </div>
-
       </div>
     </div>
 
+    <!-- ESTADOS -->
     @if (generando) {
-      <div class="d-flex justify-content-center p-3">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Generando...</span>
-        </div>
+      <div class="text-center py-5 fade-in">
+        <div class="spinner-border text-primary custom-spinner" role="status"></div>
+        <p class="mt-3 text-muted">Generando consignación...</p>
       </div>
     } @else if (codigoGenerado) {
-      <div>
-        <h2>Resultado de la transaccion {{codigoGenerado}}</h2>
+      <div class="result-card mx-auto mt-4 fade-in">
+        <h6 class="result-label">Transacción generada</h6>
+        <div class="result-code">
+          {{codigoGenerado}}
+        </div>
       </div>
     }
+
   </div>
 </div>
