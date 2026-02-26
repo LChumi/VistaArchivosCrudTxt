@@ -1,1 +1,55 @@
-<p>consignacion works!</p>
+<div class="section py-4">
+  <div class="container-fluid">
+
+    <div class="card custom-card mb-4">
+      <div class="card-body">
+
+        <!-- TÍTULO -->
+        <div class="text-center mb-4">
+          <h4 class="section-title">
+            Generar Consignación
+          </h4>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="row justify-content-center g-3">
+
+          <div class="col-12 col-md-4">
+            <label class="form-label">Consignación</label>
+            <select class="form-select custom-input"
+                    (change)="onChangeConsignacion($event)">
+              <option value="">Seleccione</option>
+              @for (rel of relaciones; track rel.consignacion.codigo) {
+                <option [value]="rel.consignacion.codigo">
+                  {{ rel.consignacion.nombre }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label">Bodega Destino</label>
+            <select class="form-select custom-input">
+              @for (b of bodegaDestino; track b.codigo) {
+                <option [value]="b.codigo">
+                  {{ b.nombre }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label">CCO</label>
+            <input type="text"
+                   id="cco"
+                   class="form-control custom-input"
+                   [(ngModel)]="cco">
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
