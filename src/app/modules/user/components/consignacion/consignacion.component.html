@@ -17,10 +17,13 @@
           <div class="col-12 col-md-4">
             <label class="form-label">Consignación</label>
             <select class="form-select custom-input"
-                    (change)="onChangeConsignacion($event)">
-              <option value="">Seleccione</option>
+                    [(ngModel)]="consignacionSeleccionada"
+                    (ngModelChange)="onChangeConsignacion()">
+
+              <option [ngValue]="undefined">Seleccione</option>
+
               @for (rel of relaciones; track rel.consignacion.codigo) {
-                <option [value]="rel.consignacion.codigo">
+                <option [ngValue]="rel">
                   {{ rel.consignacion.nombre }}
                 </option>
               }
@@ -29,7 +32,7 @@
 
           <div class="col-12 col-md-4">
             <label class="form-label">Bodega Destino</label>
-            <select class="form-select custom-input">
+            <select class="form-select custom-input" [(ngModel)]="bodFin">
               @for (b of bodegaDestino; track b.codigo) {
                 <option [value]="b.codigo">
                   {{ b.nombre }}
@@ -46,10 +49,30 @@
                    [(ngModel)]="cco">
           </div>
 
+          <div class="col-md-4 col-lg-2">
+            <button
+              class="btn btn-primary w-100"
+              (click)="generarConsignacion()">
+              <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
+              Generar Consignacion
+            </button>
+          </div>
+
         </div>
 
       </div>
     </div>
 
+    @if (generando) {
+      <div class="d-flex justify-content-center p-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Generando...</span>
+        </div>
+      </div>
+    } @else if (codigoGenerado) {
+      <div>
+        <h2>Resultado de la transaccion {{codigoGenerado}}</h2>
+      </div>
+    }
   </div>
 </div>
