@@ -1,7 +1,6 @@
 export interface ConfiteriaRepor {
   ultVenta: any;
   ultComp: any;
-  totCom: string;
   ultCantCom: number;
   costoCom: number;
   cantVenta: number;
