@@ -19,8 +19,8 @@ export class ConfiteriaComponent {
   loadingProducto = false;
   buttonBlock = false;
 
-  obtenerProductos(){
-    if (!this.proveedor){
+  obtenerProductos() {
+    if (!this.proveedor) {
       alert("Ingrese un proveedor");
       return;
     }

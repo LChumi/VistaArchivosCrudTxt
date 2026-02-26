@@ -11,43 +11,43 @@
 
         <div class="row g-3 align-items-end">
 
-            @if (!buttonBlock) {
-              <div class="col-md-6 col-lg-4">
-                <label for="proveedores" class="form-label fw-semibold">
-                  Seleccione un Proveedor
-                </label>
+          @if (!buttonBlock) {
+            <div class="col-md-6 col-lg-4">
+              <label for="proveedores" class="form-label fw-semibold">
+                Seleccione un Proveedor
+              </label>
 
-                <select
-                  id="proveedores"
-                  class="form-select"
-                  [(ngModel)]="proveedor">
+              <select
+                id="proveedores"
+                class="form-select"
+                [(ngModel)]="proveedor">
 
-                  @for (prov of proveedores; track $index){
-                    <option [value]="prov.nombre">
-                      {{prov.nombre}}
-                    </option>
-                  }
+                @for (prov of proveedores; track $index) {
+                  <option [value]="prov.nombre">
+                    {{ prov.nombre }}
+                  </option>
+                }
 
-                </select>
-              </div>
-              <div class="col-md-4 col-lg-2">
-                <button
-                  class="btn btn-primary w-100"
-                  (click)="obtenerProductos()">
-                  <fa-icon [icon]="faSearch"></fa-icon>
-                  Buscar
-                </button>
-              </div>
-            } @else {
-              <div class="col-md-4 col-lg-2">
-                <button
-                  class="btn btn-primary w-100"
-                  (click)="buttonBlock = false">
-                  <fa-icon [icon]="faSearch"></fa-icon>
-                  Seleccionar otro proveedor
-                </button>
-              </div>
-            }
+              </select>
+            </div>
+            <div class="col-md-4 col-lg-2">
+              <button
+                class="btn btn-primary w-100"
+                (click)="obtenerProductos()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Buscar
+              </button>
+            </div>
+          } @else {
+            <div class="col-md-4 col-lg-2">
+              <button
+                class="btn btn-primary w-100"
+                (click)="buttonBlock = false">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                Seleccionar otro proveedor
+              </button>
+            </div>
+          }
 
         </div>
 
@@ -59,7 +59,7 @@
       <div class="card shadow-sm border-0">
         <div class="card-body p-0">
 
-          @if (!loadingProducto){
+          @if (!loadingProducto) {
             <div class="table-responsive">
 
               <table class="table table-hover table-striped align-middle mb-0">
@@ -86,23 +86,23 @@
 
                 <tbody class="text-center">
 
-                  @for (producto of listaPorductos; track $index){
+                  @for (producto of listaPorductos; track $index) {
 
                     <tr>
-                      <td>{{producto.barra}}</td>
-                      <td>{{producto.item }}</td>
-                      <td class="text-start">{{producto.proNombre }}</td>
+                      <td>{{ producto.barra }}</td>
+                      <td>{{ producto.item }}</td>
+                      <td class="text-start">{{ producto.proNombre }}</td>
                       <td>{{ producto.ultVenta | date:'mediumDate' }}</td>
                       <td>{{ producto.ultComp | date:'mediumDate' }}</td>
-                      <td>{{producto.totCom }}</td>
-                      <td>{{producto.ultCantCom }}</td>
-                      <td>{{producto.costoCom }}</td>
-                      <td>{{producto.cantVenta }}</td>
-                      <td>{{producto.stockIni }}</td>
-                      <td>{{producto.stockDisp }}</td>
-                      <td>{{producto.stockReal }}</td>
+                      <td>{{ producto.totCom }}</td>
+                      <td>{{ producto.ultCantCom }}</td>
+                      <td>{{ producto.costoCom }}</td>
+                      <td>{{ producto.cantVenta }}</td>
+                      <td>{{ producto.stockIni }}</td>
+                      <td>{{ producto.stockDisp }}</td>
+                      <td>{{ producto.stockReal }}</td>
                       <td class="fw-bold text-success">
-                        {{producto.pvp }}
+                        {{ producto.pvp }}
                       </td>
                       <td class="fw-bold text-success">
                         {{ calcularRotacion(producto) | percent:'0.0-0' }}
@@ -132,10 +132,11 @@
 
         </div>
       </div>
-    }
-    @loading (minimum 200) {
+    } @loading (minimum 200) {
       <span>Inicializando tabla...</span>
-    } @placeholder (minimum 200) { <span>Espere por favor</span> }
+    } @placeholder (minimum 200) {
+      <span>Espere por favor</span>
+    }
 
   </div>
 </div>
