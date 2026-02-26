@@ -15,6 +15,14 @@
       <img [src]="alamcenNarancayImg" alt="Bodega">
       <h2>{{bodega.bod_nombre}}</h2>
     </div>
+    <div class="card" (click)="abrirConsignacion()" >
+      <img [src]="alamcenNarancayImg" alt="consignacion">
+      <h2>Consignacion</h2>
+    </div>
+    <div class="card" (click)="abrirConfiteria()" >
+      <img [src]="alamcenNarancayImg" alt="confiteria">
+      <h2>Confiteria</h2>
+    </div>
   </div>
   <hr>
   <div class="bg-light-subtle align-items-center">
@@ -22,7 +30,6 @@
       <fa-icon [icon]="faFileExport"></fa-icon>
     </button>
   </div>
-
 
   <div class="modal-opciones" *ngIf="showModal ">
     <div class="modal-content-opciones">

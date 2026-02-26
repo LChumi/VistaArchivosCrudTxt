@@ -47,6 +47,10 @@ export class DialogService {
           this.router.navigate(['observaciones/colombia']).then(r => {})
         }else if (/^(ALMACEN GRAN COLOMBIA P2)$/.test(nombreBodega)) {
           this.router.navigate(['observaciones/colombia2']).then(r => {})
+        }else if (/^(CONSIGNACION)$/.test(nombreBodega)) {
+          this.router.navigate(['observaciones/consignacion']).then(r => {})
+        }else if (/^(CONFITERIA)$/.test(nombreBodega)) {
+          this.router.navigate(['observaciones/confiteria']).then(r => {})
         }else{
           alert('Proximamente')
         }

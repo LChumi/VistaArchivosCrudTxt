@@ -25,6 +25,7 @@ export class BodegasComponent implements OnInit {
   bodegaSeleccionada!: Bodega;
   listaBodegas!: Bodega[];
   id_usuario = sessionStorage.getItem('idUsuario') ?? '';
+  username = sessionStorage.getItem('usuario') ?? '';
   id_empresa = sessionStorage.getItem('idEmpresa') ?? '';
   alamcenNarancayImg:string = '../../../../../assets/img/bodega.jpg';
   showModal=false
@@ -45,7 +46,6 @@ export class BodegasComponent implements OnInit {
   }
 
   listarBodegas() {
-    console.log(this.id_usuario, "empresa: ", this.id_empresa)
     this.bodegaService.getBodegas(this.id_usuario, this.id_empresa).subscribe(
       (listarBodegas:Bodega[]) => this.listaBodegas=listarBodegas
     )
@@ -53,10 +53,19 @@ export class BodegasComponent implements OnInit {
 
 
   BodegaSelecccionada(bodega: Bodega) {
-    console.log(bodega)
     this.bodegaSeleccionada = bodega;
     sessionStorage.setItem('bodId', String(this.bodegaSeleccionada.bod_codigo));
     this.dialogService.abrirConfirmacion(bodega.bod_nombre);
+  }
+
+  abrirConsignacion(){
+    if (this.username == 'CABRERA EDISON'){
+      this.dialogService.abrirConfirmacion('CONSIGNACION')
+    }
+  }
+
+  abrirConfiteria(){
+    this.dialogService.abrirConfirmacion('CONFITERIA')
   }
 
   logout() {
