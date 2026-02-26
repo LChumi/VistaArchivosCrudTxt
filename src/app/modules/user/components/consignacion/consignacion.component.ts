@@ -45,10 +45,12 @@ export class ConsignacionComponent {
     }
 
     this.consignacionService.generarConsignacion(request).subscribe({
-      next: response => {
-        if (this.isValidResponse(response)) {
-          this.codigoGenerado = response;
+      next: resp => {
+        if (resp.status && this.isValidResponse(resp.mensaje)) {
+          console.log("Éxito:", resp.mensaje);
+          this.codigoGenerado = resp.mensaje;
         } else {
+          console.error("Error:", resp.mensaje);
           alert("Respuesta vacía del servicio");
         }
         this.generando = false;

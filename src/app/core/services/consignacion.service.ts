@@ -3,6 +3,7 @@ import {API_URL} from "../constants/constatns";
 import {ConsignacionRequest} from "../models/consignacion-request";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {ConsignacionResponse} from "../models/consignacion-response";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class ConsignacionService {
 
   constructor() { }
 
-  generarConsignacion(request: ConsignacionRequest): Observable<string> {
-    return this.http.post(`${this.baseUrl}/generar`, request, { responseType: 'text' });
+  generarConsignacion(request: ConsignacionRequest): Observable<ConsignacionResponse> {
+    return this.http.post<ConsignacionResponse>(`${this.baseUrl}/generar`, request);
   }
 
 }
