@@ -6,7 +6,7 @@
  * Me gustaría ser reconocido por mi trabajo y estar abierto a colaboraciones o enseñanzas sobre el programa.
  */
 
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {WebcamModule} from 'ngx-webcam';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {MatButton} from "@angular/material/button";
+import localeEs from '@angular/common/locales/es';
+import {registerLocaleData} from "@angular/common";
+
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import {MatButton} from "@angular/material/button";
         ZXingScannerModule,
         MatButton
     ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'es'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

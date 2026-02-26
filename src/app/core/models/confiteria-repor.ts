@@ -1,6 +1,6 @@
 export interface ConfiteriaRepor {
-  ultVenta: string;
-  ultComp: string;
+  ultVenta: any;
+  ultComp: any;
   totCom: string;
   ultCantCom: number;
   costoCom: number;

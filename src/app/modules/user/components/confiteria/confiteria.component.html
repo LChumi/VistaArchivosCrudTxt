@@ -92,8 +92,8 @@
                       <td>{{producto.barra}}</td>
                       <td>{{producto.item }}</td>
                       <td class="text-start">{{producto.proNombre }}</td>
-                      <td>{{producto.ultVenta }}</td>
-                      <td>{{producto.ultComp }}</td>
+                      <td>{{ producto.ultVenta | date:'mediumDate' }}</td>
+                      <td>{{ producto.ultComp | date:'mediumDate' }}</td>
                       <td>{{producto.totCom }}</td>
                       <td>{{producto.ultCantCom }}</td>
                       <td>{{producto.costoCom }}</td>
