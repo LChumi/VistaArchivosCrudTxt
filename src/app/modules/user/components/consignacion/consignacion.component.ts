@@ -56,7 +56,7 @@ export class ConsignacionComponent {
         this.generando = false;
       },
       error: error => {
-        alert(`Error al generar consignacion ${error}`);
+        alert(`Error al generar consignacion`);
         this.generando = false;
       }
     });

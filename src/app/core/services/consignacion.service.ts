@@ -16,7 +16,7 @@ export class ConsignacionService {
   constructor() { }
 
   generarConsignacion(request: ConsignacionRequest): Observable<ConsignacionResponse> {
-    return this.http.post<ConsignacionResponse>(`${this.baseUrl}/generar`, request);
+    return this.http.post<ConsignacionResponse>(`${this.baseUrl}generar`, request);
   }
 
 }

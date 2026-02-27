@@ -59,7 +59,7 @@ export class BodegasComponent implements OnInit {
   }
 
   abrirConsignacion(){
-    if (this.username == 'CABRERA EDISON'){
+    if (this.username == 'CABRERA EDISON' || this.username == 'NAULA XAVIER'){
       this.dialogService.abrirConfirmacion('CONSIGNACION')
     }
   }
