@@ -72,7 +72,6 @@
                   <th>Última Venta</th>
                   <th>Última Compra</th>
                   <th>Últ. Cant. Comprada</th>
-                  <th>Costo Compra</th>
                   <th>Cant. Venta</th>
                   <th>Stock Inicial</th>
                   <th>Stock Disp.</th>
@@ -94,14 +93,13 @@
                       <td>{{ producto.ultVenta | date:'mediumDate' }}</td>
                       <td>{{ producto.ultComp | date:'mediumDate' }}</td>
                       <td>{{ producto.ultCantCom }}</td>
-                      <td>{{ producto.costoCom }}</td>
                       <td>{{ producto.cantVenta }}</td>
                       <td>{{ producto.stockIni }}</td>
                       <td>{{ producto.stockDisp }}</td>
                       <td>{{ producto.stockReal }}</td>
-                      <td class="fw-bold text-success">
-                        {{ producto.pvp }}
-                      </td>
+                      <td class="fw-bold text-success"></td>
+                      {{ producto.pvp }}
+
                       <td class="fw-bold text-success">
                         {{ calcularRotacion(producto) | percent:'0.0-0' }}
                       </td>
