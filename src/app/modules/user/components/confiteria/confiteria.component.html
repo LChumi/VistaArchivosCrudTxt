@@ -97,18 +97,15 @@
                       <td>{{ producto.stockIni }}</td>
                       <td>{{ producto.stockDisp }}</td>
                       <td>{{ producto.stockReal }}</td>
-                      <td class="fw-bold text-success"></td>
-                      {{ producto.pvp }}
-
+                      <td class="fw-bold text-success">{{ producto.pvp }}</td>
                       <td class="fw-bold text-success">
                         {{ calcularRotacion(producto) | percent:'0.0-0' }}
                       </td>
                       <td class="sticky-col bg-white">
-                        <button class="btn btn-sm btn-outline-primary">
-                          <fa-icon [icon]="faMessage"></fa-icon>
+                        <button class="btn btn-sm btn-outline-primary" (click)="agregarCantidad(producto)">
+                          <fa-icon [icon]="faPenToSquare"></fa-icon>
                         </button>
                       </td>
-
                     </tr>
 
                   }
@@ -136,3 +133,29 @@
 
   </div>
 </div>
+
+@if (showModal) {
+  <div class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="d-flex flex-column">
+            <h5 class="modal-title">Agregar Cantidad a Pedir</h5>
+            <span *ngIf="productoSelect">{{ productoSelect.proNombre }}</span>
+          </div>
+          <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+        </div>
+        <div class="modal-body">
+          <input type="number" class="form-control"
+                 [(ngModel)]="cantidadPed"
+                 id="cant" autocomplete="off"
+                 aria-label="Cantidad pedida">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="guardarCantidad()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

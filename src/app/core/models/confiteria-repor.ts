@@ -11,4 +11,5 @@ export interface ConfiteriaRepor {
   stockDisp: number;
   stockReal: number;
   pvp: number;
+  cantPedido: number;
 }

@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ProductoService} from "../../../../core/services/producto.service";
 import {ConfiteriaRepor} from "../../../../core/models/confiteria-repor";
 import {proveedor, PROVEEDORES_MOCK} from "../../../../mocks/proveedores";
-import {faFileExcel, faMessage, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faFileExcel, faMessage, faPenToSquare, faSearch} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-confiteria',
@@ -16,8 +16,11 @@ export class ConfiteriaComponent {
   proveedores: proveedor[] = PROVEEDORES_MOCK
   proveedor!: string
   listaPorductos: ConfiteriaRepor[] = [];
+  productoSelect: ConfiteriaRepor | null = null;
   loadingProducto = false;
   buttonBlock = false;
+  showModal = false;
+  cantidadPed!: number;
 
   obtenerProductos() {
     if (!this.proveedor) {
@@ -53,6 +56,23 @@ export class ConfiteriaComponent {
     return ventas / denominador;
   }
 
+  agregarCantidad(producto: any) {
+    this.productoSelect = producto;
+    this.cantidadPed = producto.cantPedido || 0;
+    this.showModal = true;
+  }
+
+  cerrarModal() {
+    this.showModal = false;
+  }
+
+  guardarCantidad() {
+    if (this.productoSelect) {
+      this.productoSelect.cantPedido = this.cantidadPed;
+    }
+    this.cerrarModal();
+  }
+
   ordenarPorRotacionDesc() {
     this.listaPorductos.sort((a, b) => {
       const rotA = this.calcularRotacion(a);
@@ -63,5 +83,5 @@ export class ConfiteriaComponent {
 
   protected readonly faFileExcel = faFileExcel;
   protected readonly faSearch = faSearch;
-  protected readonly faMessage = faMessage;
+  protected readonly faPenToSquare = faPenToSquare;
 }
