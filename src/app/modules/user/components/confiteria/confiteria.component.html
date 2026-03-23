@@ -49,6 +49,15 @@
             </div>
           }
 
+          <div class="col-md-4 col-lg-2">
+            <button
+              class="btn btn-primary w-80"
+              (click)="guardarProductos()">
+              <fa-icon [icon]="faSave"></fa-icon>
+              Guardar y enviar
+            </button>
+          </div>
+
         </div>
 
       </div>
@@ -84,7 +93,7 @@
 
                 <tbody class="text-center">
 
-                  @for (producto of listaPorductos; track $index) {
+                  @for (producto of listaProductos; track $index) {
 
                     <tr>
                       <td>{{ producto.barra }}</td>

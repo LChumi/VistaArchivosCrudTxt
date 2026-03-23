@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ProductoService} from "../../../../core/services/producto.service";
 import {ConfiteriaRepor} from "../../../../core/models/confiteria-repor";
 import {proveedor, PROVEEDORES_MOCK} from "../../../../mocks/proveedores";
-import {faFileExcel, faMessage, faPenToSquare, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faFileExcel, faMessage, faPenToSquare, faSave, faSearch} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-confiteria',
@@ -15,7 +15,7 @@ export class ConfiteriaComponent {
 
   proveedores: proveedor[] = PROVEEDORES_MOCK
   proveedor!: string
-  listaPorductos: ConfiteriaRepor[] = [];
+  listaProductos: ConfiteriaRepor[] = [];
   productoSelect: ConfiteriaRepor | null = null;
   loadingProducto = false;
   buttonBlock = false;
@@ -33,7 +33,7 @@ export class ConfiteriaComponent {
     this.productoService.listaConfiteria(this.proveedor).subscribe({
       next: result => {
         if (result) {
-          this.listaPorductos = result
+          this.listaProductos = result
           this.ordenarPorRotacionDesc()
           this.loadingProducto = false;
         } else {
@@ -74,14 +74,26 @@ export class ConfiteriaComponent {
   }
 
   ordenarPorRotacionDesc() {
-    this.listaPorductos.sort((a, b) => {
+    this.listaProductos.sort((a, b) => {
       const rotA = this.calcularRotacion(a);
       const rotB = this.calcularRotacion(b);
       return rotB - rotA; // mayor a menor
     });
   }
 
+  guardarProductos(){
+    const pedidosValidos = this.listaProductos.filter(
+      producto =>
+        producto.cantPedido !== null &&
+        producto.cantPedido !== undefined &&
+        producto.cantPedido > 0
+    )
+
+    console.log(pedidosValidos);
+  }
+
   protected readonly faFileExcel = faFileExcel;
   protected readonly faSearch = faSearch;
   protected readonly faPenToSquare = faPenToSquare;
+  protected readonly faSave = faSave;
 }
