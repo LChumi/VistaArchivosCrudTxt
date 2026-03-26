@@ -1,8 +1,7 @@
 export interface ReposicionConfiteria {
-  id: string;
+  id: any;
   fecha: any;
   usuarioSolicitante: string;
   proveedor: string;
-  observaciones: string;
   estado: boolean;
 }

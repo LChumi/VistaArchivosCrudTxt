@@ -24,6 +24,7 @@ import { ObservacionesVergelComponent } from './components/observaciones-vergel/
 import { ObservacionesGColombia2Component} from "./components/observaciones-gcolombia2/observaciones-gcolombia2.component";
 import { ConfiteriaComponent } from './components/confiteria/confiteria.component';
 import { ConsignacionComponent } from './components/consignacion/consignacion.component';
+import { PedidosConfiteriaComponent } from './components/pedidos-confiteria/pedidos-confiteria.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ConsignacionComponent } from './components/consignacion/consignacion.co
     ObservacionesVergelComponent,
     ConfiteriaComponent,
     ConsignacionComponent,
+    PedidosConfiteriaComponent,
   ],
   exports: [
     FiltroColorPipe

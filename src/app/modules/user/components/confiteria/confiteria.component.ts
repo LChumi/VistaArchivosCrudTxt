@@ -2,7 +2,10 @@ import {Component, inject} from '@angular/core';
 import {ProductoService} from "../../../../core/services/producto.service";
 import {ConfiteriaRepor} from "../../../../core/models/confiteria-repor";
 import {proveedor, PROVEEDORES_MOCK} from "../../../../mocks/proveedores";
-import {faFileExcel, faMessage, faPenToSquare, faSave, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faFileExcel, faPenToSquare, faSave, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {ConfiteriaService} from "../../../../core/services/mongo/confiteria.service";
+import {ReposicionRequest} from "../../../../core/models/mongo/reposicion-request";
+import {ReposicionConfiteria} from "../../../../core/models/mongo/reposicion-confiteria";
 
 @Component({
   selector: 'app-confiteria',
@@ -12,12 +15,14 @@ import {faFileExcel, faMessage, faPenToSquare, faSave, faSearch} from "@fortawes
 export class ConfiteriaComponent {
 
   private productoService = inject(ProductoService)
+  private confiteriaService = inject(ConfiteriaService)
 
   proveedores: proveedor[] = PROVEEDORES_MOCK
   proveedor!: string
   listaProductos: ConfiteriaRepor[] = [];
   productoSelect: ConfiteriaRepor | null = null;
   loadingProducto = false;
+  saveAndGetExel = false;
   buttonBlock = false;
   showModal = false;
   cantidadPed!: number;
@@ -30,7 +35,9 @@ export class ConfiteriaComponent {
     this.buttonBlock = true;
     this.loadingProducto = true;
 
-    this.productoService.listaConfiteria(this.proveedor).subscribe({
+    const proveedorCodificado = encodeURIComponent(this.proveedor);
+
+    this.productoService.listaConfiteria(proveedorCodificado).subscribe({
       next: result => {
         if (result) {
           this.listaProductos = result
@@ -58,7 +65,7 @@ export class ConfiteriaComponent {
 
   agregarCantidad(producto: any) {
     this.productoSelect = producto;
-    this.cantidadPed = producto.cantPedido || 0;
+    this.cantidadPed = producto.pedido || 0;
     this.showModal = true;
   }
 
@@ -68,7 +75,7 @@ export class ConfiteriaComponent {
 
   guardarCantidad() {
     if (this.productoSelect) {
-      this.productoSelect.cantPedido = this.cantidadPed;
+      this.productoSelect.pedido = this.cantidadPed;
     }
     this.cerrarModal();
   }
@@ -82,14 +89,53 @@ export class ConfiteriaComponent {
   }
 
   guardarProductos(){
+
+    this.saveAndGetExel = true;
+
     const pedidosValidos = this.listaProductos.filter(
       producto =>
-        producto.cantPedido !== null &&
-        producto.cantPedido !== undefined &&
-        producto.cantPedido > 0
+        producto.pedido !== null &&
+        producto.pedido !== undefined &&
+        producto.pedido > 0
     )
 
-    console.log(pedidosValidos);
+    if (pedidosValidos.length === 0) {
+      alert("No hay pedidos, todos están en 0");
+      return;
+    }
+
+    const proveedor = pedidosValidos[0].cliNombre
+    const user = sessionStorage.getItem("idUsuario");
+
+    if (user){
+      const repo: ReposicionConfiteria ={
+        id: null,
+        proveedor,
+        estado: false,
+        usuarioSolicitante: user,
+        fecha : null
+      }
+
+      const request: ReposicionRequest = {
+        repo,
+        detalles: pedidosValidos
+      }
+      this.confiteriaService.guardarPedido(request).subscribe({
+        next: result => {
+          if (result) {
+            const reposicionId = result[0].reposicionId;
+            this.descargar(reposicionId)
+          }
+        }
+      })
+
+    }
+  }
+
+  descargar(reposicionId: string) {
+    this.confiteriaService.descargarExcel(reposicionId, this.proveedor).subscribe({
+      error: (err) => console.error('Error al descargar:', err)
+    });
   }
 
   protected readonly faFileExcel = faFileExcel;

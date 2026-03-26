@@ -41,7 +41,7 @@ export class ConfiteriaService {
           });
           const link = document.createElement('a');
           link.href = window.URL.createObjectURL(newBlob);
-          link.download = `Pedido_${proveedor}.xlsx`;
+          link.download = `PEDIDO_${proveedor}.xlsx`;
           link.click();
           window.URL.revokeObjectURL(link.href);
           observer.next();
