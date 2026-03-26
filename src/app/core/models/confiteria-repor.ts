@@ -1,4 +1,6 @@
 export interface ConfiteriaRepor {
+  id: string;
+  reposicionId: string;
   ultVenta: any;
   ultComp: any;
   ultCantCom: number;
@@ -11,5 +13,5 @@ export interface ConfiteriaRepor {
   stockDisp: number;
   stockReal: number;
   pvp: number;
-  cantPedido: number;
+  pedido: number;
 }
