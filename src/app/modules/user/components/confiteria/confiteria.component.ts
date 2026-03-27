@@ -125,6 +125,7 @@ export class ConfiteriaComponent {
           if (result) {
             const reposicionId = result[0].reposicionId;
             this.descargar(reposicionId)
+            this.saveAndGetExel = false;
           }
         }
       })
