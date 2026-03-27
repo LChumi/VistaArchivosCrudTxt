@@ -18,7 +18,7 @@ export const PROVEEDORES_MOCK: proveedor[] = [
     nombre: "CONFITECA",
   },
   {
-    nombre: "ALVAREZ CONDO CELSO VICENTE ARCOR"
+    nombre: "ALVAREZ CONDO CELSO VICENTE"
   },
   {
     nombre: "BERMEO ARGUDO CESAR AUGUSTO"
@@ -52,8 +52,5 @@ export const PROVEEDORES_MOCK: proveedor[] = [
   },
   {
     nombre: "JARA MAITA GABRIEL EDUARDO"
-  },
-  {
-    nombre: "CORDIALSA"
   }
 ]

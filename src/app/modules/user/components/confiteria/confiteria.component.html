@@ -39,25 +39,21 @@
               </button>
             </div>
           } @else {
-            <div class="col-md-4 col-lg-2">
-              <button
-                class="btn btn-primary w-100"
-                (click)="buttonBlock = false">
-                <fa-icon [icon]="faSearch"></fa-icon>
-                Seleccionar otro proveedor
+            <div class="col-12 col-md-4 col-lg-2 mb-2">
+              <button class="btn btn-primary d-flex align-items-center justify-content-center w-100" (click)="buttonBlock = false">
+                <fa-icon [icon]="faSearch" class="me-2"></fa-icon>
+                <span class="text-truncate">Seleccionar otro proveedor</span>
+              </button>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 mb-2">
+              <button class="btn btn-success d-flex align-items-center justify-content-center w-100"
+                      (click)="guardarProductos()"
+                      title="Guardar y generar Excel">
+                <fa-icon [icon]="faSave" class="me-2"></fa-icon>
+                <span>Guardar</span>
               </button>
             </div>
           }
-
-          <div class="col-md-4 col-lg-2">
-            <button
-              class="btn btn-primary w-80"
-              (click)="guardarProductos()">
-              <fa-icon [icon]="faSave"></fa-icon>
-              Guardar y generar Excel
-            </button>
-          </div>
-
         </div>
 
       </div>

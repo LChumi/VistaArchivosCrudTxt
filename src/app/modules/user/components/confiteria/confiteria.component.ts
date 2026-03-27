@@ -12,7 +12,7 @@ import {ReposicionConfiteria} from "../../../../core/models/mongo/reposicion-con
   templateUrl: './confiteria.component.html',
   styleUrl: './confiteria.component.css'
 })
-export class ConfiteriaComponent {
+export class ConfiteriaComponent{
 
   private productoService = inject(ProductoService)
   private confiteriaService = inject(ConfiteriaService)
@@ -105,7 +105,7 @@ export class ConfiteriaComponent {
     }
 
     const proveedor = pedidosValidos[0].cliNombre
-    const user = sessionStorage.getItem("idUsuario");
+    const user = sessionStorage.getItem("usuario");
 
     if (user){
       const repo: ReposicionConfiteria ={
@@ -130,6 +130,8 @@ export class ConfiteriaComponent {
         }
       })
 
+    } else {
+      alert('Por favor inicie sesion nuevamente')
     }
   }
 
