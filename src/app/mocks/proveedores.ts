@@ -36,7 +36,7 @@ export const PROVEEDORES_MOCK: proveedor[] = [
     nombre: "CHUQUI ORELLANA VICTOR MANUEL"
   },
   {
-    nombre: "FLORES CORDERO ALVARO LENIN"
+    nombre: "FLORES CORDERO LENIN"
   },
   {
     nombre: "MAURAT SUMBA MILTON FRANCISCO"
