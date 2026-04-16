@@ -70,7 +70,7 @@ export const PROVEEDORES_MOCK: proveedor[] = [
   },
   {
     nombre: "INDUAL CORAL",
-    ruc: "0302884341001"
+    ruc: "0195127719001"
   },
   {
     nombre: "CONFITES GAMBU",
