@@ -23,7 +23,7 @@
                 [(ngModel)]="proveedor">
 
                 @for (prov of proveedores; track $index) {
-                  <option [value]="prov.nombre">
+                  <option [value]="prov.ruc">
                     {{ prov.nombre }}
                   </option>
                 }
