@@ -8,5 +8,6 @@
 
 export const API_URL = 'http://192.168.112.192:7569/'
 export const API_MONGO_URL = 'http://192.168.112.192:7572/'
+export const API_MICRO_MONGO = 'http://127.0.0.1:9095/'
 //export const API_URL = 'http://localhost:7569/'
 //export const API_MONGO_URL = 'http://localhost:7572/'

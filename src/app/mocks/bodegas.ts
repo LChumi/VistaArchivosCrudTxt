@@ -27,6 +27,7 @@ export const RELACIONES_CONSIGNACION: RelacionConsignacion[] = [
       empresa: 3,
     },
     bodegasDestino: [
+      { nombre: "BODEGA GRAN COLOMBIA", codigo: 10000635, empresa: 3 },
       { nombre: "GRAN COLOMBIA PISO 1", codigo: 10000699, empresa: 3 },
       { nombre: "GRAN COLOMBIA PISO 2", codigo: 10000567, empresa: 3 }
     ]
