@@ -213,7 +213,6 @@ export class ObservacionesComponent implements OnInit,OnDestroy  {
 
   selecionarObservacion(observacion: Observacion) {
     this.observacionSeleccionada = observacion
-    console.log(this.observacionSeleccionada)
   }
   abrirVentana() {
     this.producto = new Producto();

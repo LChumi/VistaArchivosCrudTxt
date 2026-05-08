@@ -46,9 +46,6 @@ export class FiltroColorPipe implements PipeTransform {
     return '';
   }
 
-  private convertirStringAFecha(fechaString: string): Date {
-    const [dia, mes, anio] = fechaString.split('-').map(Number);
-    return new Date(anio, mes-1 , dia);
-  }
+  
 
 }
